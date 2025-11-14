@@ -1,3 +1,7 @@
+**Read this in other languages: [English](README.md), [中文](README_zh.md).**
+
+
+
 # 目标
 
 - 针对` Phicomm K2P A1`和 `Phicomm K2 psg1208` 两种设备编译定制版本的**OpenWrt**

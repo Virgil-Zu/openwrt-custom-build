@@ -1,3 +1,7 @@
+**Read this in other languages: [English](README.md), [中文](README_zh.md).**
+
+
+
 # Goals
 
 - Compile custom versions of **OpenWrt** for `Phicomm K2P A1` and `Phicomm K2 psg1208` devices
