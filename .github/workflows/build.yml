@@ -23,12 +23,13 @@ jobs:
         sudo timedatectl set-timezone "Asia/Shanghai"
 
     - name: clone-openwrt
+      run: |
         pwd
-      run: git clone https://github.com/openwrt/openwrt.git
+        git clone https://github.com/openwrt/openwrt.git
 
     - name: update-feeds
       working-directory: /openwrt
-      run:  |
+      run: |
         pwd
         ./scripts/feeds update -a
 
