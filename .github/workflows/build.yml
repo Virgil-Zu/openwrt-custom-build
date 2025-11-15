@@ -25,9 +25,11 @@ jobs:
     - name: clone-openwrt
       working-directory: $TARGET_VERSION
       run: |
+        echo $TARGET_VERSION
+        echo ${{TARGET_VERSION}}
         git clone https://github.com/openwrt/openwrt.git
         cd openwrt
-        git checkout $TARGET_VERSION
+        git checkout ${{TARGET_VERSION}}
 
     - name: update-feeds
       working-directory: $TARGET_VERSION/openwrt
