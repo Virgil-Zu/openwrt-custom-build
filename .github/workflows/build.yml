@@ -20,8 +20,7 @@ jobs:
 
     - name: install-2
       run: |
-        echo $TARGET_VERSION
-        echo ${{TARGET_VERSION}}
+        echo env.TARGET_VERSION
 
 #    - name: install-buildsystem
 #      run: |
@@ -33,15 +32,14 @@ jobs:
 #        sudo timedatectl set-timezone "Asia/Shanghai"
 #        #echo "TARGET_VERSION=${cat target}" >> $GITHUB_ENV
 #
-#    - name: clone-openwrt
-#      working-directory: $TARGET_VERSION
-#      run: |
-#        echo $TARGET_VERSION
-#        echo ${{TARGET_VERSION}}
-#        git clone https://github.com/openwrt/openwrt.git
-#        cd openwrt
-#        git checkout ${{TARGET_VERSION}}
-#
+    - name: clone-openwrt
+      working-directory: env.TARGET_VERSION
+      run: |
+        echo env.TARGET_VERSION
+        git clone https://github.com/openwrt/openwrt.git
+        cd openwrt
+        git checkout env.TARGET_VERSION
+
 #    - name: update-feeds
 #      working-directory: $TARGET_VERSION/openwrt
 #      run: ./scripts/feeds update -a
