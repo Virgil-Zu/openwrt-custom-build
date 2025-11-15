@@ -32,6 +32,7 @@ jobs:
         git clone https://github.com/openwrt/openwrt.git
         cd openwrt
         git checkout ${{env.TARGET_VERSION}}
+        cd ..
         chmod +x config.sh
 
 #    - name: update-feeds
