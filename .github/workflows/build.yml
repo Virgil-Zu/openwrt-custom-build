@@ -12,10 +12,10 @@ jobs:
     # 4C/16GRAM/14GSSD
 
     steps:
-    - name: checkout
+    - name: Checkout
       uses: actions/checkout@main
 
-    - name: install-buildsystem
+    - name: Install Buildsystem
       run: |
         # whoami => runner
         # pwd => /home/runner/work/openwrt-custom-build/openwrt-custom-build
@@ -25,7 +25,7 @@ jobs:
         sudo timedatectl set-timezone "Asia/Shanghai"
         echo "TARGET_VERSION=$(cat target.txt)" >> $GITHUB_ENV
 
-    - name: clone-openwrt
+    - name: Clone OpenWrt
       working-directory: ${{env.TARGET_VERSION}}
       run: |
         echo ${{env.TARGET_VERSION}}
@@ -33,30 +33,26 @@ jobs:
         cd openwrt
         git checkout ${{env.TARGET_VERSION}}
 
-#    - name: update-feeds
-#      working-directory: ${{env.TARGET_VERSION}}/openwrt
-#      run: ./scripts/feeds update -a
-#
-#    - name: install-feeds
-#      working-directory: ${{env.TARGET_VERSION}}/openwrt
-#      run: ./scripts/feeds install -a
-#
-#    - name: download-depend
-#      working-directory: ${{env.TARGET_VERSION}}/openwrt
-#      run: make defconfig && make download -j4
+    - name: update-feeds
+      working-directory: ${{env.TARGET_VERSION}}/openwrt
+      run: ./scripts/feeds update -a
 
-    - name: build-targets
+    - name: install-feeds
+      working-directory: ${{env.TARGET_VERSION}}/openwrt
+      run: ./scripts/feeds install -a
+
+    - name: download-depend
+      working-directory: ${{env.TARGET_VERSION}}/openwrt
+      run: make defconfig && make download -j4
+
+    - name: Config Targets
       working-directory: ${{env.TARGET_VERSION}}
-      run: |
-        pwd
-        ls -l
-        chmod +x config.sh
-        ./config.sh
- 
-#    - name: build-targets
-#      working-directory: ${{env.TARGET_VERSION}}/openwrt
-#      run: make -j4 V=s
-#
+      run: bash ./config.sh
+
+    - name: Build Targets
+      working-directory: ${{env.TARGET_VERSION}}
+      run: bash ../build.sh
+
 #    - name: upload-bin
 #      uses: actions/upload-artifact@main
 #      working-directory: ${{env.TARGET_VERSION}}
