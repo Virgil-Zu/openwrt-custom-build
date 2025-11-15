@@ -55,7 +55,6 @@ jobs:
 
     - name: create-release
       uses: softprops/action-gh-release@master
-      working-directory: ${{env.TARGET_VERSION}}
       with:
         token: ${{secrets.GITHUB_TOKEN}}
         tag_name: ${{env.TARGET_VERSION}}
