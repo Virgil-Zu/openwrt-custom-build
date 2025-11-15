@@ -33,12 +33,12 @@ jobs:
 #        #echo "TARGET_VERSION=$(cat target)" >> $GITHUB_ENV
 #
     - name: clone-openwrt
-      working-directory: env.TARGET_VERSION
+      working-directory: ${{env.TARGET_VERSION}}
       run: |
-        echo env.TARGET_VERSION
+        echo ${{env.TARGET_VERSION}}
         git clone https://github.com/openwrt/openwrt.git
         cd openwrt
-        git checkout env.TARGET_VERSION
+        git checkout ${{env.TARGET_VERSION}}
 
 #    - name: update-feeds
 #      working-directory: $TARGET_VERSION/openwrt
