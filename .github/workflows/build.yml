@@ -33,6 +33,7 @@ jobs:
         cd openwrt
         git checkout ${{env.TARGET_VERSION}}
         cd ..
+        ls -l
         chmod +x config.sh
 
 #    - name: update-feeds
