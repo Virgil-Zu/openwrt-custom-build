@@ -12,10 +12,10 @@ jobs:
     # 4C/16GRAM/14GSSD
 
     steps:
-    - name: Checkout
+    - name: checkout
       uses: actions/checkout@main
 
-    - name: Install Buildsystem
+    - name: install-buildsystem
       run: |
         # whoami => runner
         # pwd => /home/runner/work/openwrt-custom-build/openwrt-custom-build
@@ -25,7 +25,7 @@ jobs:
         sudo timedatectl set-timezone "Asia/Shanghai"
         echo "TARGET_VERSION=$(cat target.txt)" >> $GITHUB_ENV
 
-    - name: Clone OpenWrt
+    - name: clone-openwrt
       working-directory: ${{env.TARGET_VERSION}}
       run: |
         echo ${{env.TARGET_VERSION}}
@@ -45,32 +45,28 @@ jobs:
       working-directory: ${{env.TARGET_VERSION}}/openwrt
       run: make defconfig && make download -j4
 
-    - name: Config Targets
+    - name: config-targets
       working-directory: ${{env.TARGET_VERSION}}
       run: bash ./config.sh
 
-    - name: Build Targets
+    - name: build-targets
       working-directory: ${{env.TARGET_VERSION}}
       run: bash ../build.sh
 
-#    - name: upload-bin
-#      uses: actions/upload-artifact@main
-#      working-directory: ${{env.TARGET_VERSION}}
-#      if: !cancelled()
-#      with:
-#        path: bin/*-squashfs-sysupgrade.bin
-#
-#    - name: create-release
-#      uses: softprops/action-gh-release@master
-#      working-directory: ${{env.TARGET_VERSION}}
-#      if: !cancelled()
-#      with:
-#        tag_name: ${{env.TARGET_VERSION}}
-#        body_path: release.txt
-#        files: bin/*-squashfs-sysupgrade.bin
-#
-#    - name: delete-workflow-runs
-#      uses: Mattraks/delete-workflow-runs@main
-#      with:
-#        retain_days: 0
-#        keep_minimum_runs: 2
+    - name: create-release
+      uses: softprops/action-gh-release@master
+      working-directory: ${{env.TARGET_VERSION}}
+      if: !cancelled()
+      with:
+        token: ${{secrets.GITHUB_TOKEN}}
+        tag_name: ${{env.TARGET_VERSION}}
+        body_path: release.txt
+        draft: false
+        prerelease: false
+        files: bin/*-squashfs-sysupgrade.bin
+
+    - name: delete-workflow-runs
+      uses: Mattraks/delete-workflow-runs@main
+      with:
+        retain_days: 0
+        keep_minimum_runs: 2
