@@ -13,7 +13,11 @@ jobs:
     - name: checkout
       uses: actions/checkout@main
 
-    - name: install-buildsystem
+    - name: install-1
+      run: |
+        echo "TARGET_VERSION=${cat target}" >> $GITHUB_ENV
+
+    - name: install-2
       run: |
         echo $TARGET_VERSION
         echo ${{TARGET_VERSION}}
