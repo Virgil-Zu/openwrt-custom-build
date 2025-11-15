@@ -17,9 +17,11 @@ echo "loop config target ..."
 for file in ./config/*; do
     if [ -f "$file" ]; then
         cp -f "$file" "openwrt/.config"
-		IFS="#" read -r part1 part2 part3 <<< "$file"
+		IFS="#" read -r part1 part2 part3 <<< $(basename "$file")
 		echo "build target [$part1/$part2/$part3]"
+		cd openwrt
 		make -j4
+		cd ..
 		cp -f openwrt/bin/targets/$part1/$part2/*.-squashfs-sysupgrade.bin bin
     fi
 done
