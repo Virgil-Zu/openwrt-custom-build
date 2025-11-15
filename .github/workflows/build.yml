@@ -16,7 +16,7 @@ jobs:
     - name: install-1
       run: |
         echo "TARGET_VERSION=$(cat target)" >> $GITHUB_ENV
-        echo ${cat target}
+        echo $(cat target)
 
     - name: install-2
       run: |
