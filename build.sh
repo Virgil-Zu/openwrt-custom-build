@@ -7,8 +7,7 @@ if [ ! -d "config" ]; then
     exit 1
 fi
 
-echo "make [bin] dir"
-
+echo "mkdir [bin]"
 mkdir -p bin
 ls -l
 
@@ -22,6 +21,9 @@ for file in ./config/*; do
 		cd openwrt
 		make -j4
 		cd ..
-		cp -f openwrt/bin/targets/$part1/$part2/*.-squashfs-sysupgrade.bin bin
+		ls -l openwrt/bin/targets
+		ls -l openwrt/bin/targets/$part1
+		ls -l openwrt/bin/targets/$part1/$part2
+		cp -f openwrt/bin/targets/$part1/$part2/*-squashfs-sysupgrade.bin bin
     fi
 done

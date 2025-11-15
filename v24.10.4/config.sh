@@ -27,3 +27,6 @@ cat openwrt/target/linux/ramips/dts/mt7620a_phicomm_k2-v22.5-16m.dts
 sed -i 's|TARGET_DEVICES += phicomm_k2-v22.5|TARGET_DEVICES += phicomm_k2-v22.5\n\ndefine Device/phicomm_k2-v22.5-16m\n  $(Device/phicomm_k2-v22.5)\n  IMAGE_SIZE := 15744k\n  DEVICE_VARIANT := 16M\n  SUPPORTED_DEVICES += k2-v22.5-16m\nendef\nTARGET_DEVICES += phicomm_k2-v22.5-16m|g' openwrt/target/linux/ramips/image/mt7620.mk
 cat openwrt/target/linux/ramips/image/mt7620.mk
 
+# set timezone
+sed -i "s|timezone='UTC'|timezone='Asia/Shanghai'|g" openwrt/package/base-files/files/bin/config_generate
+sed -i "s|log_size='128'|log_size='64'|g" openwrt/package/base-files/files/bin/config_generate
