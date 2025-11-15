@@ -47,7 +47,11 @@ jobs:
 
     - name: build-targets
       working-directory: ${{env.TARGET_VERSION}}
-      run: chmod +x ./${{env.TARGET_VERSION}}/config.sh && ./${{env.TARGET_VERSION}}/config.sh
+      run: |
+        pwd
+        ls -l
+        chmod +x config.sh
+        ./config.sh
  
 #    - name: build-targets
 #      working-directory: ${{env.TARGET_VERSION}}/openwrt
