@@ -25,14 +25,15 @@ jobs:
 #        sudo timedatectl set-timezone "Asia/Shanghai"
 #        echo "TARGET_VERSION=$(cat target.txt)" >> $GITHUB_ENV
 #
-#    - name: clone-openwrt
-#      working-directory: ${{env.TARGET_VERSION}}
-#      run: |
-#        echo ${{env.TARGET_VERSION}}
-#        git clone https://github.com/openwrt/openwrt.git
-#        cd openwrt
-#        git checkout ${{env.TARGET_VERSION}}
-#
+    - name: clone-openwrt
+      working-directory: ${{env.TARGET_VERSION}}
+      run: |
+        echo ${{env.TARGET_VERSION}}
+        git clone https://github.com/openwrt/openwrt.git
+        cd openwrt
+        git checkout ${{env.TARGET_VERSION}}
+        chmod +x config.sh
+
 #    - name: update-feeds
 #      working-directory: ${{env.TARGET_VERSION}}/openwrt
 #      run: ./scripts/feeds update -a
