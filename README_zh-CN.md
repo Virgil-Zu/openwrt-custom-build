@@ -4,12 +4,12 @@ Read this in other languages: **[English](README.md), [中文](README_zh-CN.md).
 
 # 目标
 
-- 针对` Phicomm K2P A1`和 `Phicomm K2 psg1208` 两种设备编译定制版本的**OpenWrt**
-- 尽最大可能减少改动，编译选项和官方版本保持一致（即使官方版本的缺陷也保留），基于官方发布的  `config.buildinfo`
+- 针对` Phicomm K2P A1`和 `Phicomm K2 psg1218` 两种设备编译定制版本的**OpenWrt**
+- 尽最大可能减少改动，编译选项和官方版本保持一致（即使官方版本的缺陷也保留），编译配置基于官方发布的  `config.buildinfo`
 
 - 使用GitHub Action自定义编译openwrt
 
-- 遵循 https://openwrt.org/docs/guide-developer/adding_new_device
+- 编译步骤遵循 https://openwrt.org/docs/guide-developer/adding_new_device
 
 
 
@@ -24,10 +24,11 @@ Read this in other languages: **[English](README.md), [中文](README_zh-CN.md).
 2025/11
 
 1. 定制目标 ` Phicomm K2P A1` 适配 **32MB** 容量Flash版本镜像  `mt7621_phicomm_k2p-32m.dts`
-2. 定制目标 `Phicomm K2 psg1208` 适配 **16MB** 容量Flash版本镜像 `mt7620a_phicomm_psg1208-16m.dts`
-3. 内置中文语言包 `luci-i18n-base-zh-cn`
+2. 定制目标 `Phicomm K2 psg1218` 适配 **16MB** 容量Flash版本镜像 `mt7620a_phicomm_k2-v22.5-16m.dts`
+3. 内置简体中文语言包 `luci-i18n-base-zh-cn`
 4. 设置日志大小64  `log_size='64'`
 5. 设置时区为Asia/Shanghai  `timezone=Asia/Shanghai`
+6. 设置feeds源为阿里源 `https://mirrors.aliyun.com/openwrt`
 
 
 
@@ -43,12 +44,12 @@ Read this in other languages: **[English](README.md), [中文](README_zh-CN.md).
 
   
 
-- 目标设备`Phicomm K2 psg1208` ，创建新的设备类型  **Phicomm psg1208 (16M)**
+- 目标设备 `Phicomm K2 psg1218` ，创建新的设备类型  **Phicomm K2 v22.5 or newer (16M)**
 
 	例如:
 	
 	```shell
-	openwrt-24.10.4-ramips-mt7621-phicomm_psg1208-16m-squashfs-sysupgrade.bin
+	openwrt-24.10.4-ramips-mt7620-phicomm_k2-v22.5-16m-squashfs-sysupgrade.bin
 	```
 	
 	
@@ -59,9 +60,8 @@ Read this in other languages: **[English](README.md), [中文](README_zh-CN.md).
 
 ```shell
 ├─24.10.4 (openwrt 版本)
-│  ├─patches (应用在openwrt代码的对应目录)
 │  ├─.config  (预定义的编译配置)
-│  ├─customize.sh (应用在openwrt代码的对应目录)
+│  └─customize.sh (应用在openwrt代码的对应目录)
 ```
 
 

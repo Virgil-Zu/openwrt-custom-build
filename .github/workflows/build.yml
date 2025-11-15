@@ -23,14 +23,52 @@ jobs:
         sudo timedatectl set-timezone "Asia/Shanghai"
 
     - name: clone-openwrt
+      working-directory: $TARGET_VERSION
       run: |
-        # pwd => /home/runner/work/openwrt-custom-build/openwrt-custom-build
         git clone https://github.com/openwrt/openwrt.git
+        cd openwrt
+        git checkout $TARGET_VERSION
 
     - name: update-feeds
-      working-directory: ./openwrt
+      working-directory: $TARGET_VERSION/openwrt
       run: ./scripts/feeds update -a
 
     - name: install-feeds
-      working-directory: ./openwrt
+      working-directory: $TARGET_VERSION/openwrt
       run: ./scripts/feeds install -a
+
+    - name: download-depend
+      working-directory: $TARGET_VERSION/openwrt
+      run: make defconfig && make download -j4
+
+#    - name: build-targets
+#      id: build
+#      working-directory: $TARGET_VERSION
+#      run: ./$TARGET_VERSION/config.sh
+# 
+#    - name: build-targets
+#      id: build
+#      working-directory: $TARGET_VERSION/openwrt
+#      run: make -j4 V=s
+#
+#    - name: upload-bin
+#      uses: actions/upload-artifact@main
+#      working-directory: $TARGET_VERSION
+#      if: !cancelled()
+#      with:
+#        path: bin/*-squashfs-sysupgrade.bin
+#
+#    - name: create-release
+#      uses: softprops/action-gh-release@master
+#      working-directory: $TARGET_VERSION
+#      if: !cancelled()
+#      with:
+#        tag_name: $TARGET_VERSION
+#        body_path: release.txt
+#        files: bin/*-squashfs-sysupgrade.bin
+#
+#    - name: delete-workflow-runs
+#      uses: Mattraks/delete-workflow-runs@main
+#      with:
+#        retain_days: 0
+#        keep_minimum_runs: 2

@@ -4,8 +4,8 @@ Read this in other languages: **[English](README.md), [中文](README_zh-CN.md).
 
 # Goals
 
-- Compile custom versions of **OpenWrt** for `Phicomm K2P A1` and `Phicomm K2 psg1208` devices
-- Minimize changes as much as possible, keep compilation options consistent with the official version (even if the bugs in the official version are retained)，based on the official release of `config.buildinfo`
+- Custom  compile of **OpenWrt** for `Phicomm K2P A1` and `Phicomm K2 psg1218` devices
+- Minimize changes as much as possible, keep compile options consistent with the official version (even if the bugs in the official version are retained)，based on the official release of `config.buildinfo`
 - Use GitHub Actions to build OpenWrt
 - Follow https://openwrt.org/docs/guide-developer/adding_new_device
 
@@ -21,11 +21,12 @@ Read this in other languages: **[English](README.md), [中文](README_zh-CN.md).
 
 November 2025
 
-1. Customize target `Phicomm K2P A1` to adapt to 32MB Flash version image `mt7621_phicomm_k2p-32m.dts`
-2. Customize target `Phicomm K2 psg1208` to adapt to 16MB Flash version image `mt7620a_phicomm_psg1208-16m.dts`
-3. buildin Chinese language package `luci-i18n-base-zh-cn`
+1. Customize target `Phicomm K2P A1` to adapt to **32MB** Flash version image `mt7621_phicomm_k2p-32m.dts`
+2. Customize target `Phicomm K2 psg1218` to adapt to **16MB** Flash version image `mt7620a_phicomm_k2-v22.5-16m.dts`
+3. buildin Simplified-Chinese language package `luci-i18n-base-zh-cn`
 4. Set log size to 64: `log_size='64'`
 5. Set timezone to Asia/Shanghai: `timezone=Asia/Shanghai`
+6. Set feeds source: `https://mirrors.aliyun.com/openwrt`
 
 
 
@@ -41,23 +42,22 @@ November 2025
 
 	
 
-- For target device `Phicomm K2 psg1208`, create a new device type **Phicomm psg1208 (16M)**
+- For target device `Phicomm K2 psg1218`, create a new device type **Phicomm K2 v22.5 or newer (16M)**
 
 	PS:
 
 	```shell
-	openwrt-24.10.4-ramips-mt7621-phicomm_psg1208-16m-squashfs-sysupgrade.bin
+	openwrt-24.10.4-ramips-mt7620-phicomm_k2-v22.5-16m-squashfs-sysupgrade.bin
 	```
 
 	
 
 # Structure
 
-Since different patches may be required for each version of OpenWrt, each version is organized as a folder
+Since different patches may be required for each version of OpenWrt
 
 ```shell
 ├─24.10.4 (OpenWrt version)
-│  ├─patches (applied to the corresponding directory of the OpenWrt code)
 │  ├─.config (predefined compilation configuration)
 │  ├─customize.sh (applied to the corresponding directory of the OpenWrt code)
 ```
