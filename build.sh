@@ -25,5 +25,6 @@ for file in ./config/*; do
 		ls -l openwrt/bin/targets/$part1
 		ls -l openwrt/bin/targets/$part1/$part2
 		cp -f openwrt/bin/targets/$part1/$part2/*-squashfs-sysupgrade.bin bin
+		ls -l bin
     fi
 done

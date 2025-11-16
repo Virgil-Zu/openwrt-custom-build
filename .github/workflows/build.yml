@@ -58,10 +58,10 @@ jobs:
       with:
         token: ${{secrets.GITHUB_TOKEN}}
         tag_name: ${{env.TARGET_VERSION}}
-        body_path: release.txt
+        body_path: ${{env.TARGET_VERSION}}/release.txt
         draft: false
         prerelease: false
-        files: bin/*-squashfs-sysupgrade.bin
+        files: ${{env.TARGET_VERSION}}/bin/*-squashfs-sysupgrade.bin
 
     - name: delete-workflow-runs
       uses: Mattraks/delete-workflow-runs@main
