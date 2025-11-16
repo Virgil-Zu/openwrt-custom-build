@@ -1,18 +1,17 @@
 
 name: openwrt-build-github-actions
 
+# 4C/16GRAM/14GSSD
+
 on:
   workflow_dispatch:
   push:
-    branches: [ main ]
-#  push:
-#    tags:
-#      - "v*"  # 例如推送 v1.0.0 标签时触发
+    tags:
+      - "v*"
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    # 4C/16GRAM/14GSSD
 
     steps:
 #    - name: checkout
@@ -46,7 +45,7 @@ jobs:
 #
 #    - name: download-depend
 #      working-directory: ${{env.TARGET_VERSION}}/openwrt
-#      run: make defconfig && make download -j4
+#      run: make defconfig download clean
 #
 #    - name: config-targets
 #      working-directory: ${{env.TARGET_VERSION}}
@@ -78,4 +77,4 @@ jobs:
       uses: Mattraks/delete-workflow-runs@main
       with:
         retain_days: 0
-        keep_minimum_runs: 2
+        keep_minimum_runs: 12

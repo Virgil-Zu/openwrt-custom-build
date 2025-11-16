@@ -1,11 +1,9 @@
 #!/bin/bash
 
-#pwd => ${{env.TARGET_VERSION}}
-
-#patch openwrt 24.10.4
+## patch openwrt 24.10.4
 cp -f patches/*.patch openwrt/feeds/telephony/libs/dahdi-linux/patches/
 
-#create new device model
+## create new device model
 # phicomm_k2p-32m
 cp -f openwrt/target/linux/ramips/dts/mt7621_phicomm_k2p.dts openwrt/target/linux/ramips/dts/mt7621_phicomm_k2p-32m.dts
 sed -i 's|compatible = "phicomm,k2p"|compatible = "phicomm,k2p-32m", "phicomm,k2p"|g' openwrt/target/linux/ramips/dts/mt7621_phicomm_k2p-32m.dts
@@ -24,9 +22,11 @@ sed -i 's|model = "Phicomm K2 v22.5 or newer"|model = "Phicomm K2 v22.5 or newer
 sed -i 's|reg = <0xa0000 0x760000>|reg = <0xa0000 0xf60000>|g' openwrt/target/linux/ramips/dts/mt7620a_phicomm_k2-v22.5-16m.dts
 cat openwrt/target/linux/ramips/dts/mt7620a_phicomm_k2-v22.5-16m.dts
 
-sed -i 's|TARGET_DEVICES += phicomm_k2-v22.5|TARGET_DEVICES += phicomm_k2-v22.5\n\ndefine Device/phicomm_k2-v22.5-16m\n  $(Device/phicomm_k2-v22.5)\n  IMAGE_SIZE := 15744k\n  DEVICE_VARIANT := 16M\n  SUPPORTED_DEVICES += k2-v22.5-16m\nendef\nTARGET_DEVICES += phicomm_k2-v22.5-16m|g' openwrt/target/linux/ramips/image/mt7620.mk
+sed -i 's|TARGET_DEVICES += phicomm_k2-v22.5|TARGET_DEVICES += phicomm_k2-v22.5\n\ndefine Device/phicomm_k2-v22.5-16m\n  $(Device/phicomm_k2-v22.5)\n  IMAGE_SIZE := 15744k\n  DEVICE_VARIANT += 16M\n  SUPPORTED_DEVICES += k2-v22.5-16m\nendef\nTARGET_DEVICES += phicomm_k2-v22.5-16m|g' openwrt/target/linux/ramips/image/mt7620.mk
 cat openwrt/target/linux/ramips/image/mt7620.mk
 
 # set timezone
 sed -i "s|timezone='UTC'|timezone='Asia/Shanghai'|g" openwrt/package/base-files/files/bin/config_generate
 sed -i "s|log_size='128'|log_size='64'|g" openwrt/package/base-files/files/bin/config_generate
+
+touch openwrt/target/linux/ramips/Makefile

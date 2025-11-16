@@ -19,7 +19,7 @@ for file in ./config/*; do
 		IFS="#" read -r part1 part2 part3 <<< $(basename "$file")
 		echo "build target [$part1/$part2/$part3]"
 		cd openwrt
-		make -j4
+		make -j$(nproc) V=s
 		cd ..
 		ls -l openwrt/bin/targets
 		ls -l openwrt/bin/targets/$part1

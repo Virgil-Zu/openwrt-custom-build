@@ -1,79 +1,74 @@
-Read this in other languages: **[English](README.md), [中文](README_zh-CN.md).**
+**这个Repo面向中国大陆地区的用户，不提供英文说明**
+
+**This Repo is intended for users in Chinese Mainland, so it no engish readme.md**
+
+> [!CAUTION]
+> 开发中，代码不可运行
+
+# 目标
+
+- 针对` Phicomm K2P A1`和 `Phicomm K2 psg1218` 两种设备编译定制版本的 OpenWrt
+- 尽可能减少改动，编译选项和官方版本保持一致（即使官方版本的缺陷也保留），编译配置基于官方发布的  `config.buildinfo`
+
+- 使用GitHub Action自定义编译 OpenWrt
+
+- 添加设备步骤遵循 https://openwrt.org/docs/guide-developer/adding_new_device
+
+- 编译步骤遵循 https://openwrt.org/docs/guide-developer/toolchain/use-buildsystem
 
 
 
-# Goals
+# 频次
 
-- Custom  compile of **OpenWrt** for `Phicomm K2P A1` and `Phicomm K2 psg1218` devices
-- Minimize changes as much as possible, keep compile options consistent with the official version (even if the bugs in the official version are retained)，based on the official release of `config.buildinfo`
-- Use GitHub Actions to build OpenWrt
-- Follow https://openwrt.org/docs/guide-developer/adding_new_device
-
-
-
-# Frequency
-
-- Follow **OpenWrt** version updates
-
-- Keep the last successful  **3** versions
-
-# Customizations
-
-November 2025
-
-1. Customize target `Phicomm K2P A1` to adapt to **32MB** Flash version image `mt7621_phicomm_k2p-32m.dts`
-2. Customize target `Phicomm K2 psg1218` to adapt to **16MB** Flash version image `mt7620a_phicomm_k2-v22.5-16m.dts`
-3. buildin Simplified-Chinese language package `luci-i18n-base-zh-cn`
-4. Set log size to 64: `log_size='64'`
-5. Set timezone to Asia/Shanghai: `timezone=Asia/Shanghai`
-6. Set feeds source: `https://mirrors.aliyun.com/openwrt`
-
-
-
-# Outputs
-
-- For target device `Phicomm K2P A1`, create a new device type **Phicomm K2P (32M)**
-
-	PS:
-
-	```shell
-	openwrt-24.10.4-ramips-mt7621-phicomm_k2p-32m-squashfs-sysupgrade.bin
-	```
+- 跟随 **OpenWrt** 版本更新
 
 	
 
-- For target device `Phicomm K2 psg1218`, create a new device type **Phicomm K2 v22.5 or newer (16M)**
+# 定制
 
-	PS:
+2025/11
 
+1. 定制目标 ` Phicomm K2P A1` 适配 **32MB** 容量Flash版本镜像  `mt7621_phicomm_k2p-32m.dts`
+2. 定制目标 `Phicomm K2 psg1218` 适配 **16MB** 容量Flash版本镜像 `mt7620a_phicomm_k2-v22.5-16m.dts`，需要 斐讯布局
+3. 内置简体中文语言包 `luci-i18n-base-zh-cn`
+4. 设置日志大小64  `log_size='64'`
+5. 设置时区为Asia/Shanghai  `timezone=Asia/Shanghai`
+6. 设置 opkg 源为 阿里云 `https://mirrors.aliyun.com/openwrt`
+
+
+
+# 输出
+
+- 目标设备 `Phicomm K2P A1`，创建新的设备类型  **Phicomm K2P (32M)**
+
+  例如:
+
+  ``````shell
+  openwrt-24.10.4-ramips-mt7621-phicomm_k2p-32m-squashfs-sysupgrade.bin
+  ``````
+
+  
+
+- 目标设备 `Phicomm K2 psg1218` ，创建新的设备类型  **Phicomm K2 v22.5 or newer (16M)**
+
+	例如:
+	
 	```shell
 	openwrt-24.10.4-ramips-mt7620-phicomm_k2-v22.5-16m-squashfs-sysupgrade.bin
 	```
-
+	
 	
 
-# Structure
-
-Since different patches may be required for each version of OpenWrt
-
-```shell
-├─24.10.4 (OpenWrt version)
-│  ├─.config (predefined compilation configuration)
-│  ├─customize.sh (applied to the corresponding directory of the OpenWrt code)
-```
-
-
-
-# Versions
+# 版本
 
 ## 24.10.4
 
-1. The `asterisk/dahdi-linux` project is referenced, using an old version from 2024; subsequent new versions have fixed this issue.
+1. `asterisk/dahdi-linux`项目被引用，用的是2024年的旧版本，之后的新版本已经修复
 
-	A local macro is defined on line 1519 of `base.c`: `#define MAX 10 /* attempts */`, which is used to indicate the maximum number of attempts.
+	`base.c` 的第 1519 行定义了一个局部宏：#define MAX 10 /* attempts */，用于表示最大尝试次数
 
-	The Linux header file `include/linux/minmax.h` has already defined the `MAX(a, b)` macro (used to compare the maximum of two values).
+	linux头文件`include/linux/minmax.h` 中已经定义了 MAX(a, b) 宏（用于比较两个值的最大值）
 
-	It is necessary to change `MAX` in `base.c` to `MAX_ATTEMPTS`.
-
-	 <font color="red">I don't know how the official image compiles successfully; this is unreasonable.</font>
+	这里需要将`base.c` 中的`MAX`改为`MAX_ATTEMPTS`
+	
+	:rage:**不知道官方镜像是如何编译成功的，这很不合理**
