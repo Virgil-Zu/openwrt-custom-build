@@ -3,6 +3,8 @@ name: openwrt-build-github-actions
 
 on:
   workflow_dispatch:
+  push:
+    branches: [ main ]
 #  push:
 #    tags:
 #      - "v*"  # 例如推送 v1.0.0 标签时触发
@@ -64,11 +66,11 @@ jobs:
       uses: softprops/action-gh-release@master
       with:
         token: ${{secrets.GITHUB_TOKEN}}
-        tag_name: ${{env.TARGET_VERSION}}
-        body_path: ${{env.TARGET_VERSION}}/release.txt
+        tag_name: "v24.10.4"
+        body_path: release.txt
         draft: false
         prerelease: false
-        files: ${{env.TARGET_VERSION}}/bin/*-squashfs-sysupgrade.bin
+        files: bin/*-squashfs-sysupgrade.bin
 
     - name: delete-workflow-runs
       uses: Mattraks/delete-workflow-runs@main
