@@ -1,4 +1,0 @@
-. buildin Simplified-Chinese language package `luci-i18n-base-zh-cn`
-. Set log size to 64: `log_size='64'`
-. Set timezone to Asia/Shanghai: `timezone=Asia/Shanghai`
-. Set feeds source: `https://mirrors.aliyun.com/openwrt`
