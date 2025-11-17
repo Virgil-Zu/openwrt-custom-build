@@ -43,7 +43,7 @@ while IFS= read -r line; do
         sed -i "/^[[:space:]]*CONFIG_TARGET_ALL_PROFILES=/d" .config
 
         sed -i "s|downloads.openwrt.org|mirrors.aliyun.com/openwrt|g" .config
-        echo "- 设置 opkg 源为 阿里云 `https://mirrors.aliyun.com/openwrt`" >> "${RELEASE_FILE}"
+        echo "- 设置 opkg 源为 阿里云 \`https://mirrors.aliyun.com/openwrt\`" >> "${RELEASE_FILE}"
 
         echo "CONFIG_TARGET_${arch}_${soc}_DEVICE_${device}=y" >> .config
         echo "CONFIG_LUCI_LANG_zh_Hans=y" >> .config
@@ -51,7 +51,7 @@ while IFS= read -r line; do
         echo "CONFIG_PACKAGE_luci-i18n-firewall-zh-cn=y" >> .config
         echo "CONFIG_PACKAGE_luci-i18n-package-manager-zh-cn=y" >> .config
 
-        echo "- 内置简体中文语言包 `luci-i18n-base-zh-cn`" >> "${RELEASE_FILE}"
+        echo "- 内置简体中文语言包 \`luci-i18n-base-zh-cn\`" >> "${RELEASE_FILE}"
 
         cat .config
 
