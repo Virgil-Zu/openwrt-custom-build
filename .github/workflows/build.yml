@@ -6,8 +6,8 @@ name: openwrt-build-github-actions
 on:
   workflow_dispatch:
   push:
-#    tags:
-#      - "v*"
+    tags:
+      - "v*"
 
 jobs:
   build:
@@ -35,26 +35,19 @@ jobs:
         cd openwrt
         git checkout ${{env.VERSION}}
 
-#    - name: update-feeds
-#      working-directory: openwrt
-#      run: ./scripts/feeds update -a
+    - name: update-feeds
+      working-directory: openwrt
+      run: ./scripts/feeds update -a
 
-#    - name: install-feeds
-#      working-directory: openwrt
-#      run: ./scripts/feeds install -a
+    - name: install-feeds
+      working-directory: openwrt
+      run: ./scripts/feeds install -a
 
     - name: config-targets
       run: bash ./config.sh
 
     - name: build-targets
       run: bash ./build.sh
-
-#    - name: test-release
-#      run: |
-#        mkdir -p bin
-#        echo "mt7620" > bin/openwrt-24.10.4-ramips-mt7620-phicomm_k2-v22.5-16m-squashfs-sysupgrade.bin
-#        echo "mt7621" > bin/openwrt-24.10.4-ramips-mt7621-phicomm_k2p-32m-squashfs-sysupgrade.bin
-#        echo "release" > release.txt
 
     - name: create-release
       uses: softprops/action-gh-release@master

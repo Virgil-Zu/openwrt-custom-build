@@ -53,15 +53,14 @@ while IFS= read -r line; do
 
         echo "- 内置简体中文语言包 \`luci-i18n-base-zh-cn\`" >> "${RELEASE_FILE}"
 
-        cat .config
+        #cat .config
+        make defconfig
 
-        #make defconfig
-
-        #echo "download depend..."
-        #make download -j$(nproc) V=s
+        echo "download depend..."
+        make download -j$(nproc) V=s
         
-        #echo "make..."
-        #make -j$(nproc) V=s
+        echo "make..."
+        make -j$(nproc) V=s
 
 		cp -f openwrt/bin/targets/${arch}/${soc}/*-squashfs-sysupgrade.bin bin
 		cd ..
@@ -75,4 +74,4 @@ done < "${INPUT_FILE}"
 echo "build targets done."
 tree -L 3 openwrt/bin/targets
 ls -l bin
-cat "${RELEASE_FILE}"
+#cat "${RELEASE_FILE}"
