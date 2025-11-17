@@ -43,10 +43,6 @@ jobs:
       working-directory: openwrt
       run: ./scripts/feeds install -a
 
-    - name: download-depend
-      working-directory: openwrt
-      run: make download -j$(nproc) V=s
-
     - name: config-targets
       run: bash ./config.sh
 

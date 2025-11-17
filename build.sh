@@ -53,10 +53,10 @@ while IFS= read -r line; do
 
         make defconfig
 
-        #echo "download depend..."
-        #make download -j$(nproc) V=s
+        echo "download depend..."
+        make download -j$(nproc) V=s
         
-        #echo "make..."
+        echo "make..."
         make -j$(nproc) V=s
 
 		cp -f openwrt/bin/targets/$part1/$part2/*-squashfs-sysupgrade.bin bin
