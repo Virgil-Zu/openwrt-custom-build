@@ -75,3 +75,4 @@ done < "${INPUT_FILE}"
 echo "build targets done."
 tree -L 3 openwrt/bin/targets
 ls -l bin
+cat "${RELEASE_FILE}"
