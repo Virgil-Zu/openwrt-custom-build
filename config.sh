@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 RELEASE_FILE="release.txt"
 
