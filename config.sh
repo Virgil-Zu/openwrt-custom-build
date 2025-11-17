@@ -1,7 +1,18 @@
 #!/bin/bash
 
+RELEASE_FILE="release.txt"
+
 ## patch openwrt
 cp -f patches/*.patch openwrt/feeds/telephony/libs/dahdi-linux/patches/
+
+echo "" > "${RELEASE_FILE}"
+
+# set timezone
+sed -i "s|timezone='UTC'|timezone='Asia/Shanghai'|g" openwrt/package/base-files/files/bin/config_generate
+sed -i "s|log_size='128'|log_size='64'|g" openwrt/package/base-files/files/bin/config_generate
+
+echo "- 设置时区为Asia/Shanghai  `timezone=Asia/Shanghai`" >> "${RELEASE_FILE}"
+echo "- 设置日志大小64  `log_size='64'`" >> "${RELEASE_FILE}"
 
 ## create new device model
 # phicomm_k2p-32m
@@ -14,8 +25,9 @@ cat openwrt/target/linux/ramips/dts/mt7621_phicomm_k2p-32m.dts
 sed -i 's|TARGET_DEVICES += phicomm_k2p|TARGET_DEVICES += phicomm_k2p\n\ndefine Device/phicomm_k2p-32m\n  $(Device/phicomm_k2p)\n  IMAGE_SIZE := 32128k\n  DEVICE_VARIANT := 32M\n  SUPPORTED_DEVICES += k2p-32m\nendef\nTARGET_DEVICES += phicomm_k2p-32m|g' openwrt/target/linux/ramips/image/mt7621.mk
 cat openwrt/target/linux/ramips/image/mt7621.mk
 
+echo "- 添加设备 `ramips/mt7621/phicomm_k2p-32m`" >> "${RELEASE_FILE}"
 
-# phicomm_k2p-32m
+# phicomm_k2-v22.5-16m
 cp -f openwrt/target/linux/ramips/dts/mt7620a_phicomm_k2-v22.5.dts openwrt/target/linux/ramips/dts/mt7620a_phicomm_k2-v22.5-16m.dts
 sed -i 's|compatible = "phicomm,k2-v22.5"|compatible = "phicomm,k2-v22.5-16m"|g' openwrt/target/linux/ramips/dts/mt7620a_phicomm_k2-v22.5-16m.dts
 sed -i 's|model = "Phicomm K2 v22.5 or newer"|model = "Phicomm K2 v22.5 or newer (16M)"|g' openwrt/target/linux/ramips/dts/mt7620a_phicomm_k2-v22.5-16m.dts
@@ -25,8 +37,6 @@ cat openwrt/target/linux/ramips/dts/mt7620a_phicomm_k2-v22.5-16m.dts
 sed -i 's|TARGET_DEVICES += phicomm_k2-v22.5|TARGET_DEVICES += phicomm_k2-v22.5\n\ndefine Device/phicomm_k2-v22.5-16m\n  $(Device/phicomm_k2-v22.5)\n  IMAGE_SIZE := 15744k\n  DEVICE_VARIANT += 16M\n  SUPPORTED_DEVICES += k2-v22.5-16m\nendef\nTARGET_DEVICES += phicomm_k2-v22.5-16m|g' openwrt/target/linux/ramips/image/mt7620.mk
 cat openwrt/target/linux/ramips/image/mt7620.mk
 
-# set timezone
-sed -i "s|timezone='UTC'|timezone='Asia/Shanghai'|g" openwrt/package/base-files/files/bin/config_generate
-sed -i "s|log_size='128'|log_size='64'|g" openwrt/package/base-files/files/bin/config_generate
+echo "- 添加设备 `ramips/mt7620a/phicomm_k2-v22.5-16m`" >> "${RELEASE_FILE}"
 
 touch openwrt/target/linux/ramips/Makefile

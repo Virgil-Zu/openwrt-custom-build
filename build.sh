@@ -2,18 +2,19 @@
 
 echo "build target start ..."
 
+RELEASE_FILE="release.txt"
 INPUT_FILE="targets.txt"
 VERSION=$(cat version.txt)
 
-if [ ! -f "$INPUT_FILE" ]; then
-    echo "error: dir [$INPUT_FILE] not exist"
+if [ ! -f "${INPUT_FILE}" ]; then
+    echo "error: dir [${INPUT_FILE}] not exist"
     exit 1
 fi
 ls -l
 echo "loop build targets ..."
 
 while IFS= read -r line; do
-    if [[ "$line" =~ ^[[:space:]]*# ]]; then
+    if [[ "${line}" =~ ^[[:space:]]*# ]]; then
         continue
     fi
 
@@ -21,9 +22,9 @@ while IFS= read -r line; do
         continue
     fi
 
-    IFS='/' read -r arch soc device <<< "$line"
+    IFS='/' read -r arch soc device <<< "${line}"
 
-    if [ -n "$arch" ] && [ -n "$soc" ] && [ -n "$device" ]; then
+    if [ -n "${arch}" ] && [ -n "${soc}" ] && [ -n "${device}" ]; then
         
         cd openwrt
 
@@ -42,12 +43,15 @@ while IFS= read -r line; do
         sed -i "/^[[:space:]]*CONFIG_TARGET_ALL_PROFILES=/d" .config
 
         sed -i "s|downloads.openwrt.org|mirrors.aliyun.com/openwrt|g" .config
+        echo "- 设置 opkg 源为 阿里云 `https://mirrors.aliyun.com/openwrt`" >> "${RELEASE_FILE}"
 
         echo "CONFIG_TARGET_${arch}_${soc}_DEVICE_${device}=y" >> .config
         echo "CONFIG_LUCI_LANG_zh_Hans=y" >> .config
         echo "CONFIG_PACKAGE_luci-i18n-base-zh-cn=y" >> .config
         echo "CONFIG_PACKAGE_luci-i18n-firewall-zh-cn=y" >> .config
         echo "CONFIG_PACKAGE_luci-i18n-package-manager-zh-cn=y" >> .config
+
+        echo "- 内置简体中文语言包 `luci-i18n-base-zh-cn`" >> "${RELEASE_FILE}"
 
         cat .config
 
@@ -63,10 +67,10 @@ while IFS= read -r line; do
 		cd ..
 
     else
-        echo "WARN: line '$line' is invalid, skip"
+        echo "WARN: line '${line}' is invalid, skip"
     fi
 
-done < "$INPUT_FILE"
+done < "${INPUT_FILE}"
 
 echo "build targets done."
 tree -L 3 openwrt/bin/targets

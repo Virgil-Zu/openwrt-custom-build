@@ -55,17 +55,17 @@ jobs:
 #        echo "mt7620" > bin/openwrt-24.10.4-ramips-mt7620-phicomm_k2-v22.5-16m-squashfs-sysupgrade.bin
 #        echo "mt7621" > bin/openwrt-24.10.4-ramips-mt7621-phicomm_k2p-32m-squashfs-sysupgrade.bin
 #        echo "release" > release.txt
-
-    - name: create-release
-      uses: softprops/action-gh-release@master
-      env:
-        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-      with:
-        tag_name: ${{env.VERSION}}
-        body_path: release.txt
-        draft: false
-        prerelease: false
-        files: bin/*-squashfs-sysupgrade.bin
+#
+#    - name: create-release
+#      uses: softprops/action-gh-release@master
+#      env:
+#        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+#      with:
+#        tag_name: ${{env.VERSION}}
+#        body_path: release.txt
+#        draft: false
+#        prerelease: false
+#        files: bin/*-squashfs-sysupgrade.bin
 
     - name: delete-workflow-runs
       uses: Mattraks/delete-workflow-runs@main
