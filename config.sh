@@ -1,6 +1,6 @@
 #!/bin/bash
 
-## patch openwrt 24.10.4
+## patch openwrt
 cp -f patches/*.patch openwrt/feeds/telephony/libs/dahdi-linux/patches/
 
 ## create new device model

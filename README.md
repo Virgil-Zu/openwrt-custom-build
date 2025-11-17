@@ -22,24 +22,23 @@
 
 - 跟随 **OpenWrt** 版本更新
 
-	
+
+
 
 # 定制
 
 2025/11
 
-1. 定制目标 ` Phicomm K2P A1` 适配 **32MB** 容量Flash版本镜像  `mt7621_phicomm_k2p-32m.dts`
-2. 定制目标 `Phicomm K2 psg1218` 适配 **16MB** 容量Flash版本镜像 `mt7620a_phicomm_k2-v22.5-16m.dts`，需要 斐讯布局
-3. 内置简体中文语言包 `luci-i18n-base-zh-cn`
-4. 设置日志大小64  `log_size='64'`
-5. 设置时区为Asia/Shanghai  `timezone=Asia/Shanghai`
-6. 设置 opkg 源为 阿里云 `https://mirrors.aliyun.com/openwrt`
+1. 内置简体中文语言包 `luci-i18n-base-zh-cn`
+2. 设置日志大小64  `log_size='64'`
+3. 设置时区为Asia/Shanghai  `timezone=Asia/Shanghai`
+4. 设置 opkg 源为 阿里云 `https://mirrors.aliyun.com/openwrt`
 
 
 
 # 输出
 
-- 目标设备 `Phicomm K2P A1`，创建新的设备类型  **Phicomm K2P (32M)**
+- 目标设备 `Phicomm K2P A1`，创建新的设备类型  **Phicomm K2P (32M)**，对应斐讯 0xA0000 布局
 
   例如:
 
@@ -49,7 +48,7 @@
 
   
 
-- 目标设备 `Phicomm K2 psg1218` ，创建新的设备类型  **Phicomm K2 v22.5 or newer (16M)**
+- 目标设备 `Phicomm K2 psg1218` ，创建新的设备类型  **Phicomm K2 v22.5 or newer (16M)**，对应斐讯 0xA0000 布局
 
 	例如:
 	
