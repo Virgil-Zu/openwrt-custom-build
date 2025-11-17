@@ -59,7 +59,7 @@ while IFS= read -r line; do
         #echo "make..."
         #make -j$(nproc) V=s
 
-		cp -f openwrt/bin/targets/$part1/$part2/*-squashfs-sysupgrade.bin bin
+		cp -f openwrt/bin/targets/$arch/$soc/*-squashfs-sysupgrade.bin bin
 		cd ..
 
     else
