@@ -31,16 +31,16 @@ while IFS= read -r line; do
         echo "" > .config
         wget https://downloads.openwrt.org/releases/${VERSION#v}/targets/${arch}/${soc}/config.buildinfo -O .config
 
-        sed -i "/^[[:space:]]*CONFIG_TARGET_MULTI_PROFILE=/d" .config
         sed -i "/^[[:space:]]*CONFIG_TARGET_DEVICE_/d" .config
-        sed -i "/^[[:space:]]*CONFIG_DEVEL=/d" .config
-        sed -i "/^[[:space:]]*CONFIG_TARGET_PER_DEVICE_ROOTFS=/d" .config
-        sed -i "/^[[:space:]]*CONFIG_AUTOREMOVE=/d" .config
-        sed -i "/^[[:space:]]*CONFIG_IB=/d" .config
-        sed -i "/^[[:space:]]*CONFIG_MAKE_TOOLCHAIN=/d" .config
-        sed -i "/^[[:space:]]*CONFIG_SDK=/d" .config
-        sed -i "/^[[:space:]]*CONFIG_SDK_LLVM_BPF=/d" .config
-        sed -i "/^[[:space:]]*CONFIG_TARGET_ALL_PROFILES=/d" .config
+        sed -i "s/^[[:space:]]*CONFIG_TARGET_MULTI_PROFILE=y/# CONFIG_TARGET_MULTI_PROFILE is not set/g" .config
+        sed -i "s/^[[:space:]]*CONFIG_DEVEL=y/# CONFIG_DEVEL is not set/g" .config
+        sed -i "s/^[[:space:]]*CONFIG_TARGET_PER_DEVICE_ROOTFS=y/# CONFIG_TARGET_PER_DEVICE_ROOTFS is not set/g" .config
+        sed -i "s/^[[:space:]]*CONFIG_AUTOREMOVE=y/# CONFIG_AUTOREMOVE is not set/g" .config
+        sed -i "s/^[[:space:]]*CONFIG_IB=y/# CONFIG_IB is not set/g" .config
+        sed -i "s/^[[:space:]]*CONFIG_MAKE_TOOLCHAIN=y/# CONFIG_MAKE_TOOLCHAIN is not set/g" .config
+        sed -i "s/^[[:space:]]*CONFIG_SDK=y/# CONFIG_SDK is not set/g" .config
+        sed -i "s/^[[:space:]]*CONFIG_SDK_LLVM_BPF=y/# CONFIG_SDK_LLVM_BPF is not set/g" .config
+        sed -i "s/^[[:space:]]*CONFIG_TARGET_ALL_PROFILES=y/# CONFIG_TARGET_ALL_PROFILES is not set/g" .config
 
         sed -i "s|downloads.openwrt.org|mirrors.aliyun.com/openwrt|g" .config
         echo "- 设置 opkg 源为 阿里云 \`https://mirrors.aliyun.com/openwrt\`" >> "${RELEASE_FILE}"
@@ -56,11 +56,11 @@ while IFS= read -r line; do
         #cat .config
         make defconfig
 
-        echo "download depend..."
-        make download -j$(nproc)
+        #echo "download depend..."
+        #make download -j$(nproc)
         
-        echo "make..."
-        make -j$(nproc)
+        #echo "make..."
+        #make -j$(nproc)
 
 		cp -f openwrt/bin/targets/${arch}/${soc}/*-squashfs-sysupgrade.bin bin
 		cd ..
