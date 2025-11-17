@@ -6,8 +6,8 @@ name: openwrt-build-github-actions
 on:
   workflow_dispatch:
   push:
-    tags:
-      - "v*"
+#    tags:
+#      - "v*"
 
 jobs:
   build:
@@ -35,13 +35,13 @@ jobs:
         cd openwrt
         git checkout ${{env.VERSION}}
 
-    - name: update-feeds
-      working-directory: openwrt
-      run: ./scripts/feeds update -a
+#    - name: update-feeds
+#      working-directory: openwrt
+#      run: ./scripts/feeds update -a
 
-    - name: install-feeds
-      working-directory: openwrt
-      run: ./scripts/feeds install -a
+#    - name: install-feeds
+#      working-directory: openwrt
+#      run: ./scripts/feeds install -a
 
     - name: config-targets
       run: bash ./config.sh

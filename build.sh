@@ -31,7 +31,7 @@ while IFS= read -r line; do
         wget https://downloads.openwrt.org/releases/${VERSION#v}/targets/$arch/$soc/config.buildinfo -O .config
 
         sed -i "/^[[:space:]]*CONFIG_TARGET_MULTI_PROFILE=/d" .config
-        sed -i "/^[[:space:]]*CONFIG_TARGET_DEVICE_=/d" .config
+        sed -i "/^[[:space:]]*CONFIG_TARGET_DEVICE_/d" .config
         sed -i "/^[[:space:]]*CONFIG_DEVEL=/d" .config
         sed -i "/^[[:space:]]*CONFIG_TARGET_PER_DEVICE_ROOTFS=/d" .config
         sed -i "/^[[:space:]]*CONFIG_AUTOREMOVE=/d" .config
@@ -40,8 +40,8 @@ while IFS= read -r line; do
         sed -i "/^[[:space:]]*CONFIG_SDK=/d" .config
         sed -i "/^[[:space:]]*CONFIG_SDK_LLVM_BPF=/d" .config
         sed -i "/^[[:space:]]*CONFIG_TARGET_ALL_PROFILES=/d" .config
-        
-        sed -i "s#|downloads.openwrt.org|mirrors.aliyun.com/openwrt|g" .config
+
+        sed -i "s|downloads.openwrt.org|mirrors.aliyun.com/openwrt|g" .config
 
         echo "CONFIG_TARGET_$arch_$soc_DEVICE_$device=y" >> .config
         echo "CONFIG_LUCI_LANG_zh_Hans=y" >> .config
@@ -51,13 +51,13 @@ while IFS= read -r line; do
 
         cat .config
 
-        make defconfig
+        #make defconfig
 
-        echo "download depend..."
-        make download -j$(nproc) V=s
+        #echo "download depend..."
+        #make download -j$(nproc) V=s
         
-        echo "make..."
-        make -j$(nproc) V=s
+        #echo "make..."
+        #make -j$(nproc) V=s
 
 		cp -f openwrt/bin/targets/$part1/$part2/*-squashfs-sysupgrade.bin bin
 		cd ..
