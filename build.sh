@@ -28,7 +28,7 @@ while IFS= read -r line; do
         cd openwrt
 
         echo "" > .config
-        wget https://downloads.openwrt.org/releases/${VERSION#v}/targets/$arch/$soc/config.buildinfo -O .config
+        wget https://downloads.openwrt.org/releases/${VERSION#v}/targets/${arch}/${soc}/config.buildinfo -O .config
 
         sed -i "/^[[:space:]]*CONFIG_TARGET_MULTI_PROFILE=/d" .config
         sed -i "/^[[:space:]]*CONFIG_TARGET_DEVICE_/d" .config
@@ -43,7 +43,7 @@ while IFS= read -r line; do
 
         sed -i "s|downloads.openwrt.org|mirrors.aliyun.com/openwrt|g" .config
 
-        echo "CONFIG_TARGET_$arch_$soc_DEVICE_$device=y" >> .config
+        echo "CONFIG_TARGET_${arch}_${soc}_DEVICE_${device}=y" >> .config
         echo "CONFIG_LUCI_LANG_zh_Hans=y" >> .config
         echo "CONFIG_PACKAGE_luci-i18n-base-zh-cn=y" >> .config
         echo "CONFIG_PACKAGE_luci-i18n-firewall-zh-cn=y" >> .config
@@ -59,7 +59,7 @@ while IFS= read -r line; do
         #echo "make..."
         #make -j$(nproc) V=s
 
-		cp -f openwrt/bin/targets/$arch/$soc/*-squashfs-sysupgrade.bin bin
+		cp -f openwrt/bin/targets/${arch}/${soc}/*-squashfs-sysupgrade.bin bin
 		cd ..
 
     else
