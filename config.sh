@@ -14,6 +14,8 @@ sed -i "s|log_size='128'|log_size='64'|g" openwrt/package/base-files/files/bin/c
 
 echo "- 设置时区为Asia/Shanghai \`timezone=Asia/Shanghai\`" >> "${RELEASE_FILE}"
 echo "- 设置日志大小64 \`log_size='64'\`" >> "${RELEASE_FILE}"
+echo "- 设置 opkg 源为 阿里云 \`https://mirrors.aliyun.com/openwrt\`" >> "${RELEASE_FILE}"
+echo "- 内置简体中文语言包 \`luci-i18n-base-zh-cn\`" >> "${RELEASE_FILE}"
 
 ## create new device model
 # phicomm_k2p-32m
@@ -40,4 +42,4 @@ sed -i 's|TARGET_DEVICES += phicomm_k2-v22.5|TARGET_DEVICES += phicomm_k2-v22.5\
 
 echo "- 添加设备 \`ramips/mt7620a/phicomm_k2-v22.5-16m\`" >> "${RELEASE_FILE}"
 
-touch openwrt/target/linux/ramips/Makefile
+#touch openwrt/target/linux/ramips/Makefile

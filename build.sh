@@ -2,7 +2,6 @@
 set -e
 echo "build target start ..."
 
-RELEASE_FILE="release.txt"
 INPUT_FILE="targets.txt"
 VERSION=$(cat version.txt)
 
@@ -44,7 +43,6 @@ while IFS= read -r line; do
         sed -i "s/^[[:space:]]*CONFIG_COLLECT_KERNEL_DEBUG=y/# CONFIG_COLLECT_KERNEL_DEBUG is not set/g" .config
 
         sed -i "s|downloads.openwrt.org|mirrors.aliyun.com/openwrt|g" .config
-        echo "- 设置 opkg 源为 阿里云 \`https://mirrors.aliyun.com/openwrt\`" >> "${RELEASE_FILE}"
 
         echo "# CONFIG_KERNEL_DEBUG_INFO is not set" >> .config
         echo "# CONFIG_KERNEL_DEBUG_INFO_REDUCED is not set" >> .config
@@ -57,8 +55,6 @@ while IFS= read -r line; do
         echo "CONFIG_PACKAGE_luci-i18n-firewall-zh-cn=y" >> .config
         echo "CONFIG_PACKAGE_luci-i18n-package-manager-zh-cn=y" >> .config
 
-        echo "- 内置简体中文语言包 \`luci-i18n-base-zh-cn\`" >> "${RELEASE_FILE}"
-
         echo "config..."
         make defconfig
         #cat .config
@@ -69,10 +65,11 @@ while IFS= read -r line; do
         echo "make..."
         make -j$(nproc)
 
-        df -h
-		tree -L 3 bin/targets
-		cp -f bin/targets/${arch}/${soc}/*-squashfs-sysupgrade.bin ../bin
 		cd ..
+		
+        df -h
+		tree -L 3 openwrt/bin/targets
+		cp -f openwrt/bin/targets/${arch}/${soc}/*-squashfs-sysupgrade.bin bin
 
     else
         echo "WARN: line '${line}' is invalid, skip"

@@ -2,13 +2,12 @@
 
 **This Repo is intended for users in Chinese Mainland, so it no engish readme.md**
 
-> [!CAUTION]
-> 开发中，代码不可运行
+
 
 # 目标
 
 - 针对` Phicomm K2P A1`和 `Phicomm K2 psg1218` 两种设备编译定制版本的 OpenWrt
-- 尽可能减少改动，编译选项和官方版本保持一致（即使官方版本的缺陷也保留），编译配置基于官方发布的  `config.buildinfo`
+- 尽可能减少改动，编译选项和官方版本保持一致（即使官方版本的缺陷也保留），编译配置基于官方发布的不同设备的  `config.buildinfo`
 
 - 使用GitHub Action自定义编译 OpenWrt
 
@@ -43,7 +42,7 @@
   例如:
 
   ``````shell
-  openwrt-24.10.4-ramips-mt7621-phicomm_k2p-32m-squashfs-sysupgrade.bin
+  openwrt-xx.xx.x-ramips-mt7621-phicomm_k2p-32m-squashfs-sysupgrade.bin
   ``````
 
   
@@ -53,7 +52,7 @@
 	例如:
 	
 	```shell
-	openwrt-24.10.4-ramips-mt7620-phicomm_k2-v22.5-16m-squashfs-sysupgrade.bin
+	openwrt-xx.xx.x-ramips-mt7620-phicomm_k2-v22.5-16m-squashfs-sysupgrade.bin
 	```
 	
 	

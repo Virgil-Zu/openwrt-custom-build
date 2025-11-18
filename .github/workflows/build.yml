@@ -5,7 +5,7 @@ name: openwrt-build-github-actions
 
 on:
   workflow_dispatch:
-  push:
+#  push:
 #    tags:
 #      - "v*"
 
