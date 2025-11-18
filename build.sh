@@ -21,6 +21,8 @@ while IFS= read -r line; do
         continue
     fi
 
+	echo "build '${line}' ..."
+
     IFS='/' read -r arch soc device <<< "${line}"
 
     if [ -n "${arch}" ] && [ -n "${soc}" ] && [ -n "${device}" ]; then
@@ -28,7 +30,7 @@ while IFS= read -r line; do
         cd openwrt
 
         echo "" > .config
-        wget https://downloads.openwrt.org/releases/${VERSION#v}/targets/${arch}/${soc}/config.buildinfo -O .config
+        wget "https://downloads.openwrt.org/releases/${VERSION#v}/targets/${arch}/${soc}/config.buildinfo" -O .config
 
         sed -i "/^[[:space:]]*CONFIG_TARGET_DEVICE_/d" .config
         sed -i "s/^[[:space:]]*CONFIG_TARGET_MULTI_PROFILE=y/# CONFIG_TARGET_MULTI_PROFILE is not set/g" .config
@@ -55,6 +57,26 @@ while IFS= read -r line; do
         echo "CONFIG_PACKAGE_luci-i18n-firewall-zh-cn=y" >> .config
         echo "CONFIG_PACKAGE_luci-i18n-package-manager-zh-cn=y" >> .config
 
+		manifest=$(wget -q -O - "https://downloads.openwrt.org/releases/${VERSION#v}/targets/${arch}/${soc}/openwrt-${VERSION#v}-${arch}-${soc}.manifest")
+		if [ -z "$manifest" ]; then
+			echo "wget manifest error"
+			exit 1
+		fi
+		
+		kernel=$(echo "$manifest" | grep "^kernel - ")
+		if [ -z "$kernel" ]; then
+			echo "can not find 'kernel' line"
+			exit 1
+		fi
+		
+		#md5_value=$(echo "$kernel" | sed -n 's/.*~\([0-9a-fA-F]*\)-.*/\1/p')
+		md5_value=$(echo "$kernel" | sed -n 's/.*~\(\w*\)-.*/\1/p')
+		if [ -z "$md5_value" ]; then
+			echo "fetch 'md5' failed"
+			exit 1
+		fi
+		echo $md5_value > .vermagic
+		
         echo "config..."
         make defconfig
         #cat .config
