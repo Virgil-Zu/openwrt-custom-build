@@ -61,15 +61,17 @@ while IFS= read -r line; do
 
         echo "config..."
         make defconfig
-        cat .config
+        #cat .config
 
         echo "download depend..."
-        make download -j$(nproc)
+        make download -j$(nproc) V=s
         
         echo "make..."
-        make -j$(nproc)
+        make -j$(nproc) V=s
 
-		cp -f openwrt/bin/targets/${arch}/${soc}/*-squashfs-sysupgrade.bin bin
+        df -h
+		tree -L 3 bin/targets
+		cp -f bin/targets/${arch}/${soc}/*-squashfs-sysupgrade.bin bin
 		cd ..
 
     else
