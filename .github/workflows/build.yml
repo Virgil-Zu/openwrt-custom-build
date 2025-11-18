@@ -60,6 +60,12 @@ jobs:
     - name: build-targets
       run: bash ./build.sh
 
+    - name: summary-information
+      run: |
+        tree -L 3 openwrt/bin/targets
+        ls -l bin
+        df -h
+
     - name: create-release
       uses: softprops/action-gh-release@master
       env:

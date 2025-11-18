@@ -64,14 +64,14 @@ while IFS= read -r line; do
         #cat .config
 
         echo "download depend..."
-        make download -j$(nproc) V=s
+        make download -j$(nproc)
         
         echo "make..."
-        make -j$(nproc) V=s
+        make -j$(nproc)
 
         df -h
 		tree -L 3 bin/targets
-		cp -f bin/targets/${arch}/${soc}/*-squashfs-sysupgrade.bin bin
+		cp -f bin/targets/${arch}/${soc}/*-squashfs-sysupgrade.bin ../bin
 		cd ..
 
     else
@@ -81,6 +81,3 @@ while IFS= read -r line; do
 done < "${INPUT_FILE}"
 
 echo "build targets done."
-tree -L 3 openwrt/bin/targets
-ls -l bin
-#cat "${RELEASE_FILE}"
