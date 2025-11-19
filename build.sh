@@ -30,7 +30,7 @@ while IFS= read -r line; do
 		cd openwrt
 
 		echo "" > .config
-		wget "https://downloads.openwrt.org/releases/${VERSION#v}/targets/${arch}/${soc}/config.buildinfo" -O .config
+		wget "https://downloads.openwrt.org/releases/${VERSION#v}/targets/${arch}/${soc}/config.buildinfo" -q -O .config
 
 		sed -i "/^[[:space:]]*CONFIG_TARGET_DEVICE_/d" .config
 		sed -i "s/^[[:space:]]*CONFIG_TARGET_MULTI_PROFILE=y/# CONFIG_TARGET_MULTI_PROFILE is not set/g" .config
