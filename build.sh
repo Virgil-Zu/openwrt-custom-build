@@ -29,6 +29,8 @@ while IFS= read -r line; do
 		
 		cd openwrt
 
+		make targetclean # clean Compiled binaries: firmware, kernel, packages / Toolchain (target-specific)
+		
 		echo "" > .config
 		wget "https://downloads.openwrt.org/releases/${VERSION#v}/targets/${arch}/${soc}/config.buildinfo" -q -O .config
 
@@ -36,7 +38,6 @@ while IFS= read -r line; do
 		sed -i "s/^[[:space:]]*CONFIG_TARGET_MULTI_PROFILE=y/# CONFIG_TARGET_MULTI_PROFILE is not set/g" .config
 		sed -i "s/^[[:space:]]*CONFIG_DEVEL=y/# CONFIG_DEVEL is not set/g" .config
 		sed -i "s/^[[:space:]]*CONFIG_TARGET_PER_DEVICE_ROOTFS=y/# CONFIG_TARGET_PER_DEVICE_ROOTFS is not set/g" .config
-		sed -i "s/^[[:space:]]*CONFIG_AUTOREMOVE=y/# CONFIG_AUTOREMOVE is not set/g" .config
 		sed -i "s/^[[:space:]]*CONFIG_IB=y/# CONFIG_IB is not set/g" .config
 		sed -i "s/^[[:space:]]*CONFIG_MAKE_TOOLCHAIN=y/# CONFIG_MAKE_TOOLCHAIN is not set/g" .config
 		sed -i "s/^[[:space:]]*CONFIG_SDK=y/# CONFIG_SDK is not set/g" .config
