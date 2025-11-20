@@ -4,7 +4,7 @@ set -e
 RELEASE_FILE="release.txt"
 
 ## patch openwrt
-cp -f patches/*.patch openwrt/feeds/telephony/libs/dahdi-linux/patches/
+#cp -f patches/*.patch openwrt/feeds/telephony/libs/dahdi-linux/patches/
 
 echo "" > "${RELEASE_FILE}"
 
