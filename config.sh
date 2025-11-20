@@ -25,7 +25,7 @@ sed -i 's|model = "Phicomm K2P"|model = "Phicomm K2P (32M)"|' openwrt/target/lin
 sed -i 's|reg = <0xa0000 0xf60000>|reg = <0xa0000 0x1fb0000>|' openwrt/target/linux/ramips/dts/mt7621_phicomm_k2p-32m.dts
 #cat openwrt/target/linux/ramips/dts/mt7621_phicomm_k2p-32m.dts
 
-sed -i 's|TARGET_DEVICES += phicomm_k2p|TARGET_DEVICES += phicomm_k2p\n\ndefine Device/phicomm_k2p-32m\n  $(Device/phicomm_k2p)\n  IMAGE_SIZE := 32128k\n  DEVICE_VARIANT := 32M\n  SUPPORTED_DEVICES += k2p-32m\nendef\nTARGET_DEVICES += phicomm_k2p-32m|' openwrt/target/linux/ramips/image/mt7621.mk
+#sed -i 's|TARGET_DEVICES += phicomm_k2p|TARGET_DEVICES += phicomm_k2p\n\ndefine Device/phicomm_k2p-32m\n  $(Device/phicomm_k2p)\n  IMAGE_SIZE := 32128k\n  DEVICE_VARIANT := 32M\n  SUPPORTED_DEVICES += k2p-32m\nendef\nTARGET_DEVICES += phicomm_k2p-32m|' openwrt/target/linux/ramips/image/mt7621.mk
 #cat openwrt/target/linux/ramips/image/mt7621.mk
 
 echo "- 添加设备 \`ramips/mt7621/phicomm_k2p-32m\`" >> "${RELEASE_FILE}"
@@ -37,7 +37,7 @@ sed -i 's|model = "Phicomm K2 v22.5 or newer"|model = "Phicomm K2 v22.5 or newer
 sed -i 's|reg = <0xa0000 0x760000>|reg = <0xa0000 0xf60000>|g' openwrt/target/linux/ramips/dts/mt7620a_phicomm_k2-v22.5-16m.dts
 #cat openwrt/target/linux/ramips/dts/mt7620a_phicomm_k2-v22.5-16m.dts
 
-sed -i 's|TARGET_DEVICES += phicomm_k2-v22.5|TARGET_DEVICES += phicomm_k2-v22.5\n\ndefine Device/phicomm_k2-v22.5-16m\n  $(Device/phicomm_k2-v22.5)\n  IMAGE_SIZE := 15744k\n  DEVICE_VARIANT += 16M\n  SUPPORTED_DEVICES += k2-v22.5-16m\nendef\nTARGET_DEVICES += phicomm_k2-v22.5-16m|' openwrt/target/linux/ramips/image/mt7620.mk
+#sed -i 's|TARGET_DEVICES += phicomm_k2-v22.5|TARGET_DEVICES += phicomm_k2-v22.5\n\ndefine Device/phicomm_k2-v22.5-16m\n  $(Device/phicomm_k2-v22.5)\n  IMAGE_SIZE := 15744k\n  DEVICE_VARIANT += 16M\n  SUPPORTED_DEVICES += k2-v22.5-16m\nendef\nTARGET_DEVICES += phicomm_k2-v22.5-16m|' openwrt/target/linux/ramips/image/mt7620.mk
 #cat openwrt/target/linux/ramips/image/mt7620.mk
 
 echo "- 添加设备 \`ramips/mt7620a/phicomm_k2-v22.5-16m\`" >> "${RELEASE_FILE}"
@@ -46,7 +46,7 @@ echo "- 添加设备 \`ramips/mt7620a/phicomm_k2-v22.5-16m\`" >> "${RELEASE_FILE
 
 #copy kernel MD5
 sed -i 's#$(LINUX_DIR)/.vermagic#$(LINUX_DIR)/.vermagic\n	cp $(TOPDIR)/.vermagic $(LINUX_DIR)/.vermagic#' openwrt/include/kernel-defaults.mk
-cat openwrt/include/kernel-defaults.mk
+#cat openwrt/include/kernel-defaults.mk
 
 sed -i 's#$(SCRIPT_DIR)/kconfig.pl $(LINUX_DIR)/.config | $(MKHASH) md5#cat $(LINUX_DIR)/.vermagic#' openwrt/package/kernel/linux/Makefile
-cat openwrt/package/kernel/linux/Makefile
+#cat openwrt/package/kernel/linux/Makefile

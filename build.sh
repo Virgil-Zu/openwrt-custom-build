@@ -87,7 +87,7 @@ while IFS= read -r line; do
 		make download -j$(nproc)
 
 		echo "make..."
-		make -j$(nproc)
+		make -j1 V=s #$(nproc)
 
 		cd ..
 
