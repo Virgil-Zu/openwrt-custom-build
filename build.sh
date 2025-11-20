@@ -78,25 +78,25 @@ while IFS= read -r line; do
 			echo "fetch 'md5' failed"
 			exit 1
 		fi
-		echo "kernel MD5:${md5_value}"
+		echo "kernel MD5=${md5_value}"
 		echo $md5_value > .vermagic
 
 		echo "config..."
-		#make defconfig
+		#?make defconfig
 		#cat .config
 
 		echo "download depend..."
-		#make download -j$(nproc)
+		#?make download -j$(nproc)
 
 		echo "make..."
-		#make -j$(($(nproc)+1))
+		#?#make -j$(($(nproc)+1))
 
 		rm -rf ./tmp
 		cd ..
 
 		df -h
 		tree -L 3 openwrt/bin/targets
-		cp -f openwrt/bin/targets/${arch}/${soc}/*-squashfs-sysupgrade.bin bin
+		#?cp -f openwrt/bin/targets/${arch}/${soc}/*-squashfs-sysupgrade.bin bin
 
 	else
 		echo "WARN: line '${line}' is invalid, skip"
