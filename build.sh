@@ -29,8 +29,7 @@ while IFS= read -r line; do
 		
 		cd openwrt
 
-		make targetclean # clean Compiled binaries: firmware, kernel, packages / Toolchain (target-specific)
-		
+		#make dirclean 
 		echo "" > .config
 		wget "https://downloads.openwrt.org/releases/${VERSION#v}/targets/${arch}/${soc}/config.buildinfo" -q -O .config
 
@@ -87,7 +86,7 @@ while IFS= read -r line; do
 		make download -j$(nproc)
 
 		echo "make..."
-		make -j1 V=s #$(nproc)
+		make -j1 V=s #$(($(nproc)+1))
 
 		cd ..
 
