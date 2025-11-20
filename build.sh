@@ -95,7 +95,7 @@ while IFS= read -r line; do
 		cd ..
 
 		df -h
-		tree -L 3 openwrt/bin/targets
+		#?tree -L 3 openwrt/bin/targets
 		#?cp -f openwrt/bin/targets/${arch}/${soc}/*-squashfs-sysupgrade.bin bin
 
 	else
