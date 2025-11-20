@@ -71,21 +71,21 @@ while IFS='/' read -r target sub_target device || [[ -n "$target" ]]; do
 		echo $md5_value > .vermagic
 
 		echo "config..."
-		#?make defconfig
+		make defconfig
 		#cat .config
 
 		echo "download depend..."
-		#?make download -j$(nproc)
+		make download -j$(nproc)
 
 		echo "make..."
-		#?#make -j$(($(nproc)+1))
+		#make -j$(($(nproc)+1))
 
 		rm -rf ./tmp
 		cd ..
 
 		df -h
-		#?tree -L 3 openwrt/bin/targets
-		#?cp -f openwrt/bin/targets/${target}/${sub_target}/*-squashfs-sysupgrade.bin bin
+		tree -L 3 openwrt/bin/targets
+		cp -f openwrt/bin/targets/${target}/${sub_target}/*-squashfs-sysupgrade.bin bin
 
 	else
 		echo "WARN: line is invalid, skip"
