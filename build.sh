@@ -9,10 +9,10 @@ if [ ! -f "${INPUT_FILE}" ]; then
 	echo "error: dir [${INPUT_FILE}] not exist"
 	exit 1
 fi
-ls -l
+
 echo "loop build targets ..."
 
-while IFS='/' read -r target sub_target device; do
+while IFS='/' read -r target sub_target device || [[ -n "$target" ]]; do
 
     [[ "${target}" =~ ^[[:space:]]*$ || "${target}" =~ ^[[:space:]]*# ]] && continue
 
