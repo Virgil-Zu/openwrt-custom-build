@@ -12,23 +12,18 @@ fi
 ls -l
 echo "loop build targets ..."
 
-while IFS= read -r line; do
-	if [[ "${line}" =~ ^[[:space:]]*# ]]; then
-		continue
-	fi
+while IFS='/' read -r arch soc device; do
 
-	if [ -z "$line" ]; then
-		continue
-	fi
+    if [ -z "$(echo -e "$arch" | xargs)" ]; then
+        continue
+    fi
 
-	echo "build '${line}' ..."
+	if [[ "$arch" =~ ^[[:space:]]*# ]]; then
+        continue
+    fi
 
-	IFS='/' read -r arch soc device <<< "${line}"
+	echo "build '${arch}/${soc}/${device}' ..."
 
-	echo "arch '${arch}' ..."
-	echo "soc '${soc}' ..."
-	echo "device '${device}' ..."
-	
 	if [ -n "${arch}" ] && [ -n "${soc}" ] && [ -n "${device}" ]; then
 		
 		cd openwrt
