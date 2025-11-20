@@ -12,24 +12,18 @@ fi
 ls -l
 echo "loop build targets ..."
 
-while IFS='/' read -r arch soc device; do
+while IFS='/' read -r target sub_target device; do
 
-    if [ -z "$(echo -e "$arch" | xargs)" ]; then
-        continue
-    fi
+    [[ "${target}" =~ ^[[:space:]]*$ || "${target}" =~ ^[[:space:]]*# ]] && continue
 
-	if [[ "$arch" =~ ^[[:space:]]*# ]]; then
-        continue
-    fi
+	echo "build '${target}/${sub_target}/${device}' ..."
 
-	echo "build '${arch}/${soc}/${device}' ..."
-
-	if [ -n "${arch}" ] && [ -n "${soc}" ] && [ -n "${device}" ]; then
+	if [ -n "${target}" ] && [ -n "${sub_target}" ] && [ -n "${device}" ]; then
 		
 		cd openwrt
 
 		echo "" > .config
-		wget "https://downloads.openwrt.org/releases/${VERSION#v}/targets/${arch}/${soc}/config.buildinfo" -q -O .config
+		wget "https://downloads.openwrt.org/releases/${VERSION#v}/targets/${target}/${sub_target}/config.buildinfo" -q -O .config
 
 		sed -i "/^[[:space:]]*CONFIG_TARGET_DEVICE_/d" .config
 		sed -i "s/^[[:space:]]*CONFIG_TARGET_MULTI_PROFILE=y/# CONFIG_TARGET_MULTI_PROFILE is not set/g" .config
@@ -49,13 +43,13 @@ while IFS='/' read -r arch soc device; do
 		echo "# CONFIG_KERNEL_DEBUG_KERNEL is not set" >> .config
 		echo "# CONFIG_KERNEL_DEBUG_FS is not set" >> .config
 		echo "# CONFIG_TARGET_ROOTFS_INITRAMFS is not set" >> .config
-		echo "CONFIG_TARGET_${arch}_${soc}_DEVICE_${device}=y" >> .config
+		echo "CONFIG_TARGET_${target}_${sub_target}_DEVICE_${device}=y" >> .config
 		echo "CONFIG_LUCI_LANG_zh_Hans=y" >> .config
 		echo "CONFIG_PACKAGE_luci-i18n-base-zh-cn=y" >> .config
 		echo "CONFIG_PACKAGE_luci-i18n-firewall-zh-cn=y" >> .config
 		echo "CONFIG_PACKAGE_luci-i18n-package-manager-zh-cn=y" >> .config
 
-		manifest=$(wget -q -O - "https://downloads.openwrt.org/releases/${VERSION#v}/targets/${arch}/${soc}/openwrt-${VERSION#v}-${arch}-${soc}.manifest")
+		manifest=$(wget -q -O - "https://downloads.openwrt.org/releases/${VERSION#v}/targets/${target}/${sub_target}/openwrt-${VERSION#v}-${target}-${sub_target}.manifest")
 		if [ -z "$manifest" ]; then
 			echo "wget manifest error"
 			exit 1
@@ -91,10 +85,10 @@ while IFS='/' read -r arch soc device; do
 
 		df -h
 		#?tree -L 3 openwrt/bin/targets
-		#?cp -f openwrt/bin/targets/${arch}/${soc}/*-squashfs-sysupgrade.bin bin
+		#?cp -f openwrt/bin/targets/${target}/${sub_target}/*-squashfs-sysupgrade.bin bin
 
 	else
-		echo "WARN: line '${line}' is invalid, skip"
+		echo "WARN: line is invalid, skip"
 	fi
 
 done < "${INPUT_FILE}"
