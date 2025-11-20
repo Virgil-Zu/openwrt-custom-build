@@ -25,11 +25,14 @@ while IFS= read -r line; do
 
 	IFS='/' read -r arch soc device <<< "${line}"
 
+	echo "arch '${arch}' ..."
+	echo "soc '${soc}' ..."
+	echo "device '${device}' ..."
+	
 	if [ -n "${arch}" ] && [ -n "${soc}" ] && [ -n "${device}" ]; then
 		
 		cd openwrt
 
-		#make dirclean 
 		echo "" > .config
 		wget "https://downloads.openwrt.org/releases/${VERSION#v}/targets/${arch}/${soc}/config.buildinfo" -q -O .config
 
@@ -79,15 +82,16 @@ while IFS= read -r line; do
 		echo $md5_value > .vermagic
 
 		echo "config..."
-		make defconfig
+		#make defconfig
 		#cat .config
 
 		echo "download depend..."
-		make download -j$(nproc)
+		#make download -j$(nproc)
 
 		echo "make..."
-		make -j1 V=s #$(($(nproc)+1))
+		#make -j$(($(nproc)+1))
 
+		rm -rf ./tmp
 		cd ..
 
 		df -h

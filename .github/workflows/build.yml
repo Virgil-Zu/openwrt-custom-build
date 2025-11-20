@@ -46,13 +46,13 @@ jobs:
         cd openwrt
         git checkout ${{env.VERSION}}
 
-    - name: update-feeds
-      working-directory: openwrt
-      run: ./scripts/feeds update -a
-
-    - name: install-feeds
-      working-directory: openwrt
-      run: ./scripts/feeds install -a
+#    - name: update-feeds
+#      working-directory: openwrt
+#      run: ./scripts/feeds update -a
+#
+#    - name: install-feeds
+#      working-directory: openwrt
+#      run: ./scripts/feeds install -a
 
     - name: config-targets
       run: bash ./config.sh
