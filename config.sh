@@ -22,7 +22,7 @@ echo "- 内置简体中文语言包 \`luci-i18n-base-zh-cn\`" >> "${RELEASE_FILE
 cp -f openwrt/target/linux/ramips/dts/mt7621_phicomm_k2p.dts openwrt/target/linux/ramips/dts/mt7621_phicomm_k2p-32m.dts
 sed -i 's|compatible = "phicomm,k2p"|compatible = "phicomm,k2p-32m", "phicomm,k2p"|' openwrt/target/linux/ramips/dts/mt7621_phicomm_k2p-32m.dts
 sed -i 's|model = "Phicomm K2P"|model = "Phicomm K2P (32M)"|' openwrt/target/linux/ramips/dts/mt7621_phicomm_k2p-32m.dts
-sed -i 's|reg = <0xa0000 0xf60000>|reg = <0xa0000 0x1fb0000>|' openwrt/target/linux/ramips/dts/mt7621_phicomm_k2p-32m.dts
+sed -i 's|reg = <0xa0000 0xf60000>|reg = <0xa0000 0x1f60000>|' openwrt/target/linux/ramips/dts/mt7621_phicomm_k2p-32m.dts
 #cat openwrt/target/linux/ramips/dts/mt7621_phicomm_k2p-32m.dts
 
 sed -i 's|TARGET_DEVICES += phicomm_k2p|TARGET_DEVICES += phicomm_k2p\n\ndefine Device/phicomm_k2p-32m\n  $(Device/phicomm_k2p)\n  IMAGE_SIZE := 32128k\n  DEVICE_VARIANT := 32M\n  SUPPORTED_DEVICES += k2p-32m\nendef\nTARGET_DEVICES += phicomm_k2p-32m|' openwrt/target/linux/ramips/image/mt7621.mk
