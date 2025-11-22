@@ -45,8 +45,8 @@ echo "- 添加设备 \`ramips/mt7620a/phicomm_k2-v22.5-16m\`" >> "${RELEASE_FILE
 #touch openwrt/target/linux/ramips/Makefile
 
 #copy kernel MD5
-sed -i 's#$(LINUX_DIR)/.vermagic#$(LINUX_DIR)/.vermagic\n	cp $(TOPDIR)/.vermagic $(LINUX_DIR)/.vermagic#' openwrt/include/kernel-defaults.mk
+#sed -i 's#$(LINUX_DIR)/.vermagic#$(LINUX_DIR)/.vermagic\n	cp $(TOPDIR)/.vermagic $(LINUX_DIR)/.vermagic#' openwrt/include/kernel-defaults.mk
 #cat openwrt/include/kernel-defaults.mk
 
-sed -i 's#$(SCRIPT_DIR)/kconfig.pl $(LINUX_DIR)/.config | $(MKHASH) md5#cat $(LINUX_DIR)/.vermagic#' openwrt/package/kernel/linux/Makefile
+sed -i 's#$(SCRIPT_DIR)/kconfig.pl $(LINUX_DIR)/.config | $(MKHASH) md5#cat $(TOPDIR)/.vermagic#' openwrt/package/kernel/linux/Makefile
 #cat openwrt/package/kernel/linux/Makefile
