@@ -58,6 +58,7 @@ jobs:
       run: bash ./config.sh
 
     - name: build-targets
+      id: build-step
       run: bash ./build.sh
 
     - name: summary-information
@@ -66,7 +67,18 @@ jobs:
         ls -l bin
         df -h
 
+    - name: upload-artifact
+      if: github.ref_type == 'branch' && success(steps.build-step)
+      uses: actions/upload-artifact@main
+      env:
+        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      with:
+        name: openwrt-${{env.VERSION}}
+        path: bin/*-squashfs-sysupgrade.bin
+        retention-days: 3
+
     - name: create-release
+      if: github.ref_type == 'tag' && success(steps.build-step)
       uses: softprops/action-gh-release@master
       env:
         GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}

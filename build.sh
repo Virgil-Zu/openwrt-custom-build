@@ -14,7 +14,7 @@ echo "loop build targets ..."
 
 while IFS='/' read -r target sub_target device || [[ -n "$target" ]]; do
 
-    [[ "${target}" =~ ^[[:space:]]*$ || "${target}" =~ ^[[:space:]]*# ]] && continue
+	[[ "${target}" =~ ^[[:space:]]*$ || "${target}" =~ ^[[:space:]]*# ]] && continue
 
 	echo "build '${target}/${sub_target}/${device}' ..."
 

@@ -6,7 +6,14 @@
 
 # 目标
 
-- 针对` Phicomm K2P A1`和 `Phicomm K2 psg1218` 两种设备编译定制版本的 OpenWrt
+- 针对以下设备编译定制版本的 OpenWrt，主要满足修改Flash和SDRAM之后的固件
+
+  `tl-wr703n v1.6`
+
+  ` Phicomm K2P A1`
+
+  `Phicomm K2 psg1218`
+
 - 尽可能减少改动，编译选项和官方版本保持一致（即使官方版本的缺陷也保留），编译配置基于官方发布的不同设备的  `config.buildinfo`
 
 - 使用GitHub Action自定义编译 OpenWrt
@@ -36,6 +43,16 @@
 
 
 # 输出
+
+- 目标设备 `tl-wr703n v1.6`，创建新的设备类型  **Phicomm K2P (32M)**
+
+  例如:
+
+  ```
+  openwrt-xx.xx.x-ramips-mt7621-phicomm_k2p-32m-squashfs-sysupgrade.bin
+  ```
+
+  
 
 - 目标设备 `Phicomm K2P A1`，创建新的设备类型  **Phicomm K2P (32M)**，对应斐讯 0xA0000 布局
 

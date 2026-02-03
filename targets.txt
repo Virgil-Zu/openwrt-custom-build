@@ -1,2 +1,3 @@
-ramips/mt7620/phicomm_k2-v22.5-16m
-ramips/mt7621/phicomm_k2p-32m
+#ramips/mt7620/phicomm_k2-v22.5-16m
+#ramips/mt7621/phicomm_k2p-32m
+ath79/generic/tplink_tl-wr703n-16M
