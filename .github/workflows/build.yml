@@ -68,7 +68,7 @@ jobs:
         df -h
 
     - name: upload-artifact
-      if: github.ref_type == 'branch' && success(steps.build-step)
+      if: github.ref_type == 'branch' && steps.build-step.conclusion == 'success'
       uses: actions/upload-artifact@main
       env:
         GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
@@ -78,7 +78,7 @@ jobs:
         retention-days: 3
 
     - name: create-release
-      if: github.ref_type == 'tag' && success(steps.build-step)
+      if: github.ref_type == 'tag' && steps.build-step.conclusion == 'success'
       uses: softprops/action-gh-release@master
       env:
         GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
