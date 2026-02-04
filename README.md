@@ -44,12 +44,12 @@
 
 # 输出
 
-- 目标设备 `tl-wr703n v1.6`，创建新的设备类型  **Phicomm K2P (32M)**
+- 目标设备 `tl-wr703n v1.6`，创建新的设备类型  **tl-wr703n (16M)**
 
   例如:
 
   ```
-  openwrt-xx.xx.x-ramips-mt7621-phicomm_k2p-32m-squashfs-sysupgrade.bin
+  openwrt-xx.xx.x-ath79-generic-tplink_tl-wr703n-16M-squashfs-sysupgrade.bin
   ```
 
   

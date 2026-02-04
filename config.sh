@@ -24,6 +24,7 @@ sed -i 's#$(SCRIPT_DIR)/kconfig.pl $(LINUX_DIR)/.config | $(MKHASH) md5#cat $(TO
 ####################
 #*** create new device model
 target_dts=openwrt/target/linux/ath79/dts/ar9331_tplink_tl-wr703n-16m.dts
+ls -l openwrt/target/linux/ath79/dts
 cp -f openwrt/target/linux/ath79/dts/ar9331_tplink_tl-wr703n.dts $(target_dts)
 sed -i 's|compatible = "tplink,tl-wr703n"|compatible = "tplink,tl-wr703n-16m", "tplink,tl-wr703n"|' $(target_dts)
 sed -i 's|model = "TP-Link TL-WR703N"|model = "TP-Link TL-WR703N (16M)"|' $(target_dts)
