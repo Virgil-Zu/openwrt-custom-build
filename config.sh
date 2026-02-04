@@ -28,15 +28,19 @@ cp -f openwrt/target/linux/ath79/dts/ar9331_tplink_tl-wr703n.dts "${target_dts}"
 sed -i 's|compatible = "tplink,tl-wr703n"|compatible = "tplink,tl-wr703n-16m", "tplink,tl-wr703n"|' "${target_dts}"
 sed -i 's|model = "TP-Link TL-WR703N"|model = "TP-Link TL-WR703N (16M)"|' "${target_dts}"
 cat <<EOF >> "${target_dts}"
-&flash@0 {
-	partition@20000 {
-		label = "firmware";
-		reg = <0x20000 0xfc0000>;
-	};
-	partition@3f0000 {
-		label = "art";
-		reg = <0xfe0000 0x020000>;
-		read-only;
+&spi {
+	flash@0 {
+        partitions {
+			partition@20000 {
+				label = "firmware";
+				reg = <0x20000 0xfd0000>;
+			};
+			partition@ff0000 {
+				label = "art";
+				reg = <0xff0000 0x100000>;
+				read-only;
+			};
+		};
 	};
 };
 EOF
@@ -46,9 +50,10 @@ cat <<EOF >> openwrt/target/linux/ath79/image/generic.mk
 define Device/tplink_tl-wr703n-16m
   \$(Device/tplink-4mlzma)
   IMAGE_SIZE := 16256k
+  DEVICE_VENDOR := TP-Link
   DEVICE_MODEL := TL-WR703N
-  DEVICE_VARIANT := 16M
-  DEVICE_PACKAGES += kmod-usb-core kmod-usb2 kmod-usb-ohci
+  DEVICE_VARIANT := v1.6 16M
+  DEVICE_PACKAGES += kmod-usb-core kmod-usb2 kmod-usb-ohci kmod-ath9k wpad-basic-mbedtls
   TPLINK_HWID := 0x07030101
   DEVICE_DTS := ar9331_tplink_tl-wr703n-16m
   CONSOLE := ttyATH0,115200
@@ -70,7 +75,7 @@ cat <<EOF >> openwrt/target/linux/ramips/image/mt7621.mk
 define Device/phicomm_k2p-32m
   \$(Device/phicomm_k2p)
   IMAGE_SIZE := 32128k
-  DEVICE_VARIANT := 32M
+  DEVICE_VARIANT := A1 32M
   SUPPORTED_DEVICES += k2p-32m
 endef
 TARGET_DEVICES += phicomm_k2p-32m
@@ -90,7 +95,7 @@ cat <<EOF >> openwrt/target/linux/ramips/image/mt7620.mk
 define Device/phicomm_k2-v22.5-16m
   \$(Device/phicomm_k2-v22.5)
   IMAGE_SIZE := 15744k
-  DEVICE_VARIANT := 16M
+  DEVICE_VARIANT := A2 16M
   SUPPORTED_DEVICES += k2-v22.5-16m
 endef
 TARGET_DEVICES += phicomm_k2-v22.5-16m
