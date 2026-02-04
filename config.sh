@@ -77,6 +77,7 @@ define Device/phicomm_k2p-32m
   IMAGE_SIZE := 32128k
   DEVICE_VARIANT := A1 32M
   SUPPORTED_DEVICES += k2p-32m
+  DEVICE_DTS := mt7621_phicomm_k2p-32m
 endef
 TARGET_DEVICES += phicomm_k2p-32m
 EOF
@@ -97,6 +98,7 @@ define Device/phicomm_k2-v22.5-16m
   IMAGE_SIZE := 15744k
   DEVICE_VARIANT := A2 16M
   SUPPORTED_DEVICES += k2-v22.5-16m
+  DEVICE_DTS := mt7620a_phicomm_k2-v22.5-16m
 endef
 TARGET_DEVICES += phicomm_k2-v22.5-16m
 EOF

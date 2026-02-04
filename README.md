@@ -10,17 +10,25 @@
 
   `tl-wr703n v1.6`
 
-  ` Phicomm K2P A1`
+  `Phicomm K2P A1`
 
   `Phicomm K2 psg1218`
 
 - 尽可能减少改动，编译选项和官方版本保持一致（即使官方版本的缺陷也保留），编译配置基于官方发布的不同设备的  `config.buildinfo`
 
-- 使用GitHub Action自定义编译 OpenWrt
+- 使用GitHub Action自定义编译 OpenWrt，确保过程和产出物干净
 
-- 添加设备步骤遵循 https://openwrt.org/docs/guide-developer/adding_new_device
+- 添加设备步骤遵循 
 
-- 编译步骤遵循 https://openwrt.org/docs/guide-developer/toolchain/use-buildsystem
+  https://openwrt.org/docs/guide-developer/porting-to-ath79
+
+  https://openwrt.org/docs/guide-developer/adding_new_device
+
+  https://openwrt.org/docs/guide-developer/build-system/device-trees
+
+- 编译步骤遵循 
+
+  https://openwrt.org/docs/guide-developer/toolchain/use-buildsystem
 
 
 
