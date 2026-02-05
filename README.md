@@ -20,6 +20,8 @@
 
 - 添加设备步骤遵循 
 
+  https://openwrt.org/docs/techref/targets/ath79
+
   https://openwrt.org/docs/guide-developer/porting-to-ath79
 
   https://openwrt.org/docs/guide-developer/adding_new_device

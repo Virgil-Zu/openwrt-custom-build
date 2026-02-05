@@ -23,9 +23,9 @@ sed -i 's#$(SCRIPT_DIR)/kconfig.pl $(LINUX_DIR)/.config | $(MKHASH) md5#cat $(TO
 
 ####################
 #*** create new device model
-target_dts='openwrt/target/linux/ath79/dts/ar9331_tplink_tl-wr703n-16m.dts'
+target_dts='openwrt/target/linux/ath79/dts/ar9331_tplink_tl-wr703n-v1.6-16m.dts'
 cp -f openwrt/target/linux/ath79/dts/ar9331_tplink_tl-wr703n.dts "${target_dts}"
-sed -i 's|compatible = "tplink,tl-wr703n"|compatible = "tplink,tl-wr703n-16m", "tplink,tl-wr703n"|' "${target_dts}"
+sed -i 's|compatible = "tplink,tl-wr703n"|compatible = "tplink,tl-wr703n-v1.6-16m", "tplink,tl-wr703n"|' "${target_dts}"
 sed -i 's|model = "TP-Link TL-WR703N"|model = "TP-Link TL-WR703N (16M)"|' "${target_dts}"
 cat <<EOF >> "${target_dts}"
 &spi {
@@ -45,22 +45,19 @@ cat <<EOF >> "${target_dts}"
 };
 EOF
 #cat "${target_dts}"
-#https://github.com/openwrt/openwrt/blob/v17.01.7/target/linux/ar71xx/image/tp-link.mk
-cat <<EOF >> openwrt/target/linux/ath79/image/generic.mk
-define Device/tplink_tl-wr703n-16m
-  \$(Device/tplink-4mlzma)
-  IMAGE_SIZE := 16256k
-  DEVICE_VENDOR := TP-Link
+cat <<EOF >> openwrt/target/linux/ath79/image/tiny-tp-link.mk
+define Device/tplink_tl-wr703n-v1.6-16m
+  \$(Device/tplink-16mlzma)
+  SOC := ar9331
   DEVICE_MODEL := TL-WR703N
   DEVICE_VARIANT := v1.6 16M
-  DEVICE_PACKAGES += kmod-usb-core kmod-usb2 kmod-usb-ohci kmod-ath9k wpad-basic-mbedtls
+  DEVICE_PACKAGES := kmod-usb-chipidea2
   TPLINK_HWID := 0x07030101
-  DEVICE_DTS := ar9331_tplink_tl-wr703n-16m
-  CONSOLE := ttyATH0,115200
+  SUPPORTED_DEVICES += tl-wr703n-v1.6-16m
 endef
-TARGET_DEVICES += tplink_tl-wr703n-16m
+TARGET_DEVICES += tplink_tl-wr703n-v1.6-16m
 EOF
-cat openwrt/target/linux/ath79/image/generic.mk
+cat openwrt/target/linux/ath79/image/tiny-tp-link.mk
 echo "- 添加设备 \`ath79/generic/ar9331_tplink_tl-wr703n-16m\`" >> "${RELEASE_FILE}"
 
 
