@@ -31,13 +31,33 @@ cat <<EOF >> "${target_dts}"
 &spi {
 	flash@0 {
         partitions {
+			compatible = "fixed-partitions";
+			#address-cells = <1>;
+			#size-cells = <1>;
+
+			uboot: partition@0 {
+				reg = <0x0 0x20000>;
+				label = "u-boot";
+				read-only;
+
+				nvmem-layout {
+					compatible = "fixed-layout";
+					#address-cells = <1>;
+					#size-cells = <1>;
+
+					macaddr_uboot_1fc00: macaddr@1fc00 {
+						reg = <0x1fc00 0x6>;
+					};
+				};
+			};
+
 			partition@20000 {
 				label = "firmware";
 				reg = <0x20000 0xfd0000>;
 			};
 			partition@ff0000 {
 				label = "art";
-				reg = <0xff0000 0x100000>;
+				reg = <0xff0000 0x010000>;
 				read-only;
 			};
 		};
