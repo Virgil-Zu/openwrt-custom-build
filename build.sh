@@ -78,7 +78,7 @@ while IFS='/' read -r target sub_target device || [[ -n "$target" ]]; do
 		make download -j$(nproc)
 
 		echo "make..."
-		make -j$(($(nproc)+1))
+		make -j$(($(nproc)+1)) V=s
 
 		#rm -rf ./tmp
 		cd ..
