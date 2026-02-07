@@ -21,7 +21,6 @@ while IFS='/' read -r target sub_target device || [[ -n "$target" ]]; do
 	if [ -n "${target}" ] && [ -n "${sub_target}" ] && [ -n "${device}" ]; then
 		
 		cd openwrt
-		make targetclean
 
 		echo "" > .config
 		wget "https://downloads.openwrt.org/releases/${VERSION#v}/targets/${target}/${sub_target}/config.buildinfo" -q -O .config
@@ -80,13 +79,12 @@ while IFS='/' read -r target sub_target device || [[ -n "$target" ]]; do
 		echo "make..."
 		make -j$(nproc)
 
-		#rm -rf ./tmp
-		cd ..
-
 		df -h
-		tree -L 3 openwrt/bin/targets
-		cp -f openwrt/bin/targets/${target}/${sub_target}/*-squashfs-sysupgrade.bin bin
+		tree -L 3 bin/targets
+		cp -f bin/targets/${target}/${sub_target}/*-squashfs-sysupgrade.bin ../bin
 
+		make targetclean
+		cd ..
 	else
 		echo "WARN: line is invalid, skip"
 	fi
