@@ -77,7 +77,7 @@ define Device/tplink_tl-wr703n-v1.6-16m
 endef
 TARGET_DEVICES += tplink_tl-wr703n-v1.6-16m
 EOF
-cat openwrt/target/linux/ath79/image/tiny-tp-link.mk
+#cat openwrt/target/linux/ath79/image/tiny-tp-link.mk
 echo "- 添加设备 \`ath79/generic/ar9331_tplink_tl-wr703n-16m\`" >> "${RELEASE_FILE}"
 
 
@@ -98,7 +98,7 @@ define Device/phicomm_k2p-32m
 endef
 TARGET_DEVICES += phicomm_k2p-32m
 EOF
-cat openwrt/target/linux/ramips/image/mt7621.mk
+#cat openwrt/target/linux/ramips/image/mt7621.mk
 echo "- 添加设备 \`ramips/mt7621/phicomm_k2p-32m\`" >> "${RELEASE_FILE}"
 
 
@@ -119,7 +119,7 @@ define Device/phicomm_k2-v22.5-16m
 endef
 TARGET_DEVICES += phicomm_k2-v22.5-16m
 EOF
-cat openwrt/target/linux/ramips/image/mt7620.mk
+#cat openwrt/target/linux/ramips/image/mt7620.mk
 echo "- 添加设备 \`ramips/mt7620a/phicomm_k2-v22.5-16m\`" >> "${RELEASE_FILE}"
 
 #touch openwrt/target/linux/ramips/Makefile
