@@ -70,7 +70,7 @@ define Device/tplink_tl-wr703n-v1.6-16m
   \$(Device/tplink-16mlzma)
   SOC := ar9331
   DEVICE_MODEL := TL-WR703N
-  DEVICE_VARIANT := v1.6 16M
+  DEVICE_VARIANT := v1.6 (16M)
   DEVICE_PACKAGES := kmod-usb-chipidea2
   TPLINK_HWID := 0x07030101
   SUPPORTED_DEVICES += tl-wr703n-v1.6-16m
@@ -92,7 +92,7 @@ cat <<EOF >> openwrt/target/linux/ramips/image/mt7621.mk
 define Device/phicomm_k2p-32m
   \$(Device/phicomm_k2p)
   IMAGE_SIZE := 32128k
-  DEVICE_VARIANT := A1 32M
+  DEVICE_VARIANT := A1 (32M)
   SUPPORTED_DEVICES += k2p-32m
   DEVICE_DTS := mt7621_phicomm_k2p-32m
 endef
@@ -113,7 +113,7 @@ cat <<EOF >> openwrt/target/linux/ramips/image/mt7620.mk
 define Device/phicomm_k2-v22.5-16m
   \$(Device/phicomm_k2-v22.5)
   IMAGE_SIZE := 15744k
-  DEVICE_VARIANT := A2 16M
+  DEVICE_VARIANT := A2 (16M)
   SUPPORTED_DEVICES += k2-v22.5-16m
   DEVICE_DTS := mt7620a_phicomm_k2-v22.5-16m
 endef

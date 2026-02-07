@@ -24,8 +24,6 @@
 
   https://openwrt.org/docs/guide-developer/porting-to-ath79
 
-  https://openwrt.org/docs/guide-developer/adding_new_device
-
   https://openwrt.org/docs/guide-developer/build-system/device-trees
 
 - 编译步骤遵循 
@@ -54,7 +52,7 @@
 
 # 输出
 
-- 目标设备 `tl-wr703n v1.6`，创建新的设备类型  **tl-wr703n (16M)**
+- 目标设备 `tl-wr703n v1.6`，创建新的设备类型  **tl-wr703n v1.6 (16M)**，OpenWrt公版布局
 
   例如:
 
@@ -64,7 +62,7 @@
 
   
 
-- 目标设备 `Phicomm K2P A1`，创建新的设备类型  **Phicomm K2P (32M)**，对应斐讯 0xA0000 布局
+- 目标设备 `Phicomm K2P A1`，创建新的设备类型  **Phicomm K2P A1 (32M)**，对应斐讯 0xA0000 布局
 
   例如:
 
@@ -74,7 +72,7 @@
 
   
 
-- 目标设备 `Phicomm K2 psg1218` ，创建新的设备类型  **Phicomm K2 v22.5 or newer (16M)**，对应斐讯 0xA0000 布局
+- 目标设备 `Phicomm K2 psg1218` ，创建新的设备类型  **Phicomm K2 A2 (16M)**，对应斐讯 0xA0000 布局
 
 	例如:
 	
