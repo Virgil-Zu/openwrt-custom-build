@@ -21,6 +21,7 @@ while IFS='/' read -r target sub_target device || [[ -n "$target" ]]; do
 	if [ -n "${target}" ] && [ -n "${sub_target}" ] && [ -n "${device}" ]; then
 		
 		cd openwrt
+		make targetclean
 
 		echo "" > .config
 		wget "https://downloads.openwrt.org/releases/${VERSION#v}/targets/${target}/${sub_target}/config.buildinfo" -q -O .config
@@ -61,8 +62,8 @@ while IFS='/' read -r target sub_target device || [[ -n "$target" ]]; do
 			exit 1
 		fi
 
-		#md5_value=$(echo "$kernel" | sed -n 's/.*~\([0-9a-fA-F]*\)-.*/\1/p')
-		md5_value=$(echo "$kernel" | sed -n 's/.*~\(\w*\)-.*/\1/p')
+		md5_value=$(echo "$kernel" | sed -n 's/.*~\([0-9a-fA-F]*\)-.*/\1/p')
+		#md5_value=$(echo "$kernel" | sed -n 's/.*~\(\w*\)-.*/\1/p')
 		if [ -z "$md5_value" ]; then
 			echo "fetch 'md5' failed"
 			exit 1
@@ -72,14 +73,12 @@ while IFS='/' read -r target sub_target device || [[ -n "$target" ]]; do
 
 		echo "config..."
 		make defconfig
-		#cat .config
 
 		echo "download depend..."
 		make download -j$(nproc)
 
 		echo "make..."
-		#make -j$(nproc)
-		make targets/linux/${target}/Makefile -j$(nproc)
+		make -j$(nproc)
 
 		#rm -rf ./tmp
 		cd ..

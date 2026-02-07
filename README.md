@@ -8,11 +8,13 @@
 
 - 针对以下设备编译定制版本的 OpenWrt，主要满足修改Flash和SDRAM之后的固件
 
-  `tl-wr703n v1.6`
+  `tl-wr703n v1.6` ，16M Flash，公版 0x50000 布局
 
-  `Phicomm K2P A1`
+  `Phicomm K2 v22.4`，16M Flash，公版 0x50000 布局
 
-  `Phicomm K2 psg1218`
+  `Phicomm K2 v22.5`，16M Flash，斐讯 0xA0000 布局
+
+  `Phicomm K2P A1` ，32M Flash，斐讯 0xA0000 布局
 
 - 尽可能减少改动，编译选项和官方版本保持一致（即使官方版本的缺陷也保留），编译配置基于官方发布的不同设备的  `config.buildinfo`
 
@@ -52,12 +54,23 @@
 
 # 输出
 
-- 目标设备 `tl-wr703n v1.6`，创建新的设备类型  **tl-wr703n v1.6 (16M)**，OpenWrt公版布局
+- 目标设备 `tl-wr703n v1.6`，创建新的设备类型  **tl-wr703n v1.6 (16M)**，0x50000 公版布局
 
   例如:
 
   ```
-  openwrt-xx.xx.x-ath79-generic-tplink_tl-wr703n-16M-squashfs-sysupgrade.bin
+  openwrt-xx.xx.x-ath79-generic-tplink_tl-wr703n-v1.6-16M-squashfs-sysupgrade.bin
+  ```
+
+  
+
+- 目标设备 `Phicomm K2 A2` ，创建新的设备类型  **Phicomm K2 A2 (16M)**，对应斐讯 0xA0000 布局
+
+  例如:
+
+  ```shell
+  openwrt-xx.xx.x-ramips-mt7620-phicomm_k2-A2-v22.4-16m-squashfs-sysupgrade.bin
+  openwrt-xx.xx.x-ramips-mt7620-phicomm_k2-A2-v22.5-16m-squashfs-sysupgrade.bin
   ```
 
   
@@ -67,20 +80,10 @@
   例如:
 
   ``````shell
-  openwrt-xx.xx.x-ramips-mt7621-phicomm_k2p-32m-squashfs-sysupgrade.bin
+  openwrt-xx.xx.x-ramips-mt7621-phicomm_k2p-A1-32m-squashfs-sysupgrade.bin
   ``````
 
   
-
-- 目标设备 `Phicomm K2 psg1218` ，创建新的设备类型  **Phicomm K2 A2 (16M)**，对应斐讯 0xA0000 布局
-
-	例如:
-	
-	```shell
-	openwrt-xx.xx.x-ramips-mt7620-phicomm_k2-v22.5-16m-squashfs-sysupgrade.bin
-	```
-	
-	
 
 # 版本
 

@@ -23,48 +23,15 @@ sed -i 's#$(SCRIPT_DIR)/kconfig.pl $(LINUX_DIR)/.config | $(MKHASH) md5#cat $(TO
 
 ####################
 #*** create new device model
+
 target_dts='openwrt/target/linux/ath79/dts/ar9331_tplink_tl-wr703n-v1.6-16m.dts'
+cp -f openwrt/target/linux/ath79/dts/ar9331_tplink_tl-wr703n_tl-mr10u.dtsi openwrt/target/linux/ath79/dts/ar9331_tplink_tl-wr703n-16m.dtsi
+sed -i 's|reg = <0x20000 0x3d0000>|reg = <0x20000 0xfd0000>|' openwrt/target/linux/ath79/dts/ar9331_tplink_tl-wr703n-16m.dtsi
+sed -i 's|reg = <0x3f0000 0x10000>|reg = <0xff0000 0x10000>|' openwrt/target/linux/ath79/dts/ar9331_tplink_tl-wr703n-16m.dtsi
 cp -f openwrt/target/linux/ath79/dts/ar9331_tplink_tl-wr703n.dts "${target_dts}"
-sed -i 's|compatible = "tplink,tl-wr703n"|compatible = "tplink,tl-wr703n-v1.6-16m", "tplink,tl-wr703n"|' "${target_dts}"
-sed -i 's|model = "TP-Link TL-WR703N"|model = "TP-Link TL-WR703N (16M)"|' "${target_dts}"
-cat <<EOF >> "${target_dts}"
-&spi {
-	flash@0 {
-        partitions {
-			compatible = "fixed-partitions";
-			#address-cells = <1>;
-			#size-cells = <1>;
-
-			uboot: partition@0 {
-				reg = <0x0 0x20000>;
-				label = "u-boot";
-				read-only;
-
-				nvmem-layout {
-					compatible = "fixed-layout";
-					#address-cells = <1>;
-					#size-cells = <1>;
-
-					macaddr_uboot_1fc00: macaddr@1fc00 {
-						reg = <0x1fc00 0x6>;
-					};
-				};
-			};
-
-			partition@20000 {
-				label = "firmware";
-				reg = <0x20000 0xfd0000>;
-			};
-			partition@ff0000 {
-				label = "art";
-				reg = <0xff0000 0x010000>;
-				read-only;
-			};
-		};
-	};
-};
-EOF
-#cat "${target_dts}"
+sed -i 's|wr703n_tl-mr10u.dtsi|wr703n-16m.dtsi"|' "${target_dts}"
+sed -i 's|"tplink,tl-wr703n"|"tplink,tl-wr703n-v1.6-16m", "tplink,tl-wr703n"|' "${target_dts}"
+sed -i 's|"TP-Link TL-WR703N"|"TP-Link TL-WR703N (16M)"|' "${target_dts}"
 cat <<EOF >> openwrt/target/linux/ath79/image/tiny-tp-link.mk
 define Device/tplink_tl-wr703n-v1.6-16m
   \$(Device/tplink-16mlzma)
@@ -78,51 +45,59 @@ endef
 TARGET_DEVICES += tplink_tl-wr703n-v1.6-16m
 EOF
 #cat openwrt/target/linux/ath79/image/tiny-tp-link.mk
-echo "- 添加设备 \`ath79/generic/ar9331_tplink_tl-wr703n-16m\`" >> "${RELEASE_FILE}"
+echo "- 添加设备 \`ath79/tiny/tplink_tl-wr703n-v1.6-16m\`" >> "${RELEASE_FILE}"
 
 
-target_dts='openwrt/target/linux/ramips/dts/mt7621_phicomm_k2p-32m.dts'
-cp -f openwrt/target/linux/ramips/dts/mt7621_phicomm_k2p.dts "${target_dts}"
-sed -i 's|compatible = "phicomm,k2p"|compatible = "phicomm,k2p-32m", "phicomm,k2p"|' "${target_dts}"
-sed -i 's|model = "Phicomm K2P"|model = "Phicomm K2P (32M)"|' "${target_dts}"
-sed -i 's|reg = <0xa0000 0xf60000>|reg = <0xa0000 0x1f60000>|' "${target_dts}"
-#cat "${target_dts}"
-#sed -i 's|TARGET_DEVICES += phicomm_k2p|TARGET_DEVICES += phicomm_k2p\n\ndefine Device/phicomm_k2p-32m\n  $(Device/phicomm_k2p)\n  IMAGE_SIZE := 32128k\n  DEVICE_VARIANT := 32M\n  SUPPORTED_DEVICES += k2p-32m\nendef\nTARGET_DEVICES += phicomm_k2p-32m|' openwrt/target/linux/ramips/image/mt7621.mk
-cat <<EOF >> openwrt/target/linux/ramips/image/mt7621.mk
-define Device/phicomm_k2p-32m
-  \$(Device/phicomm_k2p)
-  IMAGE_SIZE := 32128k
-  DEVICE_VARIANT := A1 (32M)
-  SUPPORTED_DEVICES += k2p-32m
-  DEVICE_DTS := mt7621_phicomm_k2p-32m
-endef
-TARGET_DEVICES += phicomm_k2p-32m
-EOF
-#cat openwrt/target/linux/ramips/image/mt7621.mk
-echo "- 添加设备 \`ramips/mt7621/phicomm_k2p-32m\`" >> "${RELEASE_FILE}"
-
-
-target_dts='openwrt/target/linux/ramips/dts/mt7620a_phicomm_k2-v22.5-16m.dts'
-cp -f openwrt/target/linux/ramips/dts/mt7620a_phicomm_k2-v22.5.dts "${target_dts}"
-sed -i 's|compatible = "phicomm,k2-v22.5"|compatible = "phicomm,k2-v22.5-16m", "phicomm,k2-v22.5"|' "${target_dts}"
-sed -i 's|model = "Phicomm K2 v22.5 or newer"|model = "Phicomm K2 v22.5 or newer (16M)"|' "${target_dts}"
-sed -i 's|reg = <0xa0000 0x760000>|reg = <0xa0000 0xf60000>|' "${target_dts}"
-#cat "${target_dts}"
-#sed -i 's|TARGET_DEVICES += phicomm_k2-v22.5|TARGET_DEVICES += phicomm_k2-v22.5\n\ndefine Device/phicomm_k2-v22.5-16m\n  $(Device/phicomm_k2-v22.5)\n  IMAGE_SIZE := 15744k\n  DEVICE_VARIANT += 16M\n  SUPPORTED_DEVICES += k2-v22.5-16m\nendef\nTARGET_DEVICES += phicomm_k2-v22.5-16m|' openwrt/target/linux/ramips/image/mt7620.mk
+target_dts='openwrt/target/linux/ramips/dts/mt7620a_phicomm_k2-A2-v22.4-16m.dts'
+cp -f openwrt/target/linux/ramips/dts/mt7620a_phicomm_k2-v22.4.dts "${target_dts}"
+sed -i 's|"phicomm,k2-v22.4"|"phicomm,k2-A2-v22.4-16m", "phicomm,k2-v22.4"|' "${target_dts}"
+sed -i 's|"Phicomm K2 v22.4 or older"|"Phicomm K2 v22.4 or older (16M)"|' "${target_dts}"
+sed -i 's|reg = <0x50000 0x7b0000>|reg = <0x50000 0xfb0000>|' "${target_dts}"
 cat <<EOF >> openwrt/target/linux/ramips/image/mt7620.mk
-define Device/phicomm_k2-v22.5-16m
+define Device/phicomm_k2-A2-v22.4-16m
+  \$(Device/phicomm_k2-v22.4)
+  IMAGE_SIZE := 16064k
+  DEVICE_VARIANT := A2 (16M)
+  SUPPORTED_DEVICES += k2-A2-v22.4-16m
+endef
+TARGET_DEVICES += phicomm_k2-A2-v22.4-16m
+EOF
+echo "- 添加设备 \`ramips/mt7620a/phicomm_k2-A2-v22.4-16m\`" >> "${RELEASE_FILE}"
+
+
+target_dts='openwrt/target/linux/ramips/dts/mt7620a_phicomm_k2-A2-v22.5-16m.dts'
+cp -f openwrt/target/linux/ramips/dts/mt7620a_phicomm_k2-v22.5.dts "${target_dts}"
+sed -i 's|"phicomm,k2-v22.5"|"phicomm,k2-A2-v22.5-16m", "phicomm,k2-v22.5"|' "${target_dts}"
+sed -i 's|"Phicomm K2 v22.5 or newer"|"Phicomm K2 v22.5 or newer (16M)"|' "${target_dts}"
+sed -i 's|reg = <0xa0000 0x760000>|reg = <0xa0000 0xf60000>|' "${target_dts}"
+cat <<EOF >> openwrt/target/linux/ramips/image/mt7620.mk
+define Device/phicomm_k2-A2-v22.5-16m
   \$(Device/phicomm_k2-v22.5)
   IMAGE_SIZE := 15744k
   DEVICE_VARIANT := A2 (16M)
-  SUPPORTED_DEVICES += k2-v22.5-16m
-  DEVICE_DTS := mt7620a_phicomm_k2-v22.5-16m
+  SUPPORTED_DEVICES += k2-A2-v22.5-16m
 endef
-TARGET_DEVICES += phicomm_k2-v22.5-16m
+TARGET_DEVICES += phicomm_k2-A2-v22.5-16m
 EOF
-#cat openwrt/target/linux/ramips/image/mt7620.mk
-echo "- 添加设备 \`ramips/mt7620a/phicomm_k2-v22.5-16m\`" >> "${RELEASE_FILE}"
+echo "- 添加设备 \`ramips/mt7620a/phicomm_k2-A2-v22.5-16m\`" >> "${RELEASE_FILE}"
 
-#touch openwrt/target/linux/ramips/Makefile
+
+target_dts='openwrt/target/linux/ramips/dts/mt7621_phicomm_k2p-A1-32m.dts'
+cp -f openwrt/target/linux/ramips/dts/mt7621_phicomm_k2p.dts "${target_dts}"
+sed -i 's|compatible = "phicomm,k2p"|compatible = "phicomm,k2p-A1-32m", "phicomm,k2p"|' "${target_dts}"
+sed -i 's|model = "Phicomm K2P"|model = "Phicomm K2P (32M)"|' "${target_dts}"
+sed -i 's|reg = <0xa0000 0xf60000>|reg = <0xa0000 0x1f60000>|' "${target_dts}"
+cat <<EOF >> openwrt/target/linux/ramips/image/mt7621.mk
+define Device/phicomm_k2p-A1-32m
+  \$(Device/phicomm_k2p)
+  IMAGE_SIZE := 32128k
+  DEVICE_VARIANT := A1 (32M)
+  SUPPORTED_DEVICES += k2p-A1-32m
+endef
+TARGET_DEVICES += phicomm_k2p-A1-32m
+EOF
+echo "- 添加设备 \`ramips/mt7621/phicomm_k2p-32m\`" >> "${RELEASE_FILE}"
+
 
 ####################
 #*** patch openwrt v24.10.4
