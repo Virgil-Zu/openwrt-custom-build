@@ -24,7 +24,7 @@ while IFS='/' read -r target sub_target device || [[ -n "$target" ]]; do
 		cd openwrt
 
 		if [[ -n "${LAST_TARGET}" && "${LAST_TARGET}" != "${target}" ]]; then
-			make -k dirclean
+			make clean
 			LAST_TARGET=${target}
 		fi
 
