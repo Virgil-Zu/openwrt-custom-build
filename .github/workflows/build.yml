@@ -21,7 +21,7 @@ jobs:
       - name: set-matrix
         id: set-matrix
         run: |
-          targets=$(cat targets.txt | jq -R . | jq -s .)
+          targets=$(grep -v '^$' targets.txt | jq -R . | jq -s .)
           echo "matrix={\"target\":$targets}" >> $GITHUB_OUTPUT
           echo "version=$(cat version.txt)" >> $GITHUB_OUTPUT
 
