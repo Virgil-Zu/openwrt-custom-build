@@ -10,6 +10,7 @@ if [ ! -f "${INPUT_FILE}" ]; then
 	exit 1
 fi
 
+LAST_TARGET=""
 echo "loop build targets ..."
 
 while IFS='/' read -r target sub_target device || [[ -n "$target" ]]; do
@@ -21,6 +22,11 @@ while IFS='/' read -r target sub_target device || [[ -n "$target" ]]; do
 	if [ -n "${target}" ] && [ -n "${sub_target}" ] && [ -n "${device}" ]; then
 		
 		cd openwrt
+
+		if [[ "${LAST_TARGET}" != "${target}" ]]; then
+			make -k dirclean
+			LAST_TARGET=${target}
+		fi
 
 		echo "" > .config
 		wget "https://downloads.openwrt.org/releases/${VERSION#v}/targets/${target}/${sub_target}/config.buildinfo" -q -O .config
@@ -76,13 +82,12 @@ while IFS='/' read -r target sub_target device || [[ -n "$target" ]]; do
 		make download -j$(nproc)
 
 		echo "make..."
-		make -j$(nproc)
+		make -j$(($(nproc)+1))
 
 		df -h
 		tree -L 3 bin/targets
 		cp -f bin/targets/${target}/${sub_target}/*-squashfs-sysupgrade.bin ../bin
 
-		make targetclean
 		cd ..
 	else
 		echo "WARN: line is invalid, skip"
