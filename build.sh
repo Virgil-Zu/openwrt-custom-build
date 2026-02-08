@@ -62,7 +62,6 @@ while IFS='/' read -r target sub_target device || [[ -n "$target" ]]; do
 		fi
 
 		md5_value=$(echo "$kernel" | sed -n 's/.*~\([0-9a-fA-F]*\)-.*/\1/p')
-		#md5_value=$(echo "$kernel" | sed -n 's/.*~\(\w*\)-.*/\1/p')
 		if [ -z "$md5_value" ]; then
 			echo "fetch 'md5' failed"
 			exit 1
