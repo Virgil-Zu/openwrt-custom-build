@@ -21,7 +21,7 @@ jobs:
       - name: set-matrix
         id: set-matrix
         run: |
-          targets=$(grep -v '^$' targets.txt | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*,*$//' | jq -R . | jq -s .)
+          targets=$(grep -v '^$' targets.txt | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*,*$//' | jq -R . | jq -sc .)
           echo $targets
           echo "matrix={\"target\":$targets}"
           echo "matrix={\"target\":$targets}" >> $GITHUB_OUTPUT
