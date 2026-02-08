@@ -23,6 +23,7 @@ jobs:
         run: |
           targets=$(grep -v '^$' targets.txt | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*,*$//' | jq -R . | jq -s .)
           echo $targets
+          echo "matrix={\"target\":$targets}"
           echo "matrix={\"target\":$targets}" >> $GITHUB_OUTPUT
           echo "version=$(cat version.txt)" >> $GITHUB_OUTPUT
 
