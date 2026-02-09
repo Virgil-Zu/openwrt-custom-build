@@ -8,7 +8,7 @@ fi
 
 echo "build target start ..."
 
-IFS=/ read -r target sub_target device <<< "$1"
+IFS=/ read -r target sub_target device <<< "$2"
 
 if [ -n "${target}" ] && [ -n "${sub_target}" ] && [ -n "${device}" ]; then
 
@@ -17,7 +17,7 @@ if [ -n "${target}" ] && [ -n "${sub_target}" ] && [ -n "${device}" ]; then
 	cd openwrt
 
 	echo "" > .config
-	wget "https://downloads.openwrt.org/releases/${VERSION#v}/targets/${target}/${sub_target}/config.buildinfo" -q -O .config
+	wget "https://downloads.openwrt.org/releases/${1#v}/targets/${target}/${sub_target}/config.buildinfo" -q -O .config
 
 	sed -i "/^[[:space:]]*CONFIG_TARGET_DEVICE_/d" .config
 	sed -i "s/^[[:space:]]*CONFIG_TARGET_MULTI_PROFILE=y/# CONFIG_TARGET_MULTI_PROFILE is not set/g" .config
@@ -43,7 +43,7 @@ if [ -n "${target}" ] && [ -n "${sub_target}" ] && [ -n "${device}" ]; then
 	echo "CONFIG_PACKAGE_luci-i18n-firewall-zh-cn=y" >> .config
 	echo "CONFIG_PACKAGE_luci-i18n-package-manager-zh-cn=y" >> .config
 
-	manifest=$(wget -q -O - "https://downloads.openwrt.org/releases/${VERSION#v}/targets/${target}/${sub_target}/openwrt-${VERSION#v}-${target}-${sub_target}.manifest")
+	manifest=$(wget -q -O - "https://downloads.openwrt.org/releases/${1#v}/targets/${target}/${sub_target}/openwrt-${1#v}-${target}-${sub_target}.manifest")
 	if [ -z "$manifest" ]; then
 		echo "wget manifest error"
 		exit 1
