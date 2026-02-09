@@ -102,6 +102,6 @@ echo "- 添加设备 \`ramips/mt7621/phicomm_k2p-32m\`" >> "${RELEASE_FILE}"
 
 ####################
 #*** patch openwrt v24.10.4
-#cp -f patches/*.patch openwrt/feeds/telephony/libs/dahdi-linux/patches/
+cp -f patches/*.patch openwrt/feeds/telephony/libs/dahdi-linux/patches/
 
 
