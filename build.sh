@@ -75,7 +75,7 @@ if [ -n "${target}" ] && [ -n "${sub_target}" ] && [ -n "${device}" ]; then
 	make download -j$(nproc)
 
 	echo "make..."
-	make -j$(($(nproc)+1))
+	make -j$(($(nproc)+1)) || make -j1 V=s
 
 	df -h
 	tree -L 3 bin/targets
