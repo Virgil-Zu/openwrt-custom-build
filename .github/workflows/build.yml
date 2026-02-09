@@ -76,7 +76,7 @@ jobs:
 #          ls -l bin
 #          df -h
       - name: upload-artifact
-        if: steps.build-step.conclusion == 'success'
+#        if: steps.build-step.conclusion == 'success'
         uses: actions/upload-artifact@main
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
