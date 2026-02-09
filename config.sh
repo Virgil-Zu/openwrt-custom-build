@@ -39,7 +39,7 @@ define Device/tplink_tl-wr703n-v1.6-16m
   SOC := ar9331
   DEVICE_MODEL := TL-WR703N
   DEVICE_VARIANT := v1.6 (16M)
-  DEVICE_PACKAGES := kmod-usb-chipidea2
+  DEVICE_PACKAGES := kmod-usb-core kmod-usb-ehci-platform kmod-usb-ohci-platform
   TPLINK_HWID := 0x07030101
   SUPPORTED_DEVICES += tl-wr703n-v1.6-16m
 endef

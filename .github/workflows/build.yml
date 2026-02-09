@@ -59,12 +59,12 @@ jobs:
           git clone https://github.com/openwrt/openwrt.git
           cd openwrt
           git checkout ${{env.VERSION}}
-      - name: update-feeds
-        working-directory: openwrt
-        run: ./scripts/feeds update -a
-      - name: install-feeds
-        working-directory: openwrt
-        run: ./scripts/feeds install -a
+#      - name: update-feeds
+#        working-directory: openwrt
+#        run: ./scripts/feeds update -a
+#      - name: install-feeds
+#        working-directory: openwrt
+#        run: ./scripts/feeds install -a
       - name: config-targets
         run: bash ./config.sh
 #      - name: build-targets
@@ -81,7 +81,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
         with:
-          name: $(tmp="${matrix.target//\"/}"; echo "${tmp##*/}")
+          name: ${{ bash 'tmp=${{ matrix.target }}; tmp=${tmp//\"/}; echo ${tmp##*/}' }}
 #          path: bin/*-squashfs-sysupgrade.bin
           path: release.txt
           retention-days: 3
