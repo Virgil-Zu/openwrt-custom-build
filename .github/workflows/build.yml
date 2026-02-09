@@ -13,7 +13,7 @@ jobs:
   targets:
     runs-on: ubuntu-latest
     outputs:
-      matrix_targets: ${{ steps.set-matrix.outputs.matrix }}
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
       version: ${{ steps.set-matrix.outputs.version }}
     steps:
       - name: checkout
@@ -29,7 +29,7 @@ jobs:
     needs: targets
     runs-on: ubuntu-latest
     strategy:
-      matrix: ${{fromJson(needs.targets.outputs.matrix_targets)}}
+      matrix: ${{fromJson(needs.targets.outputs.matrix)}}
     steps:
       - name: checkout
         uses: actions/checkout@main
@@ -54,10 +54,10 @@ jobs:
           mkdir -p bin
       - name: clone-openwrt
         run: |
-          echo ${{ steps.build-step.outputs.version }}
+          echo ${{ needs.targets.outputs.version }}
           git clone https://github.com/openwrt/openwrt.git
           cd openwrt
-          git checkout ${{ steps.build-step.outputs.version }}
+          git checkout ${{ needs.targets.outputs.version }}
       - name: update-feeds
         working-directory: openwrt
         run: ./scripts/feeds update -a
@@ -70,7 +70,7 @@ jobs:
         id: build-step
         run: |
           echo "artifact_name=$(tmp="${{ matrix.target }}"; tmp="${tmp//\"/}"; echo "${tmp##*/}")" >> $GITHUB_OUTPUT
-          bash ./build.sh ${{ steps.build-step.outputs.version }} ${{ matrix.target }}
+          bash ./build.sh ${{ needs.targets.outputs.version }} ${{ matrix.target }}
       - name: summary-information
         run: |
           tree -L 3 openwrt/bin/targets
@@ -88,7 +88,7 @@ jobs:
 
   release:
     runs-on: ubuntu-latest
-    needs: build
+    needs: [targets, build]
     if: github.ref_type == 'tag'
     steps:
       - name: download-artifact
@@ -100,7 +100,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
         with:
-          tag_name: ${{ steps.build-step.outputs.version }}
+          tag_name: ${{ needs.targets.outputs.version }}
           #body_path: release.txt
           draft: false
           prerelease: false
