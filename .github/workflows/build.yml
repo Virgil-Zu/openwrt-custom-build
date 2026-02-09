@@ -70,11 +70,11 @@ jobs:
 #      - name: build-targets
 #        id: build-step
 #        run: bash ./build.sh ${{ matrix.target }}
-      - name: summary-information
-        run: |
-          tree -L 3 openwrt/bin/targets
-          ls -l bin
-          df -h
+#      - name: summary-information
+#        run: |
+#          tree -L 3 openwrt/bin/targets
+#          ls -l bin
+#          df -h
       - name: upload-artifact
         if: steps.build-step.conclusion == 'success'
         uses: actions/upload-artifact@main
