@@ -67,21 +67,23 @@ jobs:
 #        run: ./scripts/feeds install -a
       - name: config-targets
         run: bash ./config.sh
-#      - name: build-targets
-#        id: build-step
-#        run: bash ./build.sh ${{ matrix.target }}
+      - name: build-targets
+        id: build-step
+        run: |
+          echo "artifact_name=$(tmp="${matrix.target//\"/}"; echo "${tmp##*/}")" >> $GITHUB_OUTPUT
+#          bash ./build.sh ${{ matrix.target }}
 #      - name: summary-information
 #        run: |
 #          tree -L 3 openwrt/bin/targets
 #          ls -l bin
 #          df -h
       - name: upload-artifact
-#        if: steps.build-step.conclusion == 'success'
+        if: steps.build-step.conclusion == 'success'
         uses: actions/upload-artifact@main
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
         with:
-          name: ${{ bash 'tmp=${{ matrix.target }}; tmp=${tmp//\"/}; echo ${tmp##*/}' }}
+          name: ${{ steps.build-step.outputs.artifact_name }}
 #          path: bin/*-squashfs-sysupgrade.bin
           path: release.txt
           retention-days: 3
