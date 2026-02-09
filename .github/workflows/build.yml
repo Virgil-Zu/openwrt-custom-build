@@ -84,7 +84,6 @@ jobs:
         with:
           name: ${{ steps.build-step.outputs.artifact_name }}
           path: bin/*-squashfs-sysupgrade.bin
-          path: release.txt
           retention-days: 3
 
   release:
