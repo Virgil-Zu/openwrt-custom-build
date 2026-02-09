@@ -2,7 +2,12 @@
 set -e
 
 if [ -z "$1" ]; then
-	echo "invalid parameter"
+	echo "invalid parameter 1"
+	exit 1
+fi
+
+if [ -z "$2" ]; then
+	echo "invalid parameter 2"
 	exit 1
 fi
 
