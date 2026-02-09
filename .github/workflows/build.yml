@@ -22,8 +22,6 @@ jobs:
         id: set-matrix
         run: |
           targets=$(grep -v '^$' targets.txt | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*,*$//' | jq -R . | jq -sc .)
-          echo $targets
-          echo "matrix={\"target\":$targets}"
           echo "matrix={\"target\":$targets}" >> $GITHUB_OUTPUT
           echo "version=$(cat version.txt)" >> $GITHUB_OUTPUT
 
@@ -83,7 +81,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
         with:
-          name: openwrt-${{env.VERSION}}-${{ matrix.target }}
+          name: openwrt-${{env.VERSION}}
           path: bin/*-squashfs-sysupgrade.bin
           retention-days: 3
 
