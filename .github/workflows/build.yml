@@ -68,10 +68,11 @@ jobs:
       - name: build-targets
         id: build-step
         run: |
+          bash ./build.sh ${{ needs.targets.outputs.version }} ${{ matrix.target }}
           echo "artifact_name=$(tmp="${{ matrix.target }}"; tmp="${tmp//\"/}"; echo "${tmp##*/}")" >> $GITHUB_OUTPUT
-#          bash ./build.sh ${{ needs.targets.outputs.version }} ${{ matrix.target }}
       - name: summary-information
         run: |
+          tree -L 3 openwrt/bin/targets
           ls -l bin
           df -h
       - name: upload-artifact
@@ -81,13 +82,13 @@ jobs:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
         with:
           name: ${{ steps.build-step.outputs.artifact_name }}
-          path: bin/*-release.txt
+          path: bin/*-squashfs-sysupgrade.bin
           retention-days: 3
 
   release:
     runs-on: ubuntu-latest
     needs: [targets, build]
-#    if: github.ref_type == 'tag'
+    if: github.ref_type == 'tag'
     steps:
       - name: download-artifact
         uses: actions/download-artifact@main
@@ -96,7 +97,7 @@ jobs:
       - name: summary
         run: |
           tree -L 3 bin
-          find ./bin -mindepth 2 -type f -name "*-release.txt" -exec cp -f {} ./bin/ \;
+          find bin -mindepth 2 -type f -name "*-squashfs-sysupgrade.bin" -exec cp -f {} bin/ \;
           ls -l bin
       - name: create-release
         uses: softprops/action-gh-release@master
@@ -107,7 +108,7 @@ jobs:
           #body_path: release.txt
           draft: false
           prerelease: false
-          files: bin/*-release.txt
+          files: bin/*-squashfs-sysupgrade.bin
       - name: delete-workflow-runs
         uses: Mattraks/delete-workflow-runs@main
         with:
