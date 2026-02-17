@@ -42,10 +42,6 @@
 
 - 添加设备步骤遵循 
 
-  https://openwrt.org/docs/techref/targets/ath79
-
-  https://openwrt.org/docs/guide-developer/porting-to-ath79
-
   https://openwrt.org/docs/guide-developer/build-system/device-trees
 
 - 编译步骤遵循 
@@ -67,7 +63,7 @@
 
 1. 内置简体中文语言包 `luci-i18n-base-zh-cn`
 2. 设置日志大小64  `log_size='64'`
-3. 设置时区为Asia/Shanghai  `timezone=Asia/Shanghai`
+3. 设置时区为Asia/Shanghai  `zonename=Asia/Shanghai`
 4. 设置 opkg 源为 阿里云 `https://mirrors.aliyun.com/openwrt`
 
 

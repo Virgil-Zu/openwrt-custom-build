@@ -32,7 +32,7 @@ sed -i 's#$(SCRIPT_DIR)/kconfig.pl $(LINUX_DIR)/.config | $(MKHASH) md5#cat $(TO
 ####################
 #*** create new device model
 if [ ! -f "targets/${device}.sh" ]; then
-	echo "create device script not found!"
+	echo "[targets/${device}.sh] not found!"
 	exit 1
 fi
 . "targets/${device}.sh"
