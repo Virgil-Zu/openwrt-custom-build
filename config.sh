@@ -1,7 +1,8 @@
 #!/bin/bash
 set -e
 
-RELEASE_FILE="$1-release.txt"
+IFS=/ read -r target sub_target device <<< "$1"
+RELEASE_FILE="${device}-release.txt"
 
 echo "" > "${RELEASE_FILE}"
 
