@@ -73,7 +73,6 @@ jobs:
       - name: summary-information
         run: |
           ls -l bin
-#          tree -L 3 openwrt/bin/targets
           df -h
       - name: upload-artifact
         if: steps.build-step.conclusion == 'success'
