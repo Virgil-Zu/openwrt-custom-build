@@ -21,7 +21,7 @@ jobs:
       - name: set-matrix
         id: set-matrix
         run: |
-          targets=$(grep -v '^$' targets.txt | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*,*$//' | jq -R . | jq -sc .)
+          targets=$(sed -e '/^#/d' -e '/^$/d' -e 's/^[[:space:]]*//' -e 's/[[:space:]]*,*$//' targets.txt | jq -R . | jq -sc .)
           echo "matrix={\"target\":$targets}" >> $GITHUB_OUTPUT
           echo "version=$(cat version.txt)" >> $GITHUB_OUTPUT
 
@@ -64,12 +64,12 @@ jobs:
         working-directory: openwrt
         run: ./scripts/feeds install -a
       - name: config-targets
-        run: bash ./config.sh
+        run: bash ./config.sh ${{ matrix.target }}
       - name: build-targets
         id: build-step
         run: |
           echo "artifact_name=$(tmp="${{ matrix.target }}"; tmp="${tmp//\"/}"; echo "${tmp##*/}")" >> $GITHUB_OUTPUT
-          bash ./build.sh ${{ needs.targets.outputs.version }} ${{ matrix.target }}
+#          bash ./build.sh ${{ needs.targets.outputs.version }} ${{ matrix.target }}
       - name: summary-information
         run: |
           tree -L 3 openwrt/bin/targets
@@ -82,18 +82,23 @@ jobs:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
         with:
           name: ${{ steps.build-step.outputs.artifact_name }}
-          path: bin/*-squashfs-sysupgrade.bin
+          path: bin/*-release.txt
           retention-days: 3
 
   release:
     runs-on: ubuntu-latest
     needs: [targets, build]
-    if: github.ref_type == 'tag'
+#    if: github.ref_type == 'tag'
     steps:
       - name: download-artifact
         uses: actions/download-artifact@main
         with:
           path: bin
+      - name: summary
+        run: |
+          tree -L 3 bin
+          find ./bin -mindepth 2 -type f -name "*-release.txt" -exec cp -f {} ./bin/ \;
+          ls -l bin
       - name: create-release
         uses: softprops/action-gh-release@master
         env:
@@ -103,7 +108,7 @@ jobs:
           #body_path: release.txt
           draft: false
           prerelease: false
-          files: bin/*-squashfs-sysupgrade.bin
+          files: bin/*-release.txt
       - name: delete-workflow-runs
         uses: Mattraks/delete-workflow-runs@main
         with:

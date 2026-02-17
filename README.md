@@ -1,20 +1,40 @@
-**这个Repo面向中国大陆地区的用户，不提供英文说明**
-
-**This Repo is intended for users in Chinese Mainland, so it no engish readme.md**
+**这个Repo为中国大陆地区的用户添加了时区和仓库源等配置**
 
 
 
 # 目标
 
-- 针对以下设备编译定制版本的 OpenWrt，主要满足修改Flash和SDRAM之后的固件
+针对以下设备编译定制版本的 OpenWrt，满足硬件修改Flash大小后的固件
 
-  `tl-wr703n v1.6` ，16M Flash，公版 0x50000 布局
 
-  `Phicomm K2 v22.4`，16M Flash，公版 0x50000 布局
 
-  `Phicomm K2 v22.5`，16M Flash，斐讯 0xA0000 布局
+- 目标设备 `tl-wr703n v1.6`，创建新的设备类型  **tl-wr703n v1.6 (16M)**，公版 0x50000 布局
 
-  `Phicomm K2P A1` ，32M Flash，斐讯 0xA0000 布局
+  ```shell
+  openwrt-xx.xx.x-ath79-generic-tplink_tl-wr703n-v1.6-16M-squashfs-sysupgrade.bin
+  ```
+
+- 目标设备 `Phicomm K2 A2 v22.4` ，创建新的设备类型  **Phicomm K2 A2 v22.4 (16M)**，公版 0x50000 布局，v22.4 指刷过官方固件v22.4和或更低的版本
+
+  ```shell
+  openwrt-xx.xx.x-ramips-mt7620-phicomm_k2-A2-v22.4-16m-squashfs-sysupgrade.bin
+  ```
+
+- 目标设备 `Phicomm K2 A2` v22.5 ，创建新的设备类型  **Phicomm K2 A2 v22.5 (16M)**，斐讯 0xA0000 布局，v22.5 指刷过官方固件v22.5和或更高的版本
+
+  ```shell
+  openwrt-xx.xx.x-ramips-mt7620-phicomm_k2-A2-v22.5-16m-squashfs-sysupgrade.bin
+  ```
+
+- 目标设备 `Phicomm K2P A1`，创建新的设备类型  **Phicomm K2P A1 (32M)**，斐讯 0xA0000 布局
+
+  ```shell
+  openwrt-xx.xx.x-ramips-mt7621-phicomm_k2p-A1-32m-squashfs-sysupgrade.bin
+  ```
+
+
+
+# 原则
 
 - 尽可能减少改动，编译选项和官方版本保持一致（即使官方版本的缺陷也保留），编译配置基于官方发布的不同设备的  `config.buildinfo`
 
@@ -51,39 +71,6 @@
 4. 设置 opkg 源为 阿里云 `https://mirrors.aliyun.com/openwrt`
 
 
-
-# 输出
-
-- 目标设备 `tl-wr703n v1.6`，创建新的设备类型  **tl-wr703n v1.6 (16M)**，0x50000 公版布局
-
-  例如:
-
-  ```
-  openwrt-xx.xx.x-ath79-generic-tplink_tl-wr703n-v1.6-16M-squashfs-sysupgrade.bin
-  ```
-
-  
-
-- 目标设备 `Phicomm K2 A2` ，创建新的设备类型  **Phicomm K2 A2 (16M)**，对应斐讯 0xA0000 布局
-
-  例如:
-
-  ```shell
-  openwrt-xx.xx.x-ramips-mt7620-phicomm_k2-A2-v22.4-16m-squashfs-sysupgrade.bin
-  openwrt-xx.xx.x-ramips-mt7620-phicomm_k2-A2-v22.5-16m-squashfs-sysupgrade.bin
-  ```
-
-  
-
-- 目标设备 `Phicomm K2P A1`，创建新的设备类型  **Phicomm K2P A1 (32M)**，对应斐讯 0xA0000 布局
-
-  例如:
-
-  ``````shell
-  openwrt-xx.xx.x-ramips-mt7621-phicomm_k2p-A1-32m-squashfs-sysupgrade.bin
-  ``````
-
-  
 
 # 版本
 

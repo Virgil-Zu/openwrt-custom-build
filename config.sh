@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-RELEASE_FILE="release.txt"
+RELEASE_FILE="$1-release.txt"
 
 echo "" > "${RELEASE_FILE}"
 
