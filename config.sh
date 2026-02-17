@@ -2,7 +2,7 @@
 set -e
 
 IFS=/ read -r target sub_target device <<< "$1"
-RELEASE_FILE="${device}-release.txt"
+RELEASE_FILE="bin/${device}-release.txt"
 
 echo "" > "${RELEASE_FILE}"
 

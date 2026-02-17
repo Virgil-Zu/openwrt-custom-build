@@ -72,6 +72,7 @@ jobs:
 #          bash ./build.sh ${{ needs.targets.outputs.version }} ${{ matrix.target }}
       - name: summary-information
         run: |
+          tree -L 3 openwrt/bin/targets
           ls -l bin
           df -h
       - name: upload-artifact
