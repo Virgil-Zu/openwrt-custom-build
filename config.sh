@@ -9,7 +9,7 @@ echo "" > "${RELEASE_FILE}"
 
 ####################
 #*** patch openwrt v24.10.4
-cp -f patches/*.patch openwrt/feeds/telephony/libs/dahdi-linux/patches/
+#cp -f patches/*.patch openwrt/feeds/telephony/libs/dahdi-linux/patches/
 
 
 ####################
