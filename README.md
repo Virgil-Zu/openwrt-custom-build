@@ -17,7 +17,7 @@ Compile customized versions of OpenWrt for the following devices to meet the fir
   openwrt-xx.xx.x-ramips-mt7620-phicomm_k2-A2-v22.4-16m-squashfs-sysupgrade.bin
   ```
 
-- Target device `Phicomm K2 A2` v22.5: Create a new device type **Phicomm K2 A2 v22.5 (16M)** with the Phicomm 0xA0000 partition layout. "v22.5" refers to devices that have been flashed with the official firmware v22.5 or higher versions.
+- Target device `Phicomm K2 A2 v22.5`: Create a new device type **Phicomm K2 A2 v22.5 (16M)** with the Phicomm 0xA0000 partition layout. "v22.5" refers to devices that have been flashed with the official firmware v22.5 or higher versions.
 
   ```shell
   openwrt-xx.xx.x-ramips-mt7620-phicomm_k2-A2-v22.5-16m-squashfs-sysupgrade.bin

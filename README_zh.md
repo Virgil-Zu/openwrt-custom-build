@@ -20,7 +20,7 @@
   openwrt-xx.xx.x-ramips-mt7620-phicomm_k2-A2-v22.4-16m-squashfs-sysupgrade.bin
   ```
 
-- 目标设备 `Phicomm K2 A2` v22.5 ，创建新的设备类型  **Phicomm K2 A2 v22.5 (16M)**，斐讯 0xA0000 布局，v22.5 指刷过官方固件v22.5和或更高的版本
+- 目标设备 `Phicomm K2 A2 v22.5` ，创建新的设备类型  **Phicomm K2 A2 v22.5 (16M)**，斐讯 0xA0000 布局，v22.5 指刷过官方固件v22.5和或更高的版本
 
   ```shell
   openwrt-xx.xx.x-ramips-mt7620-phicomm_k2-A2-v22.5-16m-squashfs-sysupgrade.bin
