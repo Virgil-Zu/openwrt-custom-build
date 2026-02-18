@@ -1,3 +1,7 @@
+**Read this in other languages: [English](README.md), [中文](README_zh.md).**
+
+
+
 **这个Repo为中国大陆地区的用户添加了时区和仓库源等配置**
 
 

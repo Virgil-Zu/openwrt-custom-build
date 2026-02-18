@@ -1,3 +1,7 @@
+**Read this in other languages: [English](README.md), [中文](README_zh.md).**
+
+
+
 **This repository adds configurations such as time zone and package repository sources for users in mainland China.**
 
 # Objectives
