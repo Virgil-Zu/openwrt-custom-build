@@ -15,7 +15,7 @@
 - 目标设备 `tl-wr703n v1.6`，创建新的设备类型  **tl-wr703n v1.6 (16M)**，公版 0x50000 布局
 
   ```shell
-  openwrt-xx.xx.x-ath79-generic-tplink_tl-wr703n-v1.6-16M-squashfs-sysupgrade.bin
+  openwrt-xx.xx.x-ath79-generic-tplink_tl-wr703n-v1.6-16m-squashfs-sysupgrade.bin
   ```
 
 - 目标设备 `Phicomm K2 A2 v22.4` ，创建新的设备类型  **Phicomm K2 A2 v22.4 (16M)**，公版 0x50000 布局，v22.4 指刷过官方固件v22.4和或更低的版本

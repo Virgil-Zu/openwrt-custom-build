@@ -11,7 +11,7 @@ Compile customized versions of OpenWrt for the following devices to meet the fir
 - Target device `tl-wr703n v1.6`: Create a new device type **tl-wr703n v1.6 (16M)** with the official 0x50000 partition layout.
 
   ```shell
-  openwrt-xx.xx.x-ath79-generic-tplink_tl-wr703n-v1.6-16M-squashfs-sysupgrade.bin
+  openwrt-xx.xx.x-ath79-generic-tplink_tl-wr703n-v1.6-16m-squashfs-sysupgrade.bin
   ```
 
 
