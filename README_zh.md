@@ -32,8 +32,27 @@
 
 - 目标设备 `Phicomm K2P A1`，创建新的设备类型  **Phicomm K2P A1 (32M)**，斐讯 0xA0000 布局
 
+  K2P还修复了WIFI传输功率设置的BUG
+  
+  > OpenWrt针对 MT7621 芯片的驱动，使用了开源驱动，项目地址 `https://github.com/openwrt/mt76`，斐讯K2P的PCB上携带外置功率放大器 PA，斐讯在处理eeprom时没有按照标准设置 eeprom 中 `MT_EE_EXT_PA_2G_TARGET_POWER` 和 `MT_EE_EXT_PA_5G_TARGET_POWER` 的值，设置在了  `MT_EE_TX0_2G_TARGET_POWER` 和 `MT_EE_TX0_5G_G0_TARGET_POWER` 处，造成驱动mt76读取支持的最大功率时读取到0，按照程序逻辑给了一个安全的最大功率 7dBm。这里针对编译K2P的固件做修复。输出两个固件，名称中不含32m表示官方尺寸FLASH大小。版本包含 `v24.10.x`。
+  >
+  > ```shell
+  > lsmod | grep mt76
+  > cfg80211              323584  4 mt7615_common,mt76_connac_lib,mt76,mac80211
+  > compat                 12288  3 mt76,mac80211,cfg80211
+  > hwmon                  16384  1 mt7615_common
+  > mac80211              647168  4 mt7615e,mt7615_common,mt76_connac_lib,mt76
+  > mt76                   69632  3 mt7615e,mt7615_common,mt76_connac_lib
+  > mt76_connac_lib        49152  2 mt7615e,mt7615_common
+  > mt7615_common          73728  1 mt7615e
+  > mt7615e                20480  0
+  > ```
+  >
+  > 从加载的模块确定，要修改 `https://github.com/openwrt/mt76/blob/master/mt7615/eeprom.c`
+  
   ```shell
   openwrt-xx.xx.x-ramips-mt7621-phicomm_k2p-A1-32m-squashfs-sysupgrade.bin
+  openwrt-xx.xx.x-ramips-mt7621-phicomm_k2p-A1-squashfs-sysupgrade.bin
   ```
 
 

@@ -9,8 +9,10 @@ echo "" > "${RELEASE_FILE}"
 
 ####################
 #*** patch openwrt v24.10.4
-#cp -f patches/*.patch openwrt/feeds/telephony/libs/dahdi-linux/patches/
-
+#cp -f patches/201-fix-max-wctdm24xxp-base.patch openwrt/feeds/telephony/libs/dahdi-linux/patches/
+#cp -f patches/202-fix-max-opvax1200-base.patch openwrt/feeds/telephony/libs/dahdi-linux/patches/
+#cp -f patches/203-fix-max-wcaxx.patch openwrt/feeds/telephony/libs/dahdi-linux/patches/
+#cp -f patches/204-fix-max-wctdm.patch openwrt/feeds/telephony/libs/dahdi-linux/patches/
 
 ####################
 #*** set timezone
