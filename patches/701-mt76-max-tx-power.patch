@@ -1,5 +1,5 @@
---- "a/mt76/blob/master/mt7615/eeprom.c"
-+++ "b/mt76/blob/master/mt7615/eeprom.c"
+--- "a/mt7615/eeprom.c"
++++ "b/mt7615/eeprom.c"
 @@ -207,9 +207,9 @@ int mt7615_eeprom_get_target_power_index(struct mt7615_dev *dev,
  	/* TSSI disabled */
  	if (mt7615_ext_pa_enabled(dev, chan->band)) {

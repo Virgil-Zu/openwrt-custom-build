@@ -3,7 +3,7 @@ set -e
 
 ####################
 #*** patch mt76 max-tx-power
-cp -f patches/701-fix-mt76-max-tx-power.patch openwrt/package/kernel/mt76/patches/
+cp -f patches/701-mt76-max-tx-power.patch openwrt/package/kernel/mt76/patches/
 
 cat <<EOF >> openwrt/target/linux/ramips/image/mt7621.mk
 define Device/phicomm_k2p-A1
