@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-IFS=/ read -r target sub_target device <<< "$1"
+IFS=/ read -r target sub_target device <<< "$2"
 
 RELEASE_FILE="${device}-release.txt"
 
