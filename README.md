@@ -32,7 +32,21 @@ Compile customized versions of OpenWrt for the following devices to meet the fir
   Fixed the bug in the WIFI transmit power settings.
   
   > OpenWrt uses the open-source driver for the MT7621 chip from the mt76 project at https://github.com/openwrt/mt76. The Phicomm K2P has an external power amplifier (PA) on its PCB, but Phicomm did not follow the standard EEPROM layout: instead of programming the transmit power values into `MT_EE_EXT_PA_2G_TARGET_POWER` and `MT_EE_EXT_PA_5G_TARGET_POWER`, it stored them in `MT_EE_TX0_2G_TARGET_POWER` and `MT_EE_TX0_5G_G0_TARGET_POWER`. As a result, the mt76 driver reads 0 for the maximum supported transmit power and defaults to a safe maximum of 7 dBm. We have applied a fix for this issue when building K2P firmware, and we will provide two firmware builds: filenames without "32m" use the official flash size, and all builds are based on version `v24.10.x`.
-
+  >
+  > ```shell
+  > lsmod | grep mt76
+  > cfg80211              323584  4 mt7615_common,mt76_connac_lib,mt76,mac80211
+  > compat                 12288  3 mt76,mac80211,cfg80211
+  > hwmon                  16384  1 mt7615_common
+  > mac80211              647168  4 mt7615e,mt7615_common,mt76_connac_lib,mt76
+  > mt76                   69632  3 mt7615e,mt7615_common,mt76_connac_lib
+  > mt76_connac_lib        49152  2 mt7615e,mt7615_common
+  > mt7615_common          73728  1 mt7615e
+  > mt7615e                20480  0
+  > ```
+  >
+  > so, modify `https://github.com/openwrt/mt76/blob/master/mt7615/eeprom.c`
+  
   ```shell
   openwrt-xx.xx.x-ramips-mt7621-phicomm_k2p-A1-32m-squashfs-sysupgrade.bin
   openwrt-xx.xx.x-ramips-mt7621-phicomm_k2p-A1-squashfs-sysupgrade.bin
