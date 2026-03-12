@@ -87,6 +87,19 @@ Compile customized versions of OpenWrt for the following devices to meet the fir
 
 # Version Notes
 
+## 23.05.6
+
+1. - Fixed the cross-compilation bug in the `xdp-tools` package within the OpenWrt source code, which has been officially confirmed as a valid bug.
+
+     Scope of Impact: xdp-tools 1.2.9 and multiple later versions, covering the entire OpenWrt v23.05 series (rc1~rc4 & stable releases).
+
+     Solution:Disable all xdp-related components—99% of home soft routers and OpenWrt main routers don’t require these at all.
+
+     - **xdp-filter**: High-speed packet filtering
+     - **xdp-loader**: XDP program loader
+     - **xdpdump**: XDP-flavored tcpdump (faster packet capture)
+     - **libxdp**: Core XDP library
+
 ## 24.10.4
 
 1. The `asterisk/dahdi-linux` project is referenced with an old version from 2024, and subsequent new versions have fixed the issue.
