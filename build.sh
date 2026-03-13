@@ -48,10 +48,12 @@ if [ -n "${target}" ] && [ -n "${sub_target}" ] && [ -n "${device}" ]; then
 	echo "CONFIG_PACKAGE_luci-i18n-firewall-zh-cn=y" >> .config
 	echo "CONFIG_PACKAGE_luci-i18n-package-manager-zh-cn=y" >> .config
 	
-	echo "# CONFIG_PACKAGE_libxdp is not set" >> .config
-	echo "# CONFIG_PACKAGE_xdp-filter is not set" >> .config
-	echo "# CONFIG_PACKAGE_xdp-loader is not set" >> .config
-	echo "# CONFIG_PACKAGE_xdpdump is not set" >> .config
+	if [ "$1" == "v24.10.4" ]; then
+		echo "# CONFIG_PACKAGE_libxdp is not set" >> .config
+		echo "# CONFIG_PACKAGE_xdp-filter is not set" >> .config
+		echo "# CONFIG_PACKAGE_xdp-loader is not set" >> .config
+		echo "# CONFIG_PACKAGE_xdpdump is not set" >> .config
+	fi
 
 	manifest=$(wget -q -O - "https://downloads.openwrt.org/releases/${1#v}/targets/${target}/${sub_target}/openwrt-${1#v}-${target}-${sub_target}.manifest")
 	if [ -z "$manifest" ]; then
