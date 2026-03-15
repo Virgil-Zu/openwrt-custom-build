@@ -1,4 +1,4 @@
-**Read this in other languages: [English](README.md), [中文](README_zh.md).**
+**[English](README.md), [中文](README_zh.md)**
 
 
 
@@ -48,7 +48,7 @@
   > mt7615e                20480  0
   > ```
   >
-  > 从加载的模块确定，要修改 `https://github.com/openwrt/mt76/blob/master/mt7615/eeprom.c`
+  > 从加载的模块确定，修改 `openwrt/mt76/mt7615/eeprom.c`
   
   ```shell
   openwrt-xx.xx.x-ramips-mt7621-phicomm_k2p-A1-32m-squashfs-sysupgrade.bin

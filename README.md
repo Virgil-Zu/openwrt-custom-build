@@ -1,4 +1,4 @@
-**Read this in other languages: [English](README.md), [中文](README_zh.md).**
+**[English](README.md), [中文](README_zh.md)**
 
 
 
@@ -45,7 +45,7 @@ Compile customized versions of OpenWrt for the following devices to meet the fir
   > mt7615e                20480  0
   > ```
   >
-  > so, modify `https://github.com/openwrt/mt76/blob/master/mt7615/eeprom.c`
+  > modify `openwrt/mt76/mt7615/eeprom.c`
   
   ```shell
   openwrt-xx.xx.x-ramips-mt7621-phicomm_k2p-A1-32m-squashfs-sysupgrade.bin
@@ -89,16 +89,16 @@ Compile customized versions of OpenWrt for the following devices to meet the fir
 
 ## 23.05.6
 
-1. - Fixed the cross-compilation bug in the `xdp-tools` package within the OpenWrt source code, which has been officially confirmed as a valid bug.
+1. Fixed the cross-compilation bug in the `xdp-tools` package within the OpenWrt source code, which has been officially confirmed BUG.
 
-     Scope of Impact: xdp-tools 1.2.9 and multiple later versions, covering the entire OpenWrt v23.05 series (rc1~rc4 & stable releases).
+   Scope of impact: xdp-tools 1.2.9 and multiple later versions, covering the entire OpenWrt v23.05 series (rc1~rc4 & stable releases).
 
-     Solution:Disable all xdp-related components—99% of home soft routers and OpenWrt main routers don’t require these at all.
+   Solution: disable all xdp-related components, 99% of home soft routers and OpenWrt main routers don’t require these at all.
 
-     - **xdp-filter**: High-speed packet filtering
-     - **xdp-loader**: XDP program loader
-     - **xdpdump**: XDP-flavored tcpdump (faster packet capture)
-     - **libxdp**: Core XDP library
+   - **xdp-filter**: High-speed packet filtering
+   - **xdp-loader**: XDP program loader
+   - **xdpdump**: XDP-flavored tcpdump (faster packet capture)
+   - **libxdp**: Core XDP library
 
 ## 24.10.4
 
