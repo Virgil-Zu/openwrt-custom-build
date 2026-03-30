@@ -8,6 +8,8 @@ cp -f patches/301-mt76-mt7615-max-tx-power-k2p.patch openwrt/package/kernel/mt76
 
 target_dts='openwrt/target/linux/ramips/dts/mt7621_phicomm_k2p-A1.dts'
 cp -f openwrt/target/linux/ramips/dts/mt7621_phicomm_k2p.dts "${target_dts}"
+sed -i 's|compatible = "phicomm,k2p"|compatible = "phicomm,k2p-A1", "phicomm,k2p"|' "${target_dts}"
+sed -i 's|model = "Phicomm K2P"|model = "Phicomm K2P (A1)"|' "${target_dts}"
 cat <<EOF >> openwrt/target/linux/ramips/image/mt7621.mk
 define Device/phicomm_k2p-A1
   \$(Device/phicomm_k2p)
