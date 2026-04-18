@@ -27,7 +27,7 @@ jobs:
 
   build:
     needs: targets
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     strategy:
       matrix: ${{fromJson(needs.targets.outputs.matrix)}}
     steps:
