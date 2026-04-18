@@ -47,11 +47,29 @@ jobs:
           # pwd => /home/runner/work/openwrt-custom-build/openwrt-custom-build
           sudo rm -rf /etc/apt/sources.list.d/*
           sudo apt update
+          
+          cd /tmp
+          wget https://www.python.org/ftp/python/2.7.18/Python-2.7.18.tgz
+          tar xzf Python-2.7.18.tgz
+          cd Python-2.7.18
+          ./configure --enable-optimizations --disable-ssl
+          sudo make altinstall
+          sudo ln -sf /usr/local/bin/python2.7 /usr/bin/python2
+          sudo ln -sf /usr/local/bin/python2.7 /usr/bin/python
+          sudo ln -sf /usr/local/bin/python2.7-config /usr/bin/python2-config
+          python2 --version
+          python --version
+          
           sudo apt-get autoremove --purge
           sudo apt-get clean
           mkdir -p bin
       - name: clone-openwrt
-        run: git clone -b ${{ needs.targets.outputs.version }} https://github.com/openwrt/openwrt.git
+#        run: git clone -b ${{ needs.targets.outputs.version }} https://github.com/openwrt/openwrt.git
+        uses: actions/checkout@main
+        with:
+          repository: openwrt/openwrt
+          ref: ${{ needs.targets.outputs.version }}
+          path: openwrt
       - name: update-feeds
         working-directory: openwrt
         run: ./scripts/feeds update -a
