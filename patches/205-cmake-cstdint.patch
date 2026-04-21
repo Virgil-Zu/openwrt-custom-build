@@ -1,0 +1,11 @@
+
+--- a/Source/cmWorkerPool.h
++++ b/Source/cmWorkerPool.h
+@@ -12,6 +12,7 @@
+ #include <string>
+ #include <utility>
+ #include <vector>
++#include <cstdint>
+ 
+ // -- Types
+ class cmWorkerPoolInternal;
