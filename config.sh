@@ -12,7 +12,7 @@ echo "" > "${RELEASE_FILE}"
 
 if [ "$1" == "v19.07.10" ]; then
 	cp -f patches/205-cmake-cstdint.patch openwrt/tools/cmake/patches/
-	cp -f patches/901-manpage-check.patch openwrt/feeds/packages/perl/patches/
+	cp -f patches/901-perl-manpage-check.patch openwrt/feeds/packages/lang/perl/patches/
 fi
 
 if [ "$1" == "v24.10.4" ]; then

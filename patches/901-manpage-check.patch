@@ -1,7 +1,0 @@
---- a/Makefile
-+++ b/Makefile
-@@ -1,1 +1,1 @@
- # Check that all manpages are present and have the right name
--manpage-check:
-+manpage-check:
-+	@true
