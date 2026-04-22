@@ -10,11 +10,6 @@ echo "" > "${RELEASE_FILE}"
 ####################
 #*** patch openwrt 
 
-if [ "$1" == "v19.07.10" ]; then
-	cp -f patches/205-cmake-cstdint.patch openwrt/tools/cmake/patches/
-	cp -f patches/901-perl-manpage-check.patch openwrt/feeds/packages/lang/perl/patches/
-fi
-
 if [ "$1" == "v24.10.4" ]; then
 	cp -f patches/201-dahdi-max-wctdm24xxp-base.patch openwrt/feeds/telephony/libs/dahdi-linux/patches/
 	cp -f patches/202-dahdi-max-opvax1200-base.patch openwrt/feeds/telephony/libs/dahdi-linux/patches/
