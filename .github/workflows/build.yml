@@ -6,8 +6,8 @@ name: openwrt-build-github-actions
 on:
   workflow_dispatch:
   push:
-    tags:
-      - "v*"
+#    tags:
+#      - "v*"
 
 jobs:
   targets:
@@ -30,6 +30,8 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: ubuntu:18.04
+      volumes:
+        - /home/runner/work/openwrt-custom-build/openwrt-custom-build:/home/runner/work/openwrt-custom-build/openwrt-custom-build
     strategy:
       matrix: ${{fromJson(needs.targets.outputs.matrix)}}
     steps:
