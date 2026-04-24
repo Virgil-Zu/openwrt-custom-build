@@ -41,10 +41,10 @@ jobs:
           df -h
           sudo apt-get autoremove --purge
           sudo apt-get clean
-          rm -rf /usr/share/dotnet
-          rm -rf /usr/local/lib/android
-          rm -rf /opt/ghc
-          rm -rf /opt/hostedtoolcache/CodeQL
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /usr/local/lib/android
+          sudo rm -rf /opt/ghc
+          sudo rm -rf /opt/hostedtoolcache/CodeQL
           df -h
       - name: build-targets
         id: build-step
