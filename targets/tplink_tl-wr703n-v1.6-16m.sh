@@ -14,6 +14,8 @@ cat <<EOF >> openwrt/target/linux/ath79/image/tiny-tp-link.mk
 define Device/tplink_tl-wr703n-v1.6-16m
   \$(Device/tplink-16mlzma)
   SOC := ar9331
+  ATH_SOC := ar9331
+  DEVICE_TITLE := TP-Link TL-WR703N
   DEVICE_MODEL := TL-WR703N
   DEVICE_VARIANT := v1.6 (16M)
   DEVICE_PACKAGES := kmod-usb-core kmod-usb-ehci-platform kmod-usb-ohci-platform
