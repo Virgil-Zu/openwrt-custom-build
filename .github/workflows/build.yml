@@ -63,12 +63,12 @@ jobs:
               rm -rf /etc/apt/sources.list.d/*
               apt update
               mkdir -p bin
-              UID=$(stat -c '%u' $GITHUB_WORKSPACE)
-              runuser -u $UID -- git clone -b ${{ needs.targets.outputs.version }} https://github.com/openwrt/openwrt.git
-              runuser -u $UID -- ./scripts/feeds update -a
-              runuser -u $UID -- ./scripts/feeds install -a
-              runuser -u $UID -- bash ./config.sh "${{ needs.targets.outputs.version }}" "${{ matrix.target }}"
-              runuser -u $UID -- bash ./build.sh "${{ needs.targets.outputs.version }}" "${{ matrix.target }}"
+              RUNNER_UID=$(stat -c '%u' $GITHUB_WORKSPACE)
+              runuser -u $RUNNER_UID -- git clone -b ${{ needs.targets.outputs.version }} https://github.com/openwrt/openwrt.git
+              runuser -u $RUNNER_UID -- ./scripts/feeds update -a
+              runuser -u $RUNNER_UID -- ./scripts/feeds install -a
+              runuser -u $RUNNER_UID -- bash ./config.sh "${{ needs.targets.outputs.version }}" "${{ matrix.target }}"
+              runuser -u $RUNNER_UID -- bash ./build.sh "${{ needs.targets.outputs.version }}" "${{ matrix.target }}"
               echo "artifact_name=$(tmp="${{ matrix.target }}"; tmp="${tmp//\"/}"; echo "${tmp##*/}")" >> $GITHUB_OUTPUT
               "
       - name: summary-information
