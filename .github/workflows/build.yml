@@ -5,6 +5,7 @@ name: openwrt-build-github-actions
 # whoami => runner
 # pwd => /home/runner/work/openwrt-custom-build/openwrt-custom-build
 
+
 on:
   workflow_dispatch:
   push:
@@ -53,8 +54,8 @@ jobs:
             entrypoint: /bin/bash
             args: |
               -c "
-              whoami
-              pwd
+              # whoami => root
+              # pwd => /github/workspace
               apt update
               apt upgrade -y
               apt install -y sudo build-essential ccache ecj fastjar file g++ gawk gettext git java-propose-classpath libelf-dev libncurses5-dev libncursesw5-dev libssl-dev python python2.7-dev python3 unzip wget python3-distutils python3-setuptools python3-dev rsync subversion swig time xsltproc zlib1g-dev 
@@ -64,11 +65,12 @@ jobs:
               apt update
               mkdir -p bin
               RUNNER_UID=$(stat -c '%u' $GITHUB_WORKSPACE)
-              runuser -u $RUNNER_UID -- git clone -b ${{ needs.targets.outputs.version }} https://github.com/openwrt/openwrt.git
-              runuser -u $RUNNER_UID -- ./scripts/feeds update -a
-              runuser -u $RUNNER_UID -- ./scripts/feeds install -a
-              runuser -u $RUNNER_UID -- bash ./config.sh "${{ needs.targets.outputs.version }}" "${{ matrix.target }}"
-              runuser -u $RUNNER_UID -- bash ./build.sh "${{ needs.targets.outputs.version }}" "${{ matrix.target }}"
+              useradd -u $RUNNER_UID -g $RUNNER_UID -M -s /bin/bash runner
+              runuser -u runner -- git clone -b ${{ needs.targets.outputs.version }} https://github.com/openwrt/openwrt.git
+              runuser -u runner -- ./scripts/feeds update -a
+              runuser -u runner -- ./scripts/feeds install -a
+              runuser -u runner -- bash ./config.sh "${{ needs.targets.outputs.version }}" "${{ matrix.target }}"
+              runuser -u runner -- bash ./build.sh "${{ needs.targets.outputs.version }}" "${{ matrix.target }}"
               echo "artifact_name=$(tmp="${{ matrix.target }}"; tmp="${tmp//\"/}"; echo "${tmp##*/}")" >> $GITHUB_OUTPUT
               "
       - name: summary-information
