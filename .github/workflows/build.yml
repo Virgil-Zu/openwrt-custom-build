@@ -52,24 +52,28 @@ jobs:
           df -h
       - name: build-targets
         uses: docker://ubuntu:18.04
-        run: |
-          whoami
-          pwd
-          apt update
-          apt upgrade -y
-          apt install -y sudo build-essential ccache ecj fastjar file g++ gawk gettext git java-propose-classpath libelf-dev libncurses5-dev libncursesw5-dev libssl-dev python python2.7-dev python3 unzip wget python3-distutils python3-setuptools python3-dev rsync subversion swig time xsltproc zlib1g-dev 
-          apt-get autoremove --purge
-          apt-get clean
-          rm -rf /etc/apt/sources.list.d/*
-          apt update
-          mkdir -p bin
-          UID=$(stat -c '%u' $GITHUB_WORKSPACE)
-          runuser -u $UID -- git clone -b ${{ needs.targets.outputs.version }} https://github.com/openwrt/openwrt.git
-          runuser -u $UID -- ./scripts/feeds update -a
-          runuser -u $UID -- ./scripts/feeds install -a
-          runuser -u $UID -- bash ./config.sh "${{ needs.targets.outputs.version }}" "${{ matrix.target }}"
-          runuser -u $UID -- bash ./build.sh "${{ needs.targets.outputs.version }}" "${{ matrix.target }}"
-          echo "artifact_name=$(tmp="${{ matrix.target }}"; tmp="${tmp//\"/}"; echo "${tmp##*/}")" >> $GITHUB_OUTPUT
+        with:
+            entrypoint: /bin/bash
+            args: |
+              -c "
+              whoami
+              pwd
+              apt update
+              apt upgrade -y
+              apt install -y sudo build-essential ccache ecj fastjar file g++ gawk gettext git java-propose-classpath libelf-dev libncurses5-dev libncursesw5-dev libssl-dev python python2.7-dev python3 unzip wget python3-distutils python3-setuptools python3-dev rsync subversion swig time xsltproc zlib1g-dev 
+              apt-get autoremove --purge
+              apt-get clean
+              rm -rf /etc/apt/sources.list.d/*
+              apt update
+              mkdir -p bin
+              UID=$(stat -c '%u' $GITHUB_WORKSPACE)
+              runuser -u $UID -- git clone -b ${{ needs.targets.outputs.version }} https://github.com/openwrt/openwrt.git
+              runuser -u $UID -- ./scripts/feeds update -a
+              runuser -u $UID -- ./scripts/feeds install -a
+              runuser -u $UID -- bash ./config.sh "${{ needs.targets.outputs.version }}" "${{ matrix.target }}"
+              runuser -u $UID -- bash ./build.sh "${{ needs.targets.outputs.version }}" "${{ matrix.target }}"
+              echo "artifact_name=$(tmp="${{ matrix.target }}"; tmp="${tmp//\"/}"; echo "${tmp##*/}")" >> $GITHUB_OUTPUT
+              "
       - name: summary-information
         run: |
           tree -L 3 openwrt/bin/targets
