@@ -31,7 +31,6 @@ jobs:
   build:
     needs: targets
     runs-on: ubuntu-latest
-    container: ubuntu:18.04
     strategy:
       matrix: ${{ fromJson(needs.targets.outputs.matrix) }}
     defaults:
