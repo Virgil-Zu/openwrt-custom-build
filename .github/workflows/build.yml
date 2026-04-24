@@ -51,6 +51,7 @@ jobs:
           rm -rf /opt/hostedtoolcache/CodeQL
           df -h
       - name: build-targets
+        id: build-step
         uses: docker://ubuntu:18.04
         with:
             entrypoint: /bin/bash
