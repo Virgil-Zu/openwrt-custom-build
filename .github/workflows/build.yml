@@ -40,9 +40,21 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@main
-      - name: install-buildsystem
-        working-directory: /root
+      - name: clean-system
         run: |
+          df -h
+          apt-get autoremove --purge
+          apt-get clean
+          rm -rf /usr/share/dotnet
+          rm -rf /usr/local/lib/android
+          rm -rf /opt/ghc
+          rm -rf /opt/hostedtoolcache/CodeQL
+          df -h
+      - name: build-targets
+        uses: docker://ubuntu:18.04
+        run: |
+          whoami
+          pwd
           apt update
           apt upgrade -y
           apt install -y sudo build-essential ccache ecj fastjar file g++ gawk gettext git java-propose-classpath libelf-dev libncurses5-dev libncursesw5-dev libssl-dev python python2.7-dev python3 unzip wget python3-distutils python3-setuptools python3-dev rsync subversion swig time xsltproc zlib1g-dev 
@@ -51,38 +63,12 @@ jobs:
           rm -rf /etc/apt/sources.list.d/*
           apt update
           mkdir -p bin
-          useradd -m runner || true
-          cp -rf $GITHUB_WORKSPACE /home/runner/repo
-          chown -R runner:runner /home/runner/repo
-      - name: clean-system
-        run: |
-          whoami
-          pwd
-          df -h
-          rm -rf /usr/share/dotnet
-          rm -rf /usr/local/lib/android
-          rm -rf /opt/ghc
-          rm -rf /opt/hostedtoolcache/CodeQL
-          df -h
-      - name: clone-openwrt
-        run: runuser -u runner -- git clone -b ${{ needs.targets.outputs.version }} https://github.com/openwrt/openwrt.git
-#        uses: actions/checkout@main
-#        with:
-#          repository: openwrt/openwrt
-#          ref: ${{ needs.targets.outputs.version }}
-#          path: openwrt
-      - name: update-feeds
-        working-directory: /home/runner/repo/openwrt
-        run: runuser -u runner -- ./scripts/feeds update -a
-      - name: install-feeds
-        working-directory: /home/runner/repo/openwrt
-        run: runuser -u runner -- ./scripts/feeds install -a
-      - name: config-targets
-        run: runuser -u runner -- bash ./config.sh "${{ needs.targets.outputs.version }}" "${{ matrix.target }}"
-      - name: build-targets
-        id: build-step
-        run: |
-          runuser -u runner -- bash ./build.sh "${{ needs.targets.outputs.version }}" "${{ matrix.target }}"
+          UID=$(stat -c '%u' $GITHUB_WORKSPACE)
+          runuser -u $UID -- git clone -b ${{ needs.targets.outputs.version }} https://github.com/openwrt/openwrt.git
+          runuser -u $UID -- ./scripts/feeds update -a
+          runuser -u $UID -- ./scripts/feeds install -a
+          runuser -u $UID -- bash ./config.sh "${{ needs.targets.outputs.version }}" "${{ matrix.target }}"
+          runuser -u $UID -- bash ./build.sh "${{ needs.targets.outputs.version }}" "${{ matrix.target }}"
           echo "artifact_name=$(tmp="${{ matrix.target }}"; tmp="${tmp//\"/}"; echo "${tmp##*/}")" >> $GITHUB_OUTPUT
       - name: summary-information
         run: |
