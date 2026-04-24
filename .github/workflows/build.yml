@@ -65,7 +65,7 @@ jobs:
               apt update
               mkdir -p bin
               RUNNER_UID=$(stat -c '%u' $GITHUB_WORKSPACE)
-              useradd -u $RUNNER_UID -g $RUNNER_UID -M -s /bin/bash runner
+              useradd -u $RUNNER_UID -M -s /bin/bash runner
               runuser -u runner -- git clone -b ${{ needs.targets.outputs.version }} https://github.com/openwrt/openwrt.git
               runuser -u runner -- ./scripts/feeds update -a
               runuser -u runner -- ./scripts/feeds install -a
