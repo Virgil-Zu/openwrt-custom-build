@@ -18,10 +18,9 @@ jobs:
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
       version: ${{ steps.set-matrix.outputs.version }}
-      workspace: ${{ steps.set-matrix.outputs.version }}
     steps:
       - name: checkout
-        uses: actions/checkout@main
+        uses: actions/checkout@v6
       - name: set-matrix
         id: set-matrix
         run: |
@@ -36,7 +35,7 @@ jobs:
       matrix: ${{ fromJson(needs.targets.outputs.matrix) }}
     steps:
       - name: checkout
-        uses: actions/checkout@main
+        uses: actions/checkout@v6
       - name: clean-system
         run: |
           df -h
@@ -52,36 +51,37 @@ jobs:
         uses: docker://ubuntu:18.04
         with:
           entrypoint: /bin/bash
-          args:
-            - -c
-            - |
-              # whoami => root
-              # pwd => /github/workspace
-              apt update
-              apt upgrade -y
-              apt install -y sudo tree build-essential ccache ecj fastjar file g++ gawk gettext git java-propose-classpath libelf-dev libncurses5-dev libncursesw5-dev libssl-dev python python2.7-dev python3 unzip wget python3-distutils python3-setuptools python3-dev rsync subversion swig time xsltproc zlib1g-dev 
-              apt-get autoremove --purge
-              apt-get clean
-              rm -rf /etc/apt/sources.list.d/*
-              apt update
-              RUNNER_UID=$(stat -c '%u' $GITHUB_WORKSPACE)
-              useradd -u $RUNNER_UID -M -s /bin/bash runner
-              runuser -u runner -- mkdir -p bin
-              runuser -u runner -- git clone -b ${{ needs.targets.outputs.version }} https://github.com/openwrt/openwrt.git
-              runuser -u runner -- bash -c 'cd openwrt && ./scripts/feeds update -a'
-              runuser -u runner -- bash -c 'cd openwrt && ./scripts/feeds install -a'
-              runuser -u runner -- bash ./config.sh ${{ needs.targets.outputs.version }} ${{ matrix.target }}
-              runuser -u runner -- bash ./build.sh ${{ needs.targets.outputs.version }} ${{ matrix.target }}
-              tmp=${{ matrix.target }}
-              echo artifact_name=${tmp##*/} >> $GITHUB_OUTPUT
+          args: |
+            -c '
+            # whoami => root
+            # pwd => /github/workspace
+            apt update
+            apt upgrade -y
+            apt install -y sudo tree build-essential ccache ecj fastjar file g++ gawk gettext git java-propose-classpath libelf-dev libncurses5-dev libncursesw5-dev libssl-dev python python2.7-dev python3 unzip wget python3-distutils python3-setuptools python3-dev rsync subversion swig time xsltproc zlib1g-dev 
+            apt-get autoremove --purge
+            apt-get clean
+            rm -rf /etc/apt/sources.list.d/*
+            apt update
+            RUNNER_UID=$(stat -c "%u" $GITHUB_WORKSPACE)
+            useradd -u $RUNNER_UID -M -s /bin/bash runner
+            runuser -u runner -- mkdir -p bin
+            runuser -u runner -- git clone -b ${{ needs.targets.outputs.version }} https://github.com/openwrt/openwrt.git
+            runuser -u runner -- bash -c "cd openwrt && ./scripts/feeds update -a"
+            runuser -u runner -- bash -c "cd openwrt && ./scripts/feeds install -a"
+            runuser -u runner -- bash ./config.sh ${{ needs.targets.outputs.version }} ${{ matrix.target }}
+            runuser -u runner -- bash ./build.sh ${{ needs.targets.outputs.version }} ${{ matrix.target }}
+            tmp=${{ matrix.target }}
+            echo "${tmp##*/}" > artifact_name.txt
+            '
       - name: summary-information
         run: |
           tree -L 3 openwrt/bin/targets
           ls -l bin
           df -h
+          echo "artifact_name=$(cat artifact_name.txt)" >> $GITHUB_OUTPUT
       - name: upload-artifact
         if: steps.build-step.conclusion == 'success'
-        uses: actions/upload-artifact@main
+        uses: actions/upload-artifact@v7
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
         with:
@@ -98,7 +98,7 @@ jobs:
         working-directory: /home/runner/repo
     steps:
       - name: download-artifact
-        uses: actions/download-artifact@main
+        uses: actions/download-artifact@v8
         with:
           path: bin
       - name: summary
@@ -107,7 +107,7 @@ jobs:
           find bin -mindepth 2 -type f -name "*-squashfs-sysupgrade.bin" -exec cp -f {} bin/ \;
           ls -l bin
       - name: create-release
-        uses: softprops/action-gh-release@master
+        uses: softprops/action-gh-release@v3
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
         with:
@@ -117,7 +117,7 @@ jobs:
           prerelease: false
           files: bin/*-squashfs-sysupgrade.bin
       - name: delete-workflow-runs
-        uses: Mattraks/delete-workflow-runs@main
+        uses: Mattraks/delete-workflow-runs@v2
         with:
           retain_days: 0
           keep_minimum_runs: 5
