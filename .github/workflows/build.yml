@@ -62,7 +62,7 @@ jobs:
             apt-get clean
             rm -rf /etc/apt/sources.list.d/*
             apt update
-            RUNNER_UID=$(stat -c '%u' \$GITHUB_WORKSPACE)
+            RUNNER_UID=$(stat -c '%u' $GITHUB_WORKSPACE)
             useradd -u $RUNNER_UID -M -s /bin/bash runner
             runuser -u runner -- mkdir -p bin
             runuser -u runner -- git clone -b ${{ needs.targets.outputs.version }} https://github.com/openwrt/openwrt.git
@@ -71,7 +71,7 @@ jobs:
             runuser -u runner -- bash ./config.sh ${{ needs.targets.outputs.version }} ${{ matrix.target }}
             runuser -u runner -- bash ./build.sh ${{ needs.targets.outputs.version }} ${{ matrix.target }}
             tmp=${{ matrix.target }}
-            echo \${tmp##*/} > artifact_name.txt
+            echo ${tmp##*/} > artifact_name.txt
             "
       - name: summary-information
         run: |
