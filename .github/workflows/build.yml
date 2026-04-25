@@ -51,9 +51,10 @@ jobs:
         id: build-step
         uses: docker://ubuntu:18.04
         with:
-            entrypoint: /bin/bash
-            args: |
-              -c "
+          entrypoint: /bin/bash
+          args:
+            - -c
+            - |
               # whoami => root
               # pwd => /github/workspace
               apt update
@@ -63,16 +64,16 @@ jobs:
               apt-get clean
               rm -rf /etc/apt/sources.list.d/*
               apt update
-              mkdir -p bin
               RUNNER_UID=$(stat -c '%u' $GITHUB_WORKSPACE)
               useradd -u $RUNNER_UID -M -s /bin/bash runner
+              runuser -u runner -- mkdir -p bin
               runuser -u runner -- git clone -b ${{ needs.targets.outputs.version }} https://github.com/openwrt/openwrt.git
-              runuser -u runner -- ./scripts/feeds update -a
-              runuser -u runner -- ./scripts/feeds install -a
-              runuser -u runner -- bash ./config.sh "${{ needs.targets.outputs.version }}" "${{ matrix.target }}"
-              runuser -u runner -- bash ./build.sh "${{ needs.targets.outputs.version }}" "${{ matrix.target }}"
-              echo "artifact_name=$(tmp="${{ matrix.target }}"; tmp="${tmp//\"/}"; echo "${tmp##*/}")" >> $GITHUB_OUTPUT
-              "
+              runuser -u runner -- bash -c 'cd openwrt && ./scripts/feeds update -a'
+              runuser -u runner -- bash -c 'cd openwrt && ./scripts/feeds install -a'
+              runuser -u runner -- bash ./config.sh ${{ needs.targets.outputs.version }} ${{ matrix.target }}
+              runuser -u runner -- bash ./build.sh ${{ needs.targets.outputs.version }} ${{ matrix.target }}
+              tmp=${{ matrix.target }}
+              echo artifact_name=${tmp##*/} >> $GITHUB_OUTPUT
       - name: summary-information
         run: |
           tree -L 3 openwrt/bin/targets
