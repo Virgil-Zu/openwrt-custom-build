@@ -52,7 +52,7 @@ jobs:
         with:
           entrypoint: /bin/bash
           args: |
-            -c '
+            -c "
             # whoami => root
             # pwd => /github/workspace
             apt update
@@ -62,17 +62,17 @@ jobs:
             apt-get clean
             rm -rf /etc/apt/sources.list.d/*
             apt update
-            RUNNER_UID=$(stat -c "%u" $GITHUB_WORKSPACE)
+            RUNNER_UID=$(stat -c '%u' \$GITHUB_WORKSPACE)
             useradd -u $RUNNER_UID -M -s /bin/bash runner
             runuser -u runner -- mkdir -p bin
             runuser -u runner -- git clone -b ${{ needs.targets.outputs.version }} https://github.com/openwrt/openwrt.git
-            runuser -u runner -- bash -c "cd openwrt && ./scripts/feeds update -a"
-            runuser -u runner -- bash -c "cd openwrt && ./scripts/feeds install -a"
+            runuser -u runner -- bash -c 'cd openwrt && ./scripts/feeds update -a'
+            runuser -u runner -- bash -c 'cd openwrt && ./scripts/feeds install -a'
             runuser -u runner -- bash ./config.sh ${{ needs.targets.outputs.version }} ${{ matrix.target }}
             runuser -u runner -- bash ./build.sh ${{ needs.targets.outputs.version }} ${{ matrix.target }}
             tmp=${{ matrix.target }}
-            echo "${tmp##*/}" > artifact_name.txt
-            '
+            echo \${tmp##*/} > artifact_name.txt
+            "
       - name: summary-information
         run: |
           tree -L 3 openwrt/bin/targets
