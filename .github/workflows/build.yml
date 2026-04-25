@@ -72,13 +72,13 @@ jobs:
             runuser -u runner -- bash ./build.sh ${{ needs.targets.outputs.version }} ${{ matrix.target }}
             tmp=${{ matrix.target }}
             echo ${tmp##*/} > artifact_name.txt
+            echo "artifact_name=$(cat artifact_name.txt)" >> $GITHUB_OUTPUT
             "
       - name: summary-information
         run: |
           tree -L 3 openwrt/bin/targets
           ls -l bin
           df -h
-          echo "artifact_name=$(cat artifact_name.txt)" >> $GITHUB_OUTPUT
       - name: upload-artifact
         if: steps.build-step.conclusion == 'success'
         uses: actions/upload-artifact@v7
