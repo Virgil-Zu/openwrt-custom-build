@@ -112,3 +112,6 @@ Compile customized versions of OpenWrt for the following devices to meet the fir
 
    :rage:**It's unreasonable that the official mirror can be compiled successfully; this makes no sense at all.**
 
+## 19.07.10
+
+1. For some legacy low-spec devices, even if you upgrade the flash size and SDRAM capacity, they still struggle to run newer firmware builds. That’s why we provide some older firmware versions.
