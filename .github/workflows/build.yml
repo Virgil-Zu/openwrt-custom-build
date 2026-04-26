@@ -70,22 +70,21 @@ jobs:
             runuser -u runner -- bash -c 'cd openwrt && ./scripts/feeds install -a'
             runuser -u runner -- bash ./config.sh ${{ needs.targets.outputs.version }} ${{ matrix.target }}
             runuser -u runner -- bash ./build.sh ${{ needs.targets.outputs.version }} ${{ matrix.target }}
-            tmp=${{ matrix.target }}
-            echo ${tmp##*/} > artifact_name.txt
-            echo "artifact_name=$(cat artifact_name.txt)" >> $GITHUB_OUTPUT
             "
       - name: summary-information
         run: |
           tree -L 3 openwrt/bin/targets
           ls -l bin
           df -h
+          tmp=${{ matrix.target }}
+          echo "ARTIFACT_NAME=${tmp##*/}" >> $GITHUB_ENV
       - name: upload-artifact
         if: steps.build-step.conclusion == 'success'
         uses: actions/upload-artifact@v7
         env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          name: ${{ steps.build-step.outputs.artifact_name }}
+          name: ${{ env.ARTIFACT_NAME }}
           path: bin/*-squashfs-sysupgrade.bin
           retention-days: 3
 
@@ -93,9 +92,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: [targets, build]
     if: github.ref_type == 'tag'
-    defaults:
-      run:
-        working-directory: /home/runner/repo
     steps:
       - name: download-artifact
         uses: actions/download-artifact@v8
