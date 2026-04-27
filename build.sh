@@ -60,8 +60,8 @@ if [ -n "${target}" ] && [ -n "${sub_target}" ] && [ -n "${device}" ]; then
 	echo "CONFIG_EXTERNAL_TOOLCHAIN=y" >> .config
 	echo "# CONFIG_NATIVE_TOOLCHAIN is not set" >> .config
 	echo "CONFIG_TOOLCHAIN_ROOT='$(pwd)/../toolchain'" >> .config
-	echo "CONFIG_TOOLCHAIN_PREFIX='mipsel-openwrt-linux-musl-'" >> .config
-	echo "CONFIG_TARGET_NAME='mipsel-openwrt-linux-musl'" >> .config
+	echo "CONFIG_TOOLCHAIN_PREFIX='mips-openwrt-linux-musl-'" >> .config
+	echo "CONFIG_TARGET_NAME='mips-openwrt-linux-musl'" >> .config
 	echo "CONFIG_TOOLCHAIN_LIBC='musl'" >> .config
 
 	manifest=$(wget -q -O - "https://downloads.openwrt.org/releases/${1#v}/targets/${target}/${sub_target}/openwrt-${1#v}-${target}-${sub_target}.manifest")
