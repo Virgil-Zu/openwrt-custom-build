@@ -69,6 +69,8 @@
 
 - 编译步骤遵循 
 
+  https://openwrt.org/docs/guide-developer/toolchain/install-buildsystem
+
   https://openwrt.org/docs/guide-developer/toolchain/use-buildsystem
 
 - 依据官方对FLASH和SDRAM的说明，主要针对SDRAM上限（FLASH容量足够）

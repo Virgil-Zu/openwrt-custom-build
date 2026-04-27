@@ -66,6 +66,8 @@ Compile customized versions of OpenWrt for the following devices to meet the fir
 
 - Follow the steps below for compilation:
 
+  https://openwrt.org/docs/guide-developer/toolchain/install-buildsystem
+
   https://openwrt.org/docs/guide-developer/toolchain/use-buildsystem
 
 - Based on the official specs of FLASH and SDRAM, the main bottleneck is the SDRAM size limit (FLASH has plenty of free space)

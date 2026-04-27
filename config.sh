@@ -11,7 +11,7 @@ echo "" > "${RELEASE_FILE}"
 #*** patch openwrt 
 
 if [ "$1" == "v19.07.10" ]; then
-
+	:
 fi
 
 ####################
