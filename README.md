@@ -68,7 +68,13 @@ Compile customized versions of OpenWrt for the following devices to meet the fir
 
   https://openwrt.org/docs/guide-developer/toolchain/use-buildsystem
 
-  
+- Based on the official specs of FLASH and SDRAM, the main bottleneck is the SDRAM size limit (FLASH has plenty of free space)
+
+  https://openwrt.org/supported_devices/openwrt_on_864_devices
+
+  https://openwrt.org/supported_devices/864_warning
+
+  When swapping chips, you gotta follow the max SDRAM capacity supported by the MCU. Use firmware version 21.02.7 for 64M SDRAM.
 
 # Update Frequency
 

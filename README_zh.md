@@ -71,7 +71,13 @@
 
   https://openwrt.org/docs/guide-developer/toolchain/use-buildsystem
 
+- 依据官方对FLASH和SDRAM的说明，主要针对SDRAM上限（FLASH容量足够）
 
+  https://openwrt.org/supported_devices/openwrt_on_864_devices
+
+  https://openwrt.org/supported_devices/864_warning
+
+  更换芯片需依据MCU最大支持的SDRAM容量，64M SDRAM使用 21.02.7版本
 
 # 频次
 
