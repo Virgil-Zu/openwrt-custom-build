@@ -76,7 +76,8 @@ if [ -n "${target}" ] && [ -n "${sub_target}" ] && [ -n "${device}" ]; then
 	make defconfig
 
 	echo "download depend..."
-	make download -j$(nproc)
+	#make download -j$(nproc)
+	make download -j1 V=sc
 
 	echo "make..."
 	make -j$(($(nproc)+1)) V=s || make -j1 V=s
