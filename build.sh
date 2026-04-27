@@ -57,12 +57,15 @@ if [ -n "${target}" ] && [ -n "${sub_target}" ] && [ -n "${device}" ]; then
 	echo "CONFIG_PACKAGE_luci-i18n-opkg-zh-cn=y" >> .config
 	
 	echo "CONFIG_EXTERNAL_TOOLCHAIN=y" >> .config
-	echo "CONFIG_EXTERNAL_TOOLCHAIN_PATH='$(pwd)/../toolchain'" >> .config
-	echo "CONFIG_EXTERNAL_TOOLCHAIN_PREFIX='mipsel-openwrt-linux-musl'" >> .config
-	echo "CONFIG_EXTERNAL_TOOLCHAIN_ARCH='mipsel_24kc'" >> .config
-	echo "CONFIG_EXTERNAL_TOOLCHAIN_GCC_VERSION='7.5.0'" >> .config
-	echo "CONFIG_EXTERNAL_TOOLCHAIN_LIBC='musl'" >> .config
-	
+	echo "# CONFIG_NATIVE_TOOLCHAIN is not set" >> .config
+	echo "CONFIG_TARGET_NAME='mipsel-openwrt-linux-musl'" >> .config
+	echo "CONFIG_TOOLCHAIN_PREFIX='mipsel-openwrt-linux-musl-'" >> .config
+	echo "CONFIG_TOOLCHAIN_ROOT='$(pwd)/../toolchain'" >> .config
+	echo "CONFIG_TOOLCHAIN_LIBC='musl'" >> .config
+	echo "CONFIG_TOOLCHAIN_BIN_PATH='./usr/bin ./bin'" >> .config
+	echo "CONFIG_TOOLCHAIN_INC_PATH='./usr/include ./include'" >> .config
+	echo "CONFIG_TOOLCHAIN_LIB_PATH='./usr/lib ./lib'" >> .config
+
 	manifest=$(wget -q -O - "https://downloads.openwrt.org/releases/${1#v}/targets/${target}/${sub_target}/openwrt-${1#v}-${target}-${sub_target}.manifest")
 	if [ -z "$manifest" ]; then
 		echo "wget manifest error"
