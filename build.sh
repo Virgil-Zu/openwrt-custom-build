@@ -19,12 +19,15 @@ if [ -n "${target}" ] && [ -n "${sub_target}" ] && [ -n "${device}" ]; then
 
 	echo "build '${target}/${sub_target}/${device}' ..."
 
+	# gcc version !!!
+	mkdir -p toolchain
+    wget "https://downloads.openwrt.org/releases/${1#v}/targets/${target}/${sub_target}/openwrt-sdk-${1#v}-${target}-${sub_target}_gcc-7.5.0_musl.Linux-x86_64.tar.xz"
+	tar -xf "openwrt-sdk-${1#v}-${target}-${sub_target}_gcc-7.5.0_musl.Linux-x86_64.tar.xz" -C sdk --strip-components=1
+	mv -f sdk/staging_dir/toolchain-mipsel_24kc_gcc-7.5.0_musl toolchain
+	rm -rf sdk
+	
 	cd openwrt
 
-	# gcc version !!!
-    wget "https://downloads.openwrt.org/releases/${1#v}/targets/${target}/${sub_target}/openwrt-sdk-${1#v}-${target}-${sub_target}_gcc-7.5.0_musl.Linux-x86_64.tar.xz"
-	tar -xf "openwrt-sdk-${1#v}-${target}-${sub_target}_gcc-7.5.0_musl.Linux-x86_64.tar.xz" --strip-components=1
-	
 	echo "" > .config
 	wget "https://downloads.openwrt.org/releases/${1#v}/targets/${target}/${sub_target}/config.buildinfo" -q -O .config
 
@@ -52,6 +55,13 @@ if [ -n "${target}" ] && [ -n "${sub_target}" ] && [ -n "${device}" ]; then
 	echo "CONFIG_PACKAGE_luci-i18n-firewall-zh-cn=y" >> .config
 	echo "CONFIG_PACKAGE_luci-i18n-opkg-zh-cn=y" >> .config
 	
+	echo "CONFIG_EXTERNAL_TOOLCHAIN=y" >> .config
+	echo "CONFIG_EXTERNAL_TOOLCHAIN_PATH='$(pwd)/../toolchain'" >> .config
+	echo "CONFIG_EXTERNAL_TOOLCHAIN_PREFIX='mipsel-openwrt-linux-musl'" >> .config
+	echo "CONFIG_EXTERNAL_TOOLCHAIN_ARCH='mipsel_24kc'" >> .config
+	echo "CONFIG_EXTERNAL_TOOLCHAIN_GCC_VERSION='7.5.0'" >> .config
+	echo "CONFIG_EXTERNAL_TOOLCHAIN_LIBC='musl'" >> .config
+	
 	manifest=$(wget -q -O - "https://downloads.openwrt.org/releases/${1#v}/targets/${target}/${sub_target}/openwrt-${1#v}-${target}-${sub_target}.manifest")
 	if [ -z "$manifest" ]; then
 		echo "wget manifest error"
@@ -76,8 +86,7 @@ if [ -n "${target}" ] && [ -n "${sub_target}" ] && [ -n "${device}" ]; then
 	make defconfig
 
 	echo "download depend..."
-	#make download -j$(nproc)
-	make download -j1 V=sc
+	make download -j$(nproc)
 
 	echo "make..."
 	make -j$(($(nproc)+1)) V=s || make -j1 V=s
