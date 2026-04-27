@@ -21,6 +21,10 @@ if [ -n "${target}" ] && [ -n "${sub_target}" ] && [ -n "${device}" ]; then
 
 	cd openwrt
 
+	# gcc version !!!
+    wget "https://downloads.openwrt.org/releases/${1#v}/targets/${target}/${sub_target}/openwrt-sdk-${1#v}-${target}-${sub_target}_gcc-7.5.0_musl.Linux-x86_64.tar.xz"
+	tar -xf "openwrt-sdk-${1#v}-${target}-${sub_target}_gcc-7.5.0_musl.Linux-x86_64.tar.xz" --strip-components=1
+	
 	echo "" > .config
 	wget "https://downloads.openwrt.org/releases/${1#v}/targets/${target}/${sub_target}/config.buildinfo" -q -O .config
 
