@@ -20,11 +20,9 @@ if [ -n "${target}" ] && [ -n "${sub_target}" ] && [ -n "${device}" ]; then
 	echo "build '${target}/${sub_target}/${device}' ..."
 
 	# gcc version !!!
-	mkdir -p toolchain
-    wget "https://downloads.openwrt.org/releases/${1#v}/targets/${target}/${sub_target}/openwrt-sdk-${1#v}-${target}-${sub_target}_gcc-7.5.0_musl.Linux-x86_64.tar.xz" -q -O sdk.tar.xz
-	tar -xf sdk.tar.xz --one-top-level=sdk
-	mv -f sdk/staging_dir/toolchain-mips_24kc_gcc-7.5.0_musl/* toolchain
-	rm -rf sdk
+	toolchain=openwrt-sdk-${1#v}-${target}-${sub_target}_gcc-7.5.0_musl.Linux-x86_64
+    wget "https://downloads.openwrt.org/releases/${1#v}/targets/${target}/${sub_target}/${toolchain}.tar.xz" -q
+	tar -xf ${toolchain}.tar.xz
 	
 	cd openwrt
 
@@ -58,7 +56,7 @@ if [ -n "${target}" ] && [ -n "${sub_target}" ] && [ -n "${device}" ]; then
 	echo "CONFIG_DEVEL=y" >> .config
 	echo "CONFIG_EXTERNAL_TOOLCHAIN=y" >> .config
 	echo "# CONFIG_NATIVE_TOOLCHAIN is not set" >> .config
-	echo "CONFIG_TOOLCHAIN_ROOT=$(pwd)/../toolchain" >> .config
+	echo "CONFIG_TOOLCHAIN_ROOT=$(pwd)/../${toolchain}" >> .config
 	echo "CONFIG_TOOLCHAIN_PREFIX=mips-openwrt-linux-musl-" >> .config
 	echo "CONFIG_TARGET_NAME=mips-openwrt-linux-musl" >> .config
 	echo "CONFIG_TOOLCHAIN_LIBC=musl" >> .config
