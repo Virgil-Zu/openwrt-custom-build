@@ -23,6 +23,7 @@ if [ -n "${target}" ] && [ -n "${sub_target}" ] && [ -n "${device}" ]; then
 	mkdir -p toolchain
     wget "https://downloads.openwrt.org/releases/${1#v}/targets/${target}/${sub_target}/openwrt-sdk-${1#v}-${target}-${sub_target}_gcc-7.5.0_musl.Linux-x86_64.tar.xz" -q -O sdk.tar.xz
 	tar -xf sdk.tar.xz
+	ls -lAh
 	tree -dL 2 sdk
 	mv -f sdk/staging_dir/toolchain-mips_24kc_gcc-7.5.0_musl/* toolchain
 	rm -rf sdk
