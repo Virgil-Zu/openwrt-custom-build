@@ -60,11 +60,6 @@ jobs:
             apt-get autoremove --purge
             apt-get clean
             useradd -u $(stat -c '%u' $GITHUB_WORKSPACE) -M -s /bin/bash runner
-            runuser -u runner -- mkdir -p bin
-            runuser -u runner -- git clone -b '${{ needs.targets.outputs.version }}' https://github.com/openwrt/openwrt.git
-            runuser -u runner -- bash -c 'cd openwrt && ./scripts/feeds update -a'
-            runuser -u runner -- bash -c 'cd openwrt && ./scripts/feeds install -a'
-            runuser -u runner -- bash ./config.sh '${{ needs.targets.outputs.version }}' '${{ matrix.target }}'
             runuser -u runner -- bash ./build.sh '${{ needs.targets.outputs.version }}' '${{ matrix.target }}'
             "
       - name: summary-information

@@ -1,38 +1,68 @@
 #!/bin/bash
 set -e
 
-if [ -z "$1" ]; then
-	echo "invalid parameter 1"
+if [ -z "${1}" ]; then
+	echo "invalid parameter 1 <varsion>"
 	exit 1
 fi
 
-if [ -z "$2" ]; then
-	echo "invalid parameter 2"
+if [ -z "${2}" ]; then
+	echo "invalid parameter 2 <target>"
 	exit 1
 fi
+
 
 echo "build target start ..."
 
-IFS=/ read -r target sub_target device <<< "$2"
+IFS=/ read -r arch libc target sub_target device <<< "${2}"
 
-if [ -n "${target}" ] && [ -n "${sub_target}" ] && [ -n "${device}" ]; then
+if [ -n "${arch}" ] && [ -n "${libc}" ] && [ -n "${target}" ] && [ -n "${sub_target}" ] && [ -n "${device}" ]; then
 
 	echo "build '${target}/${sub_target}/${device}' ..."
 
-	# every targrt / every version is different
-	toolchain=openwrt-sdk-${1#v}-${target}-${sub_target}_gcc-7.5.0_musl.Linux-x86_64
-	toolchain_path=$(pwd)/${toolchain}/staging_dir/toolchain-mips_24kc_gcc-7.5.0_musl
+	mkdir -p bin
+	
+	#*** clone source
+	git clone -b "${1}" https://github.com/openwrt/openwrt.git
+
+	#*** patch openwrt with version
+	if [ "$1" == "v19.07.10" ]; then
+		:
+	fi
+
+	#*** set timezone
+	sed -i "s|timezone='UTC'|zonename='Asia/Shanghai'|" openwrt/package/base-files/files/bin/config_generate
+	sed -i "s|zonename='UTC'|zonename='Asia/Shanghai'|" openwrt/package/base-files/files/bin/config_generate
+	sed -i "s|timezone='GMT0'|timezone='CST-8'|" openwrt/package/base-files/files/bin/config_generate
+	sed -i "s|log_size='128'|log_size='64'|" openwrt/package/base-files/files/bin/config_generate
+
+	#*** copy kernel MD5
+	sed -i 's#$(LINUX_DIR)/.vermagic#$(LINUX_DIR)/.vermagic\n	cp $(TOPDIR)/.vermagic $(LINUX_DIR)/.vermagic#' openwrt/include/kernel-defaults.mk
+	sed -i 's#$(SCRIPT_DIR)/kconfig.pl $(LINUX_DIR)/.config | $(MKHASH) md5#cat $(TOPDIR)/.vermagic#' openwrt/package/kernel/linux/Makefile
+
+	#*** create new device model
+	if [ ! -f "targets/${device}.sh" ]; then
+		echo "[targets/${device}.sh] not found!"
+		exit 1
+	fi
+	. "targets/${device}.sh"
+	
+	#*** wget toolchain
+	toolchain=openwrt-sdk-${1#v}-${target}-${sub_target}_${libc}.Linux-x86_64
+	toolchain_path=$(pwd)/${toolchain}/staging_dir/toolchain-${arch}_${libc}
     wget "https://downloads.openwrt.org/releases/${1#v}/targets/${target}/${sub_target}/${toolchain}.tar.xz" -q
 	tar -xf ${toolchain}.tar.xz
 
 	cd openwrt
 
+	./scripts/feeds update -a
+	./scripts/feeds install -a
+	
 	echo "" > .config
 	wget "https://downloads.openwrt.org/releases/${1#v}/targets/${target}/${sub_target}/config.buildinfo" -q -O .config
 
 	sed -i "/^[[:space:]]*CONFIG_TARGET_DEVICE_/d" .config
 	sed -i "s/^[[:space:]]*CONFIG_TARGET_MULTI_PROFILE=y/# CONFIG_TARGET_MULTI_PROFILE is not set/g" .config
-	#sed -i "s/^[[:space:]]*CONFIG_DEVEL=y/# CONFIG_DEVEL is not set/g" .config
 	sed -i "s/^[[:space:]]*CONFIG_TARGET_PER_DEVICE_ROOTFS=y/# CONFIG_TARGET_PER_DEVICE_ROOTFS is not set/g" .config
 	sed -i "s/^[[:space:]]*CONFIG_IB=y/# CONFIG_IB is not set/g" .config
 	sed -i "s/^[[:space:]]*CONFIG_MAKE_TOOLCHAIN=y/# CONFIG_MAKE_TOOLCHAIN is not set/g" .config
@@ -54,12 +84,10 @@ if [ -n "${target}" ] && [ -n "${sub_target}" ] && [ -n "${device}" ]; then
 	echo "CONFIG_PACKAGE_luci-i18n-firewall-zh-cn=y" >> .config
 	echo "CONFIG_PACKAGE_luci-i18n-opkg-zh-cn=y" >> .config
 	
-	# !!! CONFIG_DEVEL
-	echo "CONFIG_DEVEL=y" >> .config
 	echo "CONFIG_EXTERNAL_TOOLCHAIN=y" >> .config
 	echo "# CONFIG_NATIVE_TOOLCHAIN is not set" >> .config
-	echo "CONFIG_TARGET_NAME=\"mips-openwrt-linux-musl\"" >> .config
-	echo "CONFIG_TOOLCHAIN_PREFIX=\"mips-openwrt-linux-musl-\"" >> .config
+	echo "CONFIG_TARGET_NAME=\"${arch%%_*}-openwrt-linux-${libc#*_}\"" >> .config
+	echo "CONFIG_TOOLCHAIN_PREFIX=\"${arch%%_*}-openwrt-linux-${libc#*_}-\"" >> .config
 	echo "CONFIG_TOOLCHAIN_ROOT=\"${toolchain_path}\"" >> .config
 	echo "# CONFIG_EXTERNAL_TOOLCHAIN_LIBC_USE_GLIBC is not set" >> .config
 	echo "# CONFIG_EXTERNAL_TOOLCHAIN_LIBC_USE_UCLIBC is not set" >> .config
@@ -92,7 +120,7 @@ if [ -n "${target}" ] && [ -n "${sub_target}" ] && [ -n "${device}" ]; then
 	make download -j$(nproc)
 
 	echo "make..."
-	make -j$(($(nproc)+1)) V=s || make -j1 V=s
+	make -j$(($(nproc)+1)) V=s
 
 	df -h
 	tree -L 3 bin/targets
