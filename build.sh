@@ -19,7 +19,7 @@ if [ -n "${target}" ] && [ -n "${sub_target}" ] && [ -n "${device}" ]; then
 
 	echo "build '${target}/${sub_target}/${device}' ..."
 
-	# gcc version !!!
+	# every targrt / every version is different
 	toolchain=openwrt-sdk-${1#v}-${target}-${sub_target}_gcc-7.5.0_musl.Linux-x86_64
 	toolchain_path=$(pwd)/${toolchain}/staging_dir/toolchain-mips_24kc_gcc-7.5.0_musl
     wget "https://downloads.openwrt.org/releases/${1#v}/targets/${target}/${sub_target}/${toolchain}.tar.xz" -q
@@ -32,7 +32,7 @@ if [ -n "${target}" ] && [ -n "${sub_target}" ] && [ -n "${device}" ]; then
 
 	sed -i "/^[[:space:]]*CONFIG_TARGET_DEVICE_/d" .config
 	sed -i "s/^[[:space:]]*CONFIG_TARGET_MULTI_PROFILE=y/# CONFIG_TARGET_MULTI_PROFILE is not set/g" .config
-	sed -i "s/^[[:space:]]*CONFIG_DEVEL=y/# CONFIG_DEVEL is not set/g" .config
+	#sed -i "s/^[[:space:]]*CONFIG_DEVEL=y/# CONFIG_DEVEL is not set/g" .config
 	sed -i "s/^[[:space:]]*CONFIG_TARGET_PER_DEVICE_ROOTFS=y/# CONFIG_TARGET_PER_DEVICE_ROOTFS is not set/g" .config
 	sed -i "s/^[[:space:]]*CONFIG_IB=y/# CONFIG_IB is not set/g" .config
 	sed -i "s/^[[:space:]]*CONFIG_MAKE_TOOLCHAIN=y/# CONFIG_MAKE_TOOLCHAIN is not set/g" .config
@@ -54,7 +54,8 @@ if [ -n "${target}" ] && [ -n "${sub_target}" ] && [ -n "${device}" ]; then
 	echo "CONFIG_PACKAGE_luci-i18n-firewall-zh-cn=y" >> .config
 	echo "CONFIG_PACKAGE_luci-i18n-opkg-zh-cn=y" >> .config
 	
-	#echo "CONFIG_DEVEL=y" >> .config
+	# !!! CONFIG_DEVEL
+	echo "CONFIG_DEVEL=y" >> .config
 	echo "CONFIG_EXTERNAL_TOOLCHAIN=y" >> .config
 	echo "# CONFIG_NATIVE_TOOLCHAIN is not set" >> .config
 	echo "CONFIG_TARGET_NAME=\"mips-openwrt-linux-musl\"" >> .config
