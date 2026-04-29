@@ -21,10 +21,10 @@ if [ -n "${target}" ] && [ -n "${sub_target}" ] && [ -n "${device}" ]; then
 
 	# gcc version !!!
 	toolchain=openwrt-sdk-${1#v}-${target}-${sub_target}_gcc-7.5.0_musl.Linux-x86_64
-	toolchain_path=${toolchain}/staging_dir/toolchain-mipsel_24kc_gcc-7.5.0_musl
+	toolchain_path=$(pwd)/${toolchain}/staging_dir/toolchain-mips_24kc_gcc-7.5.0_musl
     wget "https://downloads.openwrt.org/releases/${1#v}/targets/${target}/${sub_target}/${toolchain}.tar.xz" -q
 	tar -xf ${toolchain}.tar.xz
-	
+
 	cd openwrt
 
 	echo "" > .config
@@ -59,7 +59,7 @@ if [ -n "${target}" ] && [ -n "${sub_target}" ] && [ -n "${device}" ]; then
 	echo "# CONFIG_NATIVE_TOOLCHAIN is not set" >> .config
 	echo "CONFIG_TARGET_NAME=\"mips-openwrt-linux-musl\"" >> .config
 	echo "CONFIG_TOOLCHAIN_PREFIX=\"mips-openwrt-linux-musl-\"" >> .config
-	echo "CONFIG_TOOLCHAIN_ROOT=\"$(pwd)/../${toolchain_path}\"" >> .config
+	echo "CONFIG_TOOLCHAIN_ROOT=\"${toolchain_path}\"" >> .config
 	echo "# CONFIG_EXTERNAL_TOOLCHAIN_LIBC_USE_GLIBC is not set" >> .config
 	echo "# CONFIG_EXTERNAL_TOOLCHAIN_LIBC_USE_UCLIBC is not set" >> .config
 	echo "CONFIG_EXTERNAL_TOOLCHAIN_LIBC_USE_MUSL=\"musl\"" >> .config
