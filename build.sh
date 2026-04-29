@@ -62,7 +62,7 @@ if [ -n "${target}" ] && [ -n "${sub_target}" ] && [ -n "${device}" ]; then
 	echo "CONFIG_TOOLCHAIN_ROOT=\"${toolchain_path}\"" >> .config
 	echo "# CONFIG_EXTERNAL_TOOLCHAIN_LIBC_USE_GLIBC is not set" >> .config
 	echo "# CONFIG_EXTERNAL_TOOLCHAIN_LIBC_USE_UCLIBC is not set" >> .config
-	echo "CONFIG_EXTERNAL_TOOLCHAIN_LIBC_USE_MUSL=\"musl\"" >> .config
+	echo "CONFIG_EXTERNAL_TOOLCHAIN_LIBC_USE_MUSL=y" >> .config
 
 	manifest=$(wget -q -O - "https://downloads.openwrt.org/releases/${1#v}/targets/${target}/${sub_target}/openwrt-${1#v}-${target}-${sub_target}.manifest")
 	if [ -z "$manifest" ]; then
