@@ -19,12 +19,13 @@ libc=""
 target=""
 sub_target=""
 device=""
+count=$(echo -n "$2" | grep -o "/" | wc -l)
 
-if [ $(( ${#2} - ${#2//\//} )) -eq 2  ]; then
+if [ "$count" -eq 2  ]; then
 	IFS=/ read -r target sub_target device <<< "${2}"
 fi
 
-if [ $(( ${#2} - ${#2//\//} )) -eq 4  ]; then
+if [ "$count" -eq 4  ]; then
 	IFS=/ read -r arch libc target sub_target device <<< "${2}"
 fi
 
