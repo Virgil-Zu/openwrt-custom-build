@@ -47,12 +47,6 @@ if [ -n "${arch}" ] && [ -n "${libc}" ] && [ -n "${target}" ] && [ -n "${sub_tar
 	fi
 	. "targets/${device}.sh"
 	
-	#*** wget toolchain
-	toolchain=openwrt-sdk-${1#v}-${target}-${sub_target}_${libc}.Linux-x86_64
-	toolchain_path=$(pwd)/${toolchain}/staging_dir/toolchain-${arch}_${libc}
-    wget "https://downloads.openwrt.org/releases/${1#v}/targets/${target}/${sub_target}/${toolchain}.tar.xz" -q
-	tar -xf ${toolchain}.tar.xz
-
 	cd openwrt
 
 	./scripts/feeds update -a
@@ -84,15 +78,6 @@ if [ -n "${arch}" ] && [ -n "${libc}" ] && [ -n "${target}" ] && [ -n "${sub_tar
 	echo "CONFIG_PACKAGE_luci-i18n-firewall-zh-cn=y" >> .config
 	echo "CONFIG_PACKAGE_luci-i18n-opkg-zh-cn=y" >> .config
 	
-	echo "CONFIG_EXTERNAL_TOOLCHAIN=y" >> .config
-	echo "# CONFIG_NATIVE_TOOLCHAIN is not set" >> .config
-	echo "CONFIG_TARGET_NAME=\"${arch%%_*}-openwrt-linux-${libc#*_}\"" >> .config
-	echo "CONFIG_TOOLCHAIN_PREFIX=\"${arch%%_*}-openwrt-linux-${libc#*_}-\"" >> .config
-	echo "CONFIG_TOOLCHAIN_ROOT=\"${toolchain_path}\"" >> .config
-	echo "# CONFIG_EXTERNAL_TOOLCHAIN_LIBC_USE_GLIBC is not set" >> .config
-	echo "# CONFIG_EXTERNAL_TOOLCHAIN_LIBC_USE_UCLIBC is not set" >> .config
-	echo "CONFIG_EXTERNAL_TOOLCHAIN_LIBC_USE_MUSL=y" >> .config
-
 	manifest=$(wget -q -O - "https://downloads.openwrt.org/releases/${1#v}/targets/${target}/${sub_target}/openwrt-${1#v}-${target}-${sub_target}.manifest")
 	if [ -z "$manifest" ]; then
 		echo "wget manifest error"
