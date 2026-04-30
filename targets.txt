@@ -1,2 +1,4 @@
-#mips_24kc/gcc-7.5.0_musl/ath79/tiny/tplink_tl-wr703n-v1.6-16m
-ath79/tiny/tplink_tl-wr703n-v1.6-16m
+#ath79/tiny/tplink_tl-wr703n-v1.6-16m
+mips_24kc/gcc-11.2.0_musl/ath79/tiny/tplink_tl-wr703n-v1.6-16m
+mipsel_24kc/gcc-11.2.0_musl/ramips/mt7620/phicomm_k2-A2-v22.4-16m
+mipsel_24kc/gcc-11.2.0_musl/ramips/mt7620/phicomm_k2-A2-v22.5-16m

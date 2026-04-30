@@ -62,7 +62,7 @@ if [ -n "${target}" ] && [ -n "${sub_target}" ] && [ -n "${device}" ]; then
 	
 	
 	if [ -n "${arch}" ] && [ -n "${libc}" ]; then
-		toolchain=openwrt-sdk-${1#v}-${target}-${sub_target}_${libc}.Linux-x86_64
+		toolchain=openwrt-toolchain-${1#v}-${target}-${sub_target}_${libc}.Linux-x86_64
 		toolchain_path=$(pwd)/${toolchain}/staging_dir/toolchain-${arch}_${libc}
 		wget "https://downloads.openwrt.org/releases/${1#v}/targets/${target}/${sub_target}/${toolchain}.tar.xz" -q
 		tar -xf ${toolchain}.tar.xz
