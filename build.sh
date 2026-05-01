@@ -60,7 +60,6 @@ if [ -n "${target}" ] && [ -n "${sub_target}" ] && [ -n "${device}" ]; then
 	fi
 	. "targets/${device}.sh"
 	
-	
 	if [ -n "${arch}" ] && [ -n "${libc}" ]; then
 		toolchain=openwrt-toolchain-${1#v}-${target}-${sub_target}_${libc}.Linux-x86_64
 		toolchain_path=$(pwd)/${toolchain}/toolchain-${arch}_${libc}
