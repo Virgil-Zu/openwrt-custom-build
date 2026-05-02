@@ -69,9 +69,17 @@
 
 - 编译步骤遵循 
 
+  https://openwrt.org/docs/guide-developer/toolchain/install-buildsystem
+
   https://openwrt.org/docs/guide-developer/toolchain/use-buildsystem
 
+- 依据官方对FLASH和SDRAM的说明，主要针对SDRAM上限（FLASH容量足够）
 
+  https://openwrt.org/supported_devices/openwrt_on_864_devices
+
+  https://openwrt.org/supported_devices/864_warning
+
+  更换芯片需依据MCU最大支持的SDRAM容量，64M SDRAM使用 21.02.7版本
 
 # 频次
 
@@ -120,3 +128,7 @@
 	这里需要将`base.c` 中的`MAX`改为`MAX_ATTEMPTS`
 	
 	:rage:**不知道官方镜像是如何编译成功的，这很不合理**
+
+## 19.07.10
+
+1. 对一些性能较弱的旧设备，即使扩大了FLASH大小和SDRAM，运行较新版本的固件也比较吃力。所以提供一些较低版本的固件。

@@ -66,9 +66,17 @@ Compile customized versions of OpenWrt for the following devices to meet the fir
 
 - Follow the steps below for compilation:
 
+  https://openwrt.org/docs/guide-developer/toolchain/install-buildsystem
+
   https://openwrt.org/docs/guide-developer/toolchain/use-buildsystem
 
-  
+- Based on the official specs of FLASH and SDRAM, the main bottleneck is the SDRAM size limit (FLASH has plenty of free space)
+
+  https://openwrt.org/supported_devices/openwrt_on_864_devices
+
+  https://openwrt.org/supported_devices/864_warning
+
+  When swapping chips, you gotta follow the max SDRAM capacity supported by the MCU. Use firmware version 21.02.7 for 64M SDRAM.
 
 # Update Frequency
 
@@ -112,3 +120,6 @@ Compile customized versions of OpenWrt for the following devices to meet the fir
 
    :rage:**It's unreasonable that the official mirror can be compiled successfully; this makes no sense at all.**
 
+## 19.07.10
+
+1. For some legacy low-spec devices, even if you upgrade the flash size and SDRAM capacity, they still struggle to run newer firmware builds. That’s why we provide some older firmware versions.
