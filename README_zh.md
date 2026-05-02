@@ -129,6 +129,20 @@
 	
 	:rage:**不知道官方镜像是如何编译成功的，这很不合理**
 
+## 24.10.1
+
+1. docker 编译环境使用 Ubuntu:24.04。
+1. 加入 `phicomm_k2p` 设备支持。
+1. 默认语言包 `luci-i18n-opkg-zh-cn` 改为 `luci-i18n-package-manager-zh-cn`
+
+## 22.03.7
+
+1. docker 编译环境使用 Ubuntu:22.04，依赖 python3.x。
+2. 加入 `phicomm_k2` 设备支持。
+3. 官方提供 toolchain，但是似乎 toolchain 不能用于编译镜像。
+
 ## 19.07.10
 
 1. 对一些性能较弱的旧设备，即使扩大了FLASH大小和SDRAM，运行较新版本的固件也比较吃力。所以提供一些较低版本的固件。
+2. docker 编译环境使用 Ubuntu:18.04，依赖 python 2.7x
+3. 官方提供sdk，但是似乎sdk不能用于编译镜像。

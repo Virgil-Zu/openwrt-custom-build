@@ -120,6 +120,20 @@ Compile customized versions of OpenWrt for the following devices to meet the fir
 
    :rage:**It's unreasonable that the official mirror can be compiled successfully; this makes no sense at all.**
 
+## 24.10.1
+
+1. Docker build environment is now on Ubuntu 24.04.
+2. Added support for the `phicomm_k2p` device.
+3. Swapped the default language pack from `luci-i18n-opkg-zh-cn` to `luci-i18n-package-manager-zh-cn`.
+
+## 22.03.7
+
+1. Docker build environment runs on Ubuntu 22.04, with Python 3.x as a required dependency.
+2. Added support for the `phicomm_k2` device.
+3. The official toolchain is provided, but it looks like this toolchain can't be used to build firmware images.
+
 ## 19.07.10
 
-1. For some legacy low-spec devices, even if you upgrade the flash size and SDRAM capacity, they still struggle to run newer firmware builds. That’s why we provide some older firmware versions.
+1. For older low-performance devices, even with expanded flash storage and SDRAM, they still struggle to run newer firmware builds. That's why we're providing these lower-version firmware releases.
+2. Docker build environment is based on Ubuntu 18.04, and requires Python 2.7.x.
+3. The official SDK is provided, but it seems this SDK won't work for building firmware images.

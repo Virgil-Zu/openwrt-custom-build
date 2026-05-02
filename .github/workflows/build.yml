@@ -49,14 +49,14 @@ jobs:
           df -h
       - name: build-targets
         id: build-step
-        uses: docker://ubuntu:22.04
+        uses: docker://ubuntu:24.04
         with:
           entrypoint: /bin/bash
           args: |
             -c "
             apt update
             apt upgrade -y
-            apt install -y tree build-essential clang flex bison g++ gawk gcc-multilib g++-multilib gettext git libncurses-dev libssl-dev python3-distutils python3-setuptools rsync swig unzip zlib1g-dev file wget
+            apt install -y tree build-essential clang flex bison g++ gawk gcc-multilib g++-multilib gettext git libncurses5-dev libssl-dev python3-setuptools rsync swig unzip zlib1g-dev file wget
             apt-get autoremove --purge
             apt-get clean
             useradd -u $(stat -c '%u' $GITHUB_WORKSPACE) -M -s /bin/bash runner

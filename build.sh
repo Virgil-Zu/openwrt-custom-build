@@ -96,7 +96,7 @@ if [ -n "${target}" ] && [ -n "${sub_target}" ] && [ -n "${device}" ]; then
 	echo "CONFIG_LUCI_LANG_zh_Hans=y" >> .config
 	echo "CONFIG_PACKAGE_luci-i18n-base-zh-cn=y" >> .config
 	echo "CONFIG_PACKAGE_luci-i18n-firewall-zh-cn=y" >> .config
-	echo "CONFIG_PACKAGE_luci-i18n-opkg-zh-cn=y" >> .config
+	echo "CONFIG_PACKAGE_luci-i18n-package-manager-zh-cn=y" >> .config
 	
 	if [ -n "${arch}" ] && [ -n "${libc}" ]; then
 		echo "CONFIG_EXTERNAL_TOOLCHAIN=y" >> .config
