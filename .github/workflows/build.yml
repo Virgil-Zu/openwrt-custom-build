@@ -49,7 +49,7 @@ jobs:
           df -h
       - name: build-targets
         id: build-step
-        uses: docker://ubuntu:24.04
+        uses: docker://ubuntu:22.04
         with:
           entrypoint: /bin/bash
           args: |
