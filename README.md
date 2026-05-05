@@ -132,6 +132,12 @@ Compile customized versions of OpenWrt for the following devices to meet the fir
 2. Added support for the `phicomm_k2` device.
 3. The official toolchain is provided, but it looks like this toolchain can't be used to build firmware images.
 
+## 21.02.7
+
+1. Multiple TP-Link devices with the **ath79** architecture on OpenWrt 21.02 release have a known issue: after the first boot of the squashfs firmware, the `rootfs_data` partition fails to format properly, the **overlay** mount process errors out, and the system drops straight into read-only squashfs mode.
+
+   This problem can be fixed by disabling the compile option `CONFIG_MTD_SPI_NOR_USE_4K_SECTORS`.
+
 ## 19.07.10
 
 1. For older low-performance devices, even with expanded flash storage and SDRAM, they still struggle to run newer firmware builds. That's why we're providing these lower-version firmware releases.

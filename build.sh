@@ -38,11 +38,6 @@ if [ -n "${target}" ] && [ -n "${sub_target}" ] && [ -n "${device}" ]; then
 	#*** clone source
 	git clone -b "${1}" https://github.com/openwrt/openwrt.git
 
-	#*** patch openwrt with version
-	if [ "$1" == "v19.07.10" ]; then
-		:
-	fi
-
 	#*** set timezone
 	sed -i "s|timezone='UTC'|zonename='Asia/Shanghai'|" openwrt/package/base-files/files/bin/config_generate
 	sed -i "s|zonename='UTC'|zonename='Asia/Shanghai'|" openwrt/package/base-files/files/bin/config_generate
@@ -74,6 +69,14 @@ if [ -n "${target}" ] && [ -n "${sub_target}" ] && [ -n "${device}" ]; then
 	
 	echo "" > .config
 	wget "https://downloads.openwrt.org/releases/${1#v}/targets/${target}/${sub_target}/config.buildinfo" -q -O .config
+
+	#*** patch openwrt with version
+	if [ "$1" == "v24.10.4" ]; then
+		cp -f patches/201-dahdi-max-wctdm24xxp-base.patch openwrt/feeds/telephony/libs/dahdi-linux/patches/
+		cp -f patches/202-dahdi-max-opvax1200-base.patch openwrt/feeds/telephony/libs/dahdi-linux/patches/
+		cp -f patches/203-dahdi-max-wcaxx.patch openwrt/feeds/telephony/libs/dahdi-linux/patches/
+		cp -f patches/204-dahdi-max-wctdm.patch openwrt/feeds/telephony/libs/dahdi-linux/patches/
+	fi
 
 	sed -i "/^[[:space:]]*CONFIG_TARGET_DEVICE_/d" .config
 	sed -i "s/^[[:space:]]*CONFIG_TARGET_MULTI_PROFILE=y/# CONFIG_TARGET_MULTI_PROFILE is not set/g" .config

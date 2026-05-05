@@ -141,6 +141,10 @@
 2. 加入 `phicomm_k2` 设备支持。
 3. 官方提供 toolchain，但是似乎 toolchain 不能用于编译镜像。
 
+## 21.02.7
+
+1. 多个 ath79 架构 TP-Link 设备 21.02 版本下表现为 squashfs 固件首次启动后，rootfs_data 无法被正确格式化、overlay 挂载失败，系统直接降级为只读 squashfs 模式，关闭编译选项 `CONFIG_MTD_SPI_NOR_USE_4K_SECTORS` 以解决此问题
+
 ## 19.07.10
 
 1. 对一些性能较弱的旧设备，即使扩大了FLASH大小和SDRAM，运行较新版本的固件也比较吃力。所以提供一些较低版本的固件。
