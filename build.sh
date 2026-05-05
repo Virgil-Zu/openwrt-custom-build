@@ -93,6 +93,7 @@ if [ -n "${target}" ] && [ -n "${sub_target}" ] && [ -n "${device}" ]; then
 	echo "# CONFIG_KERNEL_DEBUG_KERNEL is not set" >> .config
 	echo "# CONFIG_KERNEL_DEBUG_FS is not set" >> .config
 	echo "# CONFIG_TARGET_ROOTFS_INITRAMFS is not set" >> .config
+	echo "# CONFIG_MTD_SPI_NOR_USE_4K_SECTORS is not set" >> .config
 	echo "CONFIG_TARGET_${target}_${sub_target}_DEVICE_${device}=y" >> .config
 	echo "CONFIG_LUCI_LANG_zh_Hans=y" >> .config
 	echo "CONFIG_PACKAGE_luci-i18n-base-zh-cn=y" >> .config
