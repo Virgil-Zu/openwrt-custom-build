@@ -72,10 +72,10 @@ if [ -n "${target}" ] && [ -n "${sub_target}" ] && [ -n "${device}" ]; then
 
 	#*** patch openwrt with version
 	if [ "$1" == "v24.10.4" ]; then
-		cp -f patches/201-dahdi-max-wctdm24xxp-base.patch openwrt/feeds/telephony/libs/dahdi-linux/patches/
-		cp -f patches/202-dahdi-max-opvax1200-base.patch openwrt/feeds/telephony/libs/dahdi-linux/patches/
-		cp -f patches/203-dahdi-max-wcaxx.patch openwrt/feeds/telephony/libs/dahdi-linux/patches/
-		cp -f patches/204-dahdi-max-wctdm.patch openwrt/feeds/telephony/libs/dahdi-linux/patches/
+		cp -f ../patches/201-dahdi-max-wctdm24xxp-base.patch feeds/telephony/libs/dahdi-linux/patches/
+		cp -f ../patches/202-dahdi-max-opvax1200-base.patch feeds/telephony/libs/dahdi-linux/patches/
+		cp -f ../patches/203-dahdi-max-wcaxx.patch feeds/telephony/libs/dahdi-linux/patches/
+		cp -f ../patches/204-dahdi-max-wctdm.patch feeds/telephony/libs/dahdi-linux/patches/
 	fi
 
 	sed -i "/^[[:space:]]*CONFIG_TARGET_DEVICE_/d" .config
