@@ -101,21 +101,9 @@
 
 # 版本
 
-## 23.05.6
+## 24.10.6
 
-1. 修复OpenWrt 源码中 `xdp-tools` 软件包的交叉编译 BUG，已被官方确认为有效 bug。
-
-   影响范围：xdp-tools 1.2.9 及后续多个版本，覆盖 OpenWrt v23.05 全系列（rc1~rc4、稳定版）
-
-   解决办法：禁用xdp相关组件，这些组件99% 的家庭软路由、OpenWrt 主路由都不需要。
-
-   - **xdp-filter**：高速包过滤
-
-   - **xdp-loader**：加载 XDP 程序
-
-   - **xdpdump**：XDP 版本的 tcpdump（抓包更快）
-
-   - **libxdp**：XDP 基础库
+1. 阿里云 `https://mirrors.aliyun.com/openwrt` 不提供 24.10.6的 opkg 源，保留 `https://downloads.openwrt.org`
 
 ## 24.10.4
 

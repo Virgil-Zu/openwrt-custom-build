@@ -88,7 +88,7 @@ if [ -n "${target}" ] && [ -n "${sub_target}" ] && [ -n "${device}" ]; then
 	sed -i "s/^[[:space:]]*CONFIG_TARGET_ALL_PROFILES=y/# CONFIG_TARGET_ALL_PROFILES is not set/g" .config
 	sed -i "s/^[[:space:]]*CONFIG_COLLECT_KERNEL_DEBUG=y/# CONFIG_COLLECT_KERNEL_DEBUG is not set/g" .config
 
-	sed -i "s|downloads.openwrt.org|mirrors.aliyun.com/openwrt|g" .config
+	#sed -i "s|downloads.openwrt.org|mirrors.aliyun.com/openwrt|g" .config
 
 	echo "# CONFIG_KERNEL_DEBUG_INFO is not set" >> .config
 	echo "# CONFIG_KERNEL_DEBUG_INFO_REDUCED is not set" >> .config

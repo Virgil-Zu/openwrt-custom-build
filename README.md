@@ -95,18 +95,9 @@ Compile customized versions of OpenWrt for the following devices to meet the fir
 
 # Version Notes
 
-## 23.05.6
+## 24.10.6
 
-1. Fixed the cross-compilation bug in the `xdp-tools` package within the OpenWrt source code, which has been officially confirmed BUG.
-
-   Scope of impact: xdp-tools 1.2.9 and multiple later versions, covering the entire OpenWrt v23.05 series (rc1~rc4 & stable releases).
-
-   Solution: disable all xdp-related components, 99% of home soft routers and OpenWrt main routers don’t require these at all.
-
-   - **xdp-filter**: High-speed packet filtering
-   - **xdp-loader**: XDP program loader
-   - **xdpdump**: XDP-flavored tcpdump (faster packet capture)
-   - **libxdp**: Core XDP library
+1. The Aliyun mirror `https://mirrors.aliyun.com/openwrt` **doesn’t have the opkg repo for 24.10.6**, so just keep using the official  `https://downloads.openwrt.org`.
 
 ## 24.10.4
 
