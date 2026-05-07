@@ -99,7 +99,7 @@ jobs:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
         with:
           tag_name: ${{ needs.targets.outputs.version }}
-          body_path: version.txt
+          body: ${{ needs.targets.outputs.version }}
           draft: false
           prerelease: false
           files: bin/*-squashfs-sysupgrade.bin
