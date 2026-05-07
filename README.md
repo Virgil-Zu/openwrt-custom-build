@@ -120,7 +120,7 @@ Compile customized versions of OpenWrt for the following devices to meet the fir
 
    :rage:**It's unreasonable that the official mirror can be compiled successfully; this makes no sense at all.**
 
-## 24.10.1
+## 24.10.0
 
 1. Docker build environment is now on Ubuntu 24.04.
 2. Added support for the `phicomm_k2p` device.
