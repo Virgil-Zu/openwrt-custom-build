@@ -38,11 +38,6 @@ if [ -n "${target}" ] && [ -n "${sub_target}" ] && [ -n "${device}" ]; then
 	#*** clone source
 	git clone -b "${1}" https://github.com/openwrt/openwrt.git
 
-	#*** patch openwrt with version
-	if [ "$1" == "v19.07.10" ]; then
-		:
-	fi
-
 	#*** set timezone
 	sed -i "s|timezone='UTC'|zonename='Asia/Shanghai'|" openwrt/package/base-files/files/bin/config_generate
 	sed -i "s|zonename='UTC'|zonename='Asia/Shanghai'|" openwrt/package/base-files/files/bin/config_generate
@@ -75,6 +70,14 @@ if [ -n "${target}" ] && [ -n "${sub_target}" ] && [ -n "${device}" ]; then
 	echo "" > .config
 	wget "https://downloads.openwrt.org/releases/${1#v}/targets/${target}/${sub_target}/config.buildinfo" -q -O .config
 
+	#*** patch openwrt with version
+	if [ "$1" == "v24.10.4" ]; then
+		cp -f ../patches/201-dahdi-max-wctdm24xxp-base.patch feeds/telephony/libs/dahdi-linux/patches/
+		cp -f ../patches/202-dahdi-max-opvax1200-base.patch feeds/telephony/libs/dahdi-linux/patches/
+		cp -f ../patches/203-dahdi-max-wcaxx.patch feeds/telephony/libs/dahdi-linux/patches/
+		cp -f ../patches/204-dahdi-max-wctdm.patch feeds/telephony/libs/dahdi-linux/patches/
+	fi
+
 	sed -i "/^[[:space:]]*CONFIG_TARGET_DEVICE_/d" .config
 	sed -i "s/^[[:space:]]*CONFIG_TARGET_MULTI_PROFILE=y/# CONFIG_TARGET_MULTI_PROFILE is not set/g" .config
 	sed -i "s/^[[:space:]]*CONFIG_TARGET_PER_DEVICE_ROOTFS=y/# CONFIG_TARGET_PER_DEVICE_ROOTFS is not set/g" .config
@@ -85,7 +88,7 @@ if [ -n "${target}" ] && [ -n "${sub_target}" ] && [ -n "${device}" ]; then
 	sed -i "s/^[[:space:]]*CONFIG_TARGET_ALL_PROFILES=y/# CONFIG_TARGET_ALL_PROFILES is not set/g" .config
 	sed -i "s/^[[:space:]]*CONFIG_COLLECT_KERNEL_DEBUG=y/# CONFIG_COLLECT_KERNEL_DEBUG is not set/g" .config
 
-	sed -i "s|downloads.openwrt.org|mirrors.aliyun.com/openwrt|g" .config
+	#sed -i "s|downloads.openwrt.org|mirrors.aliyun.com/openwrt|g" .config
 
 	echo "# CONFIG_KERNEL_DEBUG_INFO is not set" >> .config
 	echo "# CONFIG_KERNEL_DEBUG_INFO_REDUCED is not set" >> .config
@@ -96,7 +99,7 @@ if [ -n "${target}" ] && [ -n "${sub_target}" ] && [ -n "${device}" ]; then
 	echo "CONFIG_LUCI_LANG_zh_Hans=y" >> .config
 	echo "CONFIG_PACKAGE_luci-i18n-base-zh-cn=y" >> .config
 	echo "CONFIG_PACKAGE_luci-i18n-firewall-zh-cn=y" >> .config
-	echo "CONFIG_PACKAGE_luci-i18n-opkg-zh-cn=y" >> .config
+	echo "CONFIG_PACKAGE_luci-i18n-package-manager-zh-cn=y" >> .config
 	
 	if [ -n "${arch}" ] && [ -n "${libc}" ]; then
 		echo "CONFIG_EXTERNAL_TOOLCHAIN=y" >> .config

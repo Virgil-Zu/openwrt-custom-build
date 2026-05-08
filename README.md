@@ -95,18 +95,9 @@ Compile customized versions of OpenWrt for the following devices to meet the fir
 
 # Version Notes
 
-## 23.05.6
+## 24.10.6
 
-1. Fixed the cross-compilation bug in the `xdp-tools` package within the OpenWrt source code, which has been officially confirmed BUG.
-
-   Scope of impact: xdp-tools 1.2.9 and multiple later versions, covering the entire OpenWrt v23.05 series (rc1~rc4 & stable releases).
-
-   Solution: disable all xdp-related components, 99% of home soft routers and OpenWrt main routers don’t require these at all.
-
-   - **xdp-filter**: High-speed packet filtering
-   - **xdp-loader**: XDP program loader
-   - **xdpdump**: XDP-flavored tcpdump (faster packet capture)
-   - **libxdp**: Core XDP library
+1. The Aliyun mirror `https://mirrors.aliyun.com/openwrt` **doesn’t have the opkg repo for 24.10.6**, so just keep using the official  `https://downloads.openwrt.org`.
 
 ## 24.10.4
 
@@ -120,6 +111,26 @@ Compile customized versions of OpenWrt for the following devices to meet the fir
 
    :rage:**It's unreasonable that the official mirror can be compiled successfully; this makes no sense at all.**
 
+## 24.10.0
+
+1. Docker build environment is now on Ubuntu 24.04.
+2. Added support for the `phicomm_k2p` device.
+3. Swapped the default language pack from `luci-i18n-opkg-zh-cn` to `luci-i18n-package-manager-zh-cn`.
+
+## 22.03.7
+
+1. Docker build environment runs on Ubuntu 22.04, with Python 3.x as a required dependency.
+2. Added support for the `phicomm_k2` device.
+3. The official toolchain is provided, but it looks like this toolchain can't be used to build firmware images.
+
+## 21.02.7
+
+1. Multiple TP-Link devices with the **ath79** architecture on OpenWrt 21.02 release have a known issue: after the first boot of the squashfs firmware, the `rootfs_data` partition fails to format properly, the **overlay** mount process errors out, and the system drops straight into read-only squashfs mode.
+
+   This problem can be fixed by disabling the compile option `CONFIG_MTD_SPI_NOR_USE_4K_SECTORS`.
+
 ## 19.07.10
 
-1. For some legacy low-spec devices, even if you upgrade the flash size and SDRAM capacity, they still struggle to run newer firmware builds. That’s why we provide some older firmware versions.
+1. For older low-performance devices, even with expanded flash storage and SDRAM, they still struggle to run newer firmware builds. That's why we're providing these lower-version firmware releases.
+2. Docker build environment is based on Ubuntu 18.04, and requires Python 2.7.x.
+3. The official SDK is provided, but it seems this SDK won't work for building firmware images.

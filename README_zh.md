@@ -101,21 +101,9 @@
 
 # 版本
 
-## 23.05.6
+## 24.10.6
 
-1. 修复OpenWrt 源码中 `xdp-tools` 软件包的交叉编译 BUG，已被官方确认为有效 bug。
-
-   影响范围：xdp-tools 1.2.9 及后续多个版本，覆盖 OpenWrt v23.05 全系列（rc1~rc4、稳定版）
-
-   解决办法：禁用xdp相关组件，这些组件99% 的家庭软路由、OpenWrt 主路由都不需要。
-
-   - **xdp-filter**：高速包过滤
-
-   - **xdp-loader**：加载 XDP 程序
-
-   - **xdpdump**：XDP 版本的 tcpdump（抓包更快）
-
-   - **libxdp**：XDP 基础库
+1. 阿里云 `https://mirrors.aliyun.com/openwrt` 不提供 24.10.6的 opkg 源，保留 `https://downloads.openwrt.org`
 
 ## 24.10.4
 
@@ -129,6 +117,24 @@
 	
 	:rage:**不知道官方镜像是如何编译成功的，这很不合理**
 
+## 24.10.0
+
+1. docker 编译环境使用 Ubuntu:24.04。
+1. 加入 `phicomm_k2p` 设备支持。
+1. 默认语言包 `luci-i18n-opkg-zh-cn` 改为 `luci-i18n-package-manager-zh-cn`
+
+## 22.03.7
+
+1. docker 编译环境使用 Ubuntu:22.04，依赖 python3.x。
+2. 加入 `phicomm_k2` 设备支持。
+3. 官方提供 toolchain，但是似乎 toolchain 不能用于编译镜像。
+
+## 21.02.7
+
+1. 多个 ath79 架构 TP-Link 设备 21.02 版本下表现为 squashfs 固件首次启动后，rootfs_data 无法被正确格式化、overlay 挂载失败，系统直接降级为只读 squashfs 模式，关闭编译选项 `CONFIG_MTD_SPI_NOR_USE_4K_SECTORS` 以解决此问题
+
 ## 19.07.10
 
 1. 对一些性能较弱的旧设备，即使扩大了FLASH大小和SDRAM，运行较新版本的固件也比较吃力。所以提供一些较低版本的固件。
+2. docker 编译环境使用 Ubuntu:18.04，依赖 python 2.7x
+3. 官方提供sdk，但是似乎sdk不能用于编译镜像。
