@@ -141,7 +141,8 @@ if [ -n "${target}" ] && [ -n "${sub_target}" ] && [ -n "${device}" ]; then
 	make download -j$(nproc)
 
 	echo "make..."
-	make -j$(($(nproc)+1)) V=s
+	make -j1 target/linux/prepare
+	make -j$(nproc) V=s
 
 	df -h
 	tree -L 3 bin/targets
