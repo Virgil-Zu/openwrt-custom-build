@@ -8,7 +8,7 @@ sed -i 's|partition@3f0000|partition@ff0000|' openwrt/target/linux/ath79/dts/ar9
 sed -i 's|reg = <0x3f0000 0x10000>|reg = <0xff0000 0x10000>|' openwrt/target/linux/ath79/dts/ar9331_tplink_tl-wr703n-16m.dtsi
 cp -f openwrt/target/linux/ath79/dts/ar9331_tplink_tl-wr703n.dts "${target_dts}"
 sed -i 's|wr703n_tl-mr10u.dtsi|wr703n-16m.dtsi"|' "${target_dts}"
-sed -i 's|"tplink,tl-wr703n"|"tplink,tl-wr703n-v1.6-16m", "tplink,tl-wr703n"|' "${target_dts}"
+sed -i 's|"tplink,tl-wr703n"|"tplink,tl-wr703n", "tplink,tl-wr703n-v1.6-16m"|' "${target_dts}"
 sed -i 's|"TP-Link TL-WR703N"|"TP-Link TL-WR703N (16M)"|' "${target_dts}"
 cat <<EOF >> openwrt/target/linux/ath79/image/tiny-tp-link.mk
 define Device/tplink_tl-wr703n-v1.6-16m
