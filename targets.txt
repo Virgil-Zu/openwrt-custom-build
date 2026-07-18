@@ -6,3 +6,4 @@ ramips/mt7620/phicomm_k2-A2-v22.4-16m
 ramips/mt7620/phicomm_k2-A2-v22.5-16m
 ramips/mt7621/phicomm_k2p-A1
 ramips/mt7621/phicomm_k2p-A1-32m
+ramips/mt7621/huasifei_ws1208v2-32m
